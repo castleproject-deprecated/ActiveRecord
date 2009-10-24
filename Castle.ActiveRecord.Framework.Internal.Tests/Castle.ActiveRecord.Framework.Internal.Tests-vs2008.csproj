@@ -95,11 +95,11 @@
     </Reference>
     <Reference Include="NHibernate, Version=2.1.0.2002, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\NHibernate.dll</HintPath>
+      <HintPath>..\..\lib\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <Name>nunit.framework</Name>
-      <HintPath>..\..\SharedLibs\nunit.framework.dll</HintPath>
+      <HintPath>..\..\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -135,9 +135,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AssemblyAttributes.cs" />
-    <Compile Include="AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="AssemblyXmlGenerationTestCase.cs" />
     <Compile Include="GraphConnectorTestCase.cs" />
     <Compile Include="ImportTestCase.cs" />

@@ -36,23 +36,23 @@
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\net\log4net.dll</HintPath>
+      <HintPath>..\..\lib\net-3.5\log4net.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=2.1.0.2002, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\NHibernate.dll</HintPath>
+      <HintPath>..\..\lib\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.2002, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\NHibernate.ByteCode.Castle.dll</HintPath>
+      <HintPath>..\..\lib\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Linq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=444cf6a87fdab271, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\net\NHibernate.Linq.dll</HintPath>
+      <HintPath>..\..\lib\net-3.5\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.5.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharedLibs\nunit.framework.dll</HintPath>
+      <HintPath>..\..\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -80,10 +80,6 @@
     <None Include="Castle.ActiveRecord.Linq.Tests.build" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Components\Validator\Castle.Components.Validator\Castle.Components.Validator-vs2008.csproj">
-      <Project>{4C945D49-02E9-43F2-9202-E7A6E7C56E77}</Project>
-      <Name>Castle.Components.Validator-vs2008</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Castle.ActiveRecord.Linq\Castle.ActiveRecord.Linq-vs2008.csproj">
       <Project>{50D39615-29A3-4545-908B-8929EC0853C3}</Project>
       <Name>Castle.ActiveRecord.Linq-vs2008</Name>
