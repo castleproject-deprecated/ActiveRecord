@@ -46,6 +46,11 @@
 			xpath="/configuration/activerecord/config/add[@key='connection.connection_string']/@value"
 			value="${ar.connection.connection_string.1}" 
 		/>
+		<xmlpoke
+			file="${app.config}"
+			xpath="/configuration/activerecord/config/add[@key='query.factory_class']/@value"
+			value="${ar.query.factory_class}" 
+		/>
 		
 		<xmlpoke
 			file="${app.config}"
@@ -64,6 +69,12 @@
 		/>
 		<xmlpoke
 			file="${app.config}"
+			xpath="/configuration/activerecord/config[@type='Castle.ActiveRecord.Tests.Model.Test2ARBase, Castle.ActiveRecord.Tests']/add[@key='query.factory_class']/@value"
+			value="${ar.query.factory_class}" 
+		/>
+
+		<xmlpoke
+			file="${app.config}"
 			xpath="/configuration/activerecord/config[@type='Castle.ActiveRecord.Tests.Model.MultipleDBWithMediator.UserDB, Castle.ActiveRecord.Tests']/add[@key='dialect']/@value"
 			value="${ar.dialect}" 
 		/>
@@ -76,7 +87,12 @@
 			file="${app.config}"
 			xpath="/configuration/activerecord/config[@type='Castle.ActiveRecord.Tests.Model.MultipleDBWithMediator.UserDB, Castle.ActiveRecord.Tests']/add[@key='connection.connection_string']/@value"
 			value="${ar.connection.connection_string.2}" 
-		/>		
+		/>
+		<xmlpoke
+			file="${app.config}"
+			xpath="/configuration/activerecord/config[@type='Castle.ActiveRecord.Tests.Model.MultipleDBWithMediator.UserDB, Castle.ActiveRecord.Tests']/add[@key='query.factory_class']/@value"
+			value="${ar.query.factory_class}" 
+		/>
 
 	</target>
 

@@ -49,6 +49,11 @@
 			xpath="/configuration/activerecord/config/add[@key='connection.connection_string']/@value"
 			value="${ar.connection.connection_string.1}" 
 		/>
+		<xmlpoke
+			file="${app.config}"
+			xpath="/configuration/activerecord/config/add[@key='query.factory_class']/@value"
+			value="${ar.query.factory_class}" 
+		/>
 		
 	</target>
 
