@@ -12,11 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+
 namespace Castle.ActiveRecord.Tests
 {
 	using System;
 	using System.IO;
+	using System.Reflection;
 	using System.Text.RegularExpressions;
+	using Castle.ActiveRecord.Framework;
 	using Castle.ActiveRecord.Tests.Model.CompositeUserType;
 	using NUnit.Framework;
 
@@ -112,5 +116,40 @@ namespace Castle.ActiveRecord.Tests
 			Assert.AreEqual("Inc", loaded.ManufacturerName[1]);
 		
 		}
+
+		[Test]
+		[ExpectedException(typeof(ActiveRecordException))]
+		public void BadCompositeUserType_WithNoType()
+		{
+				ActiveRecordStarter.Initialize(GetConfigSource(), typeof(BadProduct_WithNoType));
+		}
+
+		[Test]
+        [ExpectedException(typeof(CustomAttributeFormatException))]
+		public void BadCompositeUserType_WithBadType() {
+				ActiveRecordStarter.Initialize(GetConfigSource(), typeof(BadProduct_WithBadType));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ActiveRecordException))]
+		public void BadCompositeUserType_WithNoColumnNames()
+		{
+				ActiveRecordStarter.Initialize(GetConfigSource(), typeof(BadProduct_WithNoColumnNames));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ActiveRecordException))]
+		public void BadCompositeUserType_WithNoColumnLengths()
+		{
+				ActiveRecordStarter.Initialize(GetConfigSource(), typeof(BadProduct_WithNoColumnLength));
+		}
+
+		[Test]
+		[ExpectedException(typeof(ActiveRecordException))]
+		public void BadCompositeUserType_WithBadColumnLength()
+		{
+				ActiveRecordStarter.Initialize(GetConfigSource(), typeof(BadProduct_WithBadColumnLength));
+		}
+
 	}
 }

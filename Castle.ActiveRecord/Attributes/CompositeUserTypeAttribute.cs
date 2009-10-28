@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 namespace Castle.ActiveRecord
 {
 	using System;
 	using NHibernate.UserTypes;
+	using Castle.ActiveRecord.Framework;
 
 	/// <summary>
 	/// Maps the property to db using a NHibernate's <see cref="ICompositeUserType"/>.
@@ -70,14 +72,18 @@ namespace Castle.ActiveRecord
 		/// <param name="columnNames">The column names.</param>
 		public CompositeUserTypeAttribute(Type compositeType, string[] columnNames)
 		{
-			if (!typeof(ICompositeUserType).IsAssignableFrom(compositeType))
-			{
-				throw new ArgumentException("The composite type not implements the ICompositeUserType", "compositeType");
-			}
+			CheckCompositeType(compositeType);
 
 			this.compositeType = compositeType;
 			this.columnNames = columnNames;
 			length = new int[columnNames.Length];
+		}
+
+		private void CheckCompositeType(Type t) {
+			if (!typeof(ICompositeUserType).IsAssignableFrom(t))
+			{
+				throw new ActiveRecordException(string.Format("The type '{0}' does not implement ICompositeUserType", t));
+			}
 		}
 
 		/// <summary>
@@ -97,7 +103,10 @@ namespace Castle.ActiveRecord
 		public Type CompositeType
 		{
 			get { return compositeType; }
-			set { compositeType = value; }
+			set {
+				CheckCompositeType(value);
+				compositeType = value;
+			}
 		}
 
 		/// <summary>

@@ -22,6 +22,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 	using System.Text;
 	using Castle.ActiveRecord;
 	using NHibernate;
+	using NHibernate.UserTypes;
 
 	/// <summary>
 	/// Traverse the tree emitting proper xml configuration
@@ -818,6 +819,21 @@ namespace Castle.ActiveRecord.Framework.Internal
 		public override void VisitCompositeUserType(CompositeUserTypeModel model)
 		{
 			CompositeUserTypeAttribute attribute = model.Attribute;
+			if (attribute.CompositeType == null)
+				throw new ActiveRecordException(string.Format("CompositeType not defined for CompositeUserTypeAttribute on class '{0}', member '{1}'", model.Member.DeclaringType, model.Member.Name));
+
+			if (!typeof(ICompositeUserType).IsAssignableFrom(attribute.CompositeType))
+				throw new ActiveRecordException(string.Format("The type '{0}' does not implement ICompositeUserType for CompositeUserTypeAttribute on class '{1}', member '{2}'", attribute.CompositeType, model.Member.DeclaringType, model.Member.Name));
+
+			if (attribute.ColumnNames == null)
+				throw new ActiveRecordException(string.Format("ColumnNames not defined for CompositeUserTypeAttribute on class '{0}', member '{1}'", model.Member.DeclaringType, model.Member.Name));
+
+			if (attribute.Length == null)
+				throw new ActiveRecordException(string.Format("Length not defined for CompositeUserTypeAttribute on class '{0}', member '{1}'", model.Member.DeclaringType, model.Member.Name));
+
+			if (attribute.Length.Length != attribute.ColumnNames.Length)
+				throw new ActiveRecordException(string.Format("Length and ColumnNames lengths do not match for CompositeUserTypeAttribute on class '{0}', member '{1}'", model.Member.DeclaringType, model.Member.Name));
+
 			BeginWriteProperty(attribute.AccessString, MakeTypeName(attribute.CompositeType), null, attribute.Insert,
 			                   model.Member.Name, model.MemberType, attribute.Update);
 
