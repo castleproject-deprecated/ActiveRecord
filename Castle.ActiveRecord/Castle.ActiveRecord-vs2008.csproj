@@ -85,23 +85,23 @@
   <ItemGroup>
     <Reference Include="Castle.Components.Validator, Version=0.0.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\build\net-3.5\debug\Castle.Components.Validator.dll</HintPath>
+      <HintPath>..\..\lib\net-3.5\Castle.Components.Validator.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=0.0.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\build\net-3.5\debug\Castle.Core.dll</HintPath>
+      <HintPath>..\..\lib\net-3.5\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\build\net-3.5\debug\Castle.DynamicProxy2.dll</HintPath>
+      <HintPath>..\..\lib\net-3.5\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.0.3, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\build\net-3.5\debug\Iesi.Collections.dll</HintPath>
+      <HintPath>..\..\lib\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\build\net-3.5\debug\log4net.dll</HintPath>
+      <HintPath>..\..\lib\net-3.5\log4net.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=2.1.0.2002, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
