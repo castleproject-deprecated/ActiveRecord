@@ -313,13 +313,17 @@ namespace Castle.ActiveRecord
 		/// <param name="type">ActiveRecord type on which the rows on the database should be deleted</param>
 		protected internal static void DeleteAll(Type type)
 		{
-			EnsureInitialized(type);
 
+			EnsureInitialized(type);
+            
+            ActiveRecordModel model = GetModel (type);
+            string typeName = model.UseAutoImport ? type.Name : type.FullName;
+           
 			ISession session = holder.CreateSession(type);
 
 			try
 			{
-				session.Delete(String.Format("from {0}", type.Name));
+				session.Delete(String.Format("from {0}", typeName));
 
 				session.Flush();
 			}
@@ -333,7 +337,7 @@ namespace Castle.ActiveRecord
 			{
 				holder.FailSession(session);
 
-				throw new ActiveRecordException("Could not perform DeleteAll for " + type.Name, ex);
+				throw new ActiveRecordException("Could not perform DeleteAll for " + typeName, ex);
 			}
 			finally
 			{
@@ -354,11 +358,14 @@ namespace Castle.ActiveRecord
 		{
 			EnsureInitialized(type);
 
+            ActiveRecordModel model = GetModel (type);
+            string typeName = model.UseAutoImport ? type.Name : type.FullName;
+
 			ISession session = holder.CreateSession(type);
 
 			try
 			{
-				session.Delete(String.Format("from {0} where {1}", type.Name, where));
+				session.Delete(String.Format("from {0} where {1}", typeName, where));
 
 				session.Flush();
 			}
@@ -372,7 +379,7 @@ namespace Castle.ActiveRecord
 			{
 				holder.FailSession(session);
 
-				throw new ActiveRecordException("Could not perform DeleteAll for " + type.Name, ex);
+				throw new ActiveRecordException("Could not perform DeleteAll for " + typeName, ex);
 			}
 			finally
 			{
