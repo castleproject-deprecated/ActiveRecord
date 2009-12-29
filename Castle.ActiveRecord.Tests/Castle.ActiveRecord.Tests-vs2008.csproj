@@ -336,7 +336,7 @@
     <Compile Include="Model\SimpleBlog.cs" />
     <Compile Include="Model\SimplePost.cs" />
     <Compile Include="Model\SSAFEntity.cs" />
-    <Compile Include="ShortLivedSessions\LazyWithoutScopeTest.cs" />
+    <Compile Include="NUnitInMemoryTest.cs" />
     <Compile Include="SimpleQueryWithParameterTypesTestCase.cs" />
     <Compile Include="StatelessSessionScopeTestCase.cs" />
     <Compile Include="EnumModelTestCase.cs" />
@@ -369,7 +369,6 @@
     <Compile Include="SessionScopeAutoflushTestCase.cs" />
     <Compile Include="Testing\CustomizationTest.cs" />
     <Compile Include="Testing\InitializationTest.cs" />
-    <Compile Include="Testing\NUnitInMemoryTest.cs" />
     <Compile Include="Validation\ARValidatorTestCase.cs" />
     <Compile Include="VerifyModelsAgainstDBSchemaTestCase.cs" />
     <Compile Include="LazyTestCase.cs" />
