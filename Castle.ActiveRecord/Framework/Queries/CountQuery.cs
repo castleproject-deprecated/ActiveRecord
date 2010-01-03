@@ -15,6 +15,7 @@
 namespace Castle.ActiveRecord.Queries
 {
 	using System;
+	using Framework.Internal;
 	using NHibernate;
 	using NHibernate.Criterion;
 
@@ -36,8 +37,12 @@ namespace Castle.ActiveRecord.Queries
 		/// <param name="filter">The filter.</param>
 		/// <param name="parameters">The parameters.</param>
 		public CountQuery(Type targetType, string filter, params object[] parameters)
-			: base(targetType, "SELECT COUNT(*) FROM " + targetType.Name + " WHERE " + filter, parameters)
+			: base(targetType, " WHERE " + filter, parameters)
 		{
+			ActiveRecordBase.EnsureInitialized(targetType);
+			var model = ActiveRecordModel.GetModel(targetType);
+			string typeName = model.UseAutoImport ? targetType.Name : targetType.FullName;
+			Query = "SELECT COUNT(*) FROM " + typeName + Query;
 		}
 
 		/// <summary>
@@ -85,7 +90,7 @@ namespace Castle.ActiveRecord.Queries
 				Int32 count = Convert.ToInt32(criteria.UniqueResult());
 
 				// clear the projection, so our caller can re-use the DetachedCriteria
-				criteria.SetProjection(new IProjection[] { null });
+				criteria.SetProjection(new IProjection[] {null});
 
 				return count;
 			}

@@ -1,3 +1,13 @@
+3.0 trunk
+===
+- Bugs fixed:
+  AR-ISSUE-271
+  AR-ISSUE-272
+  AR-ISSUE-275
+  AR-ISSUE-276
+  AR-ISSUE-277
+  AR-ISSUE-278	
+
 2.0 Beta1
 ===
 - Updated NHibernate to 2.1.0 CR1. Please specify the byte code provider in your config files.
