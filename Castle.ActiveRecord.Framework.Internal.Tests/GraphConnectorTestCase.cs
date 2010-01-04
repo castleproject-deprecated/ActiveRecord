@@ -34,5 +34,17 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				ActiveRecordModel.GetModel(typeof(DiscriminatorGrandchild)).Parent
 			);
 		}
+
+		[Test]
+		public void ArIssue274_CanConnectGenericJoinedBase()
+		{
+			ActiveRecordStarter.Initialize(GetConfigSource(),
+				typeof(GenBaseJoinedClass<>),
+				typeof(GenIntermediateClass<>),
+				typeof(GenGrandsonClass));
+
+			Assert.That(ActiveRecordModel.GetModel(typeof(GenBaseJoinedClass<>)),
+				Is.EqualTo(ActiveRecordModel.GetModel(typeof(GenGrandsonClass)).Parent));
+		}
 	}
 }
