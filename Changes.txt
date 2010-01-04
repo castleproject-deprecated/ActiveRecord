@@ -1,5 +1,9 @@
 3.0 trunk
 ===
+- Updated NHibernate to to 2.1.4
+- Updated Castle Core to 1.2
+- Updated Castle DynamicProcy to 2.2
+
 - Bugs fixed:
   AR-ISSUE-271
   AR-ISSUE-272
