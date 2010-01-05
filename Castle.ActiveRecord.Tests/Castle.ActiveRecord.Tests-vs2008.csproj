@@ -337,6 +337,9 @@
     <Compile Include="Model\SimplePost.cs" />
     <Compile Include="Model\SSAFEntity.cs" />
     <Compile Include="NUnitInMemoryTest.cs" />
+    <Compile Include="PropertyAccessTests\Project.cs" />
+    <Compile Include="PropertyAccessTests\Task.cs" />
+    <Compile Include="PropertyAccessTests\TestCases.cs" />
     <Compile Include="SimpleQueryWithParameterTypesTestCase.cs" />
     <Compile Include="StatelessSessionScopeTestCase.cs" />
     <Compile Include="EnumModelTestCase.cs" />

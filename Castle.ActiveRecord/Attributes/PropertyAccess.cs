@@ -43,6 +43,26 @@ namespace Castle.ActiveRecord
 		/// </example>
 		Field,
 		/// <summary>
+		/// Use the backing field of this property to get/set the value. (Only valid when specified on automatic property)
+		/// </summary>
+		/// <example>
+		/// <code>
+		/// [Property(Access=PropertyAccess.AutomaticProperty)]
+		/// public string UserName { get; set; } // notice this is automatic property
+		/// </code>
+		/// </example>
+		AutomaticProperty,
+		/// <summary>
+		/// Use the property get method to get the value of this property. Property will be only read, never written.
+		/// </summary>
+		/// <example>
+		/// <code>
+		/// [Property(Access=PropertyAccess.ReadOnly)]
+		/// public string SumOfAllOrders { get { orders.Sum( o => o.Value ); }
+		/// </code>
+		/// </example>
+		ReadOnly,
+		/// <summary>
 		/// Use the field that is the backing store for this property to get/set the value of this property.
 		/// The field is using the same name as the property, in camel case.
 		/// </summary>
@@ -192,6 +212,10 @@ namespace Castle.ActiveRecord
 					return "property";
 				case PropertyAccess.Field:
 					return "field";
+				case PropertyAccess.AutomaticProperty:
+					return "backfield";
+				case PropertyAccess.ReadOnly:
+					return "readonly";
 				case PropertyAccess.FieldCamelcase:
 					return "field.camelcase";
 				case PropertyAccess.FieldCamelcaseUnderscore:
