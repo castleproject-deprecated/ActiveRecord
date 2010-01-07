@@ -366,6 +366,8 @@
     <Compile Include="Framework\ActiveRecordHooksValidationBase.cs" />
     <Compile Include="Framework\ActiveRecordValidationException.cs" />
     <Compile Include="Framework\Config\Configure.cs" />
+    <Compile Include="Framework\Config\DefaultDatabaseConfiguration.cs" />
+    <Compile Include="Framework\Config\DatabaseType.cs" />
     <Compile Include="Framework\Config\DefaultActiveRecordConfiguration.cs" />
     <Compile Include="Framework\Config\DefaultFlushType.cs" />
     <Compile Include="Framework\AbstractNHContributor.cs" />

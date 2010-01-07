@@ -4,6 +4,11 @@
 - Updated Castle Core to 1.2
 - Updated Castle DynamicProcy to 2.2
 - Added support for NHibernate's new access methods "readonly" and "backfield".
+- Added shorthand configuration: It is now possible to use
+    <activerecord>
+      <config db="MsSqlServer2005" csn="MyConnectionStringName"/>
+    </activerecord>
+  to get default configurations for different DBs (Sql Server, SQLite, Oracle, MySql and others)
 
 - Bugs fixed:
   AR-ISSUE-271

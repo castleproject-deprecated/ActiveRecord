@@ -18,24 +18,9 @@ namespace Castle.ActiveRecord.Framework.Config
 	using System.Collections.Generic;
 	using System.Configuration;
 	using System.Text.RegularExpressions;
+
 	using Castle.ActiveRecord.Framework.Scopes;
 	using Castle.Core.Configuration;
-
-	/// <summary>
-	/// Enum for database types support for configuration construction. 
-	/// Not to be confused by databases supported by ActiveRecord
-	/// </summary>
-	public enum DatabaseType
-	{
-		/// <summary>
-		/// Microsoft SQL Server 2005
-		/// </summary>
-		MSSQLServer2005, 
-		/// <summary>
-		/// Microsoft SQL Server 2000
-		/// </summary>
-		MSSQLServer2000
-	}
 
 	/// <summary>
 	/// Usefull for test cases.
@@ -177,7 +162,7 @@ namespace Castle.ActiveRecord.Framework.Config
 			if (string.IsNullOrEmpty(server)) throw new ArgumentNullException("server");
 			if (string.IsNullOrEmpty(initialCatalog)) throw new ArgumentNullException("initialCatalog");
 
-			return Build(DatabaseType.MSSQLServer2005, "Server=" + server + ";initial catalog=" + initialCatalog + ";Integrated Security=SSPI");
+			return Build(DatabaseType.MsSqlServer2005, "Server=" + server + ";initial catalog=" + initialCatalog + ";Integrated Security=SSPI");
 		}
 
 		/// <summary>
@@ -195,7 +180,7 @@ namespace Castle.ActiveRecord.Framework.Config
 			if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
 			if (string.IsNullOrEmpty(password)) throw new ArgumentNullException("password");
 
-			return Build(DatabaseType.MSSQLServer2005, "Server=" + server + ";initial catalog=" + initialCatalog + ";User id=" + username + ";password=" + password);
+			return Build(DatabaseType.MsSqlServer2005, "Server=" + server + ";initial catalog=" + initialCatalog + ";User id=" + username + ";password=" + password);
 		}
 
 		/// <summary>
@@ -208,26 +193,10 @@ namespace Castle.ActiveRecord.Framework.Config
 		{
 			if (string.IsNullOrEmpty(connectionString)) throw new ArgumentNullException("connectionString");
 
-			InPlaceConfigurationSource config = new InPlaceConfigurationSource();
+			var config = new InPlaceConfigurationSource();
 
-			Dictionary<string,string> parameters = new Dictionary<string,string>();
-			parameters["connection.provider"] = "NHibernate.Connection.DriverConnectionProvider";
-			parameters["cache.use_second_level_cache"] = "false";
-			parameters["proxyfactory.factory_class"] = "NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle";
-
-			if (database == DatabaseType.MSSQLServer2000)
-			{
-				parameters["connection.driver_class"] = "NHibernate.Driver.SqlClientDriver";
-				parameters["dialect"] = "NHibernate.Dialect.MsSql2000Dialect";
-				parameters["connection.connection_string"] = connectionString;
-			}
-			else if (database == DatabaseType.MSSQLServer2005)
-			{
-				parameters["connection.driver_class"] = "NHibernate.Driver.SqlClientDriver";
-				parameters["dialect"] = "NHibernate.Dialect.MsSql2005Dialect";
-				parameters["connection.connection_string"] = connectionString;
-			}
-
+			var parameters = new DefaultDatabaseConfiguration().For(database);
+			parameters["connection.connection_string"] = connectionString;
 			config.Add(typeof(ActiveRecordBase), parameters);
 
 			return config;

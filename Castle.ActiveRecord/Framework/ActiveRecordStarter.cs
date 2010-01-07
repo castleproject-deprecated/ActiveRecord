@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.ActiveRecord.Framework.Internal.EventListener;
-
 namespace Castle.ActiveRecord
 {
 	using System;
@@ -22,18 +20,23 @@ namespace Castle.ActiveRecord
 	using System.Data;
 	using System.IO;
 	using System.Reflection;
-	using Attributes;
+
+	using Castle.ActiveRecord.Attributes;
 	using Castle.ActiveRecord.Framework;
 	using Castle.ActiveRecord.Framework.Config;
 	using Castle.ActiveRecord.Framework.Internal;
+	using Castle.ActiveRecord.Framework.Internal.EventListener;
 	using Castle.ActiveRecord.Framework.Scopes;
 	using Castle.Core.Configuration;
-	using NHibernate.Cfg;
+
 	using Iesi.Collections;
 	using Iesi.Collections.Generic;
+
+	using NHibernate.Cfg;
 	using NHibernate.Criterion;
 	using NHibernate.Tool.hbm2ddl;
-	using Environment=NHibernate.Cfg.Environment;
+
+	using Environment = NHibernate.Cfg.Environment;
 
 	/// <summary>
 	/// Delegate for use in <see cref="ActiveRecordStarter.ModelsCreated"/> and <see cref="ActiveRecordStarter.ModelsValidated"/>
@@ -155,19 +158,20 @@ namespace Castle.ActiveRecord
 				{
 					throw new ActiveRecordInitializationException("You can't invoke ActiveRecordStarter.Initialize more than once");
 				}
-				
-				foreach (Type type in types)
-				{
-					registeredAssemblies.Add(type.Assembly);
-				}
 
 				if (source == null)
 				{
 					throw new ArgumentNullException("source");
 				}
+
 				if (types == null)
 				{
 					throw new ArgumentNullException("types");
+				}
+
+				foreach (Type type in types)
+				{
+					registeredAssemblies.Add(type.Assembly);
 				}
 
 				registeredTypes = new Dictionary<Type, string>();

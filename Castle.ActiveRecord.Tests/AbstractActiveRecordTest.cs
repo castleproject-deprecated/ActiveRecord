@@ -25,7 +25,7 @@ namespace Castle.ActiveRecord.Tests
 	{
 		protected static IConfigurationSource GetConfigSource()
 		{
-            return System.Configuration.ConfigurationManager.GetSection("activerecord") as IConfigurationSource;
+			return System.Configuration.ConfigurationManager.GetSection("activerecord") as IConfigurationSource;
 		}
 
 		protected static void Recreate()
