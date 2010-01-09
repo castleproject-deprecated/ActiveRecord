@@ -110,7 +110,8 @@ namespace Castle.ActiveRecord
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple=false), Serializable]
 	public class PrimaryKeyAttribute : WithAccessAttribute
 	{
-		private PrimaryKeyType generator = PrimaryKeyType.Native;
+		private static readonly PrimaryKeyType defaultPrimaryKeyType = PrimaryKeyType.Native;
+		private PrimaryKeyType? generator;
 		private Type customGenerator;
 		private String column;
 		private String unsavedValue;
@@ -123,7 +124,7 @@ namespace Castle.ActiveRecord
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PrimaryKeyAttribute"/> class.
 		/// </summary>
-		public PrimaryKeyAttribute() : this(PrimaryKeyType.Native)
+		public PrimaryKeyAttribute()
 		{
 		}
 
@@ -171,7 +172,7 @@ namespace Castle.ActiveRecord
 		/// <value>The generator.</value>
 		public PrimaryKeyType Generator
 		{
-			get { return generator; }
+			get { return generator ?? defaultPrimaryKeyType; }
 			set { generator = value; }
 		}
 
@@ -253,5 +254,11 @@ namespace Castle.ActiveRecord
 			get { return isOverride; }
 			set { isOverride = value; }
 		}
+
+		internal bool TypeSpecified
+		{
+			get { return generator.HasValue; }
+		}
+
 	}
 }

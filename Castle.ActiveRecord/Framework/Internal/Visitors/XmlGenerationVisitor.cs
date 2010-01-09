@@ -270,42 +270,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 
 			Ident();
 
-			String className = null;
-
-			switch(model.PrimaryKeyAtt.Generator)
-			{
-				case PrimaryKeyType.Identity:
-				case PrimaryKeyType.Sequence:
-				case PrimaryKeyType.HiLo:
-				case PrimaryKeyType.SeqHiLo:
-				case PrimaryKeyType.Guid:
-				case PrimaryKeyType.Native:
-				case PrimaryKeyType.Assigned:
-				case PrimaryKeyType.Foreign:
-				case PrimaryKeyType.Increment:
-					className = model.PrimaryKeyAtt.Generator.ToString().ToLower(CultureInfo.InvariantCulture);
-					break;
-
-				case PrimaryKeyType.GuidComb:
-					className = "guid.comb";
-					break;
-
-				case PrimaryKeyType.UuidHex:
-					className = "uuid.hex";
-					break;
-
-				case PrimaryKeyType.UuidString:
-					className = "uuid.string";
-					break;
-
-				case PrimaryKeyType.Counter:
-					className = "vm";
-					break;
-
-				case PrimaryKeyType.Custom:
-					className = MakeTypeName(model.PrimaryKeyAtt.CustomGenerator);
-					break;
-			}
+			string className = GetGeneratorClassName(model);
 
 			AppendF("<generator{0}>", MakeAtt("class", className));
 
@@ -1022,6 +987,61 @@ namespace Castle.ActiveRecord.Framework.Internal
 			Dedent();
 
 			Append(closingTag);
+		}
+
+		private static string GetGeneratorClassName(PrimaryKeyModel model)
+		{
+			if (model.PrimaryKeyAtt.TypeSpecified == false)
+			{
+				return GuessGeneratorClassName(model);
+			}
+
+			String className = null;
+			switch (model.PrimaryKeyAtt.Generator)
+			{
+				case PrimaryKeyType.Identity:
+				case PrimaryKeyType.Sequence:
+				case PrimaryKeyType.HiLo:
+				case PrimaryKeyType.SeqHiLo:
+				case PrimaryKeyType.Guid:
+				case PrimaryKeyType.Native:
+				case PrimaryKeyType.Assigned:
+				case PrimaryKeyType.Foreign:
+				case PrimaryKeyType.Increment:
+					className = model.PrimaryKeyAtt.Generator.ToString().ToLower(CultureInfo.InvariantCulture);
+					break;
+
+				case PrimaryKeyType.GuidComb:
+					className = "guid.comb";
+					break;
+
+				case PrimaryKeyType.UuidHex:
+					className = "uuid.hex";
+					break;
+
+				case PrimaryKeyType.UuidString:
+					className = "uuid.string";
+					break;
+
+				case PrimaryKeyType.Counter:
+					className = "vm";
+					break;
+
+				case PrimaryKeyType.Custom:
+					className = MakeTypeName(model.PrimaryKeyAtt.CustomGenerator);
+					break;
+			}
+			return className;
+		}
+
+		private static string GuessGeneratorClassName(PrimaryKeyModel model)
+		{
+			if (model.Property.PropertyType == typeof(Guid))
+				return "guid.comb";
+			if (model.Property.PropertyType == typeof(string))
+				return "assigned";
+			// NOTE: perhaps this could be extended to some other 
+			return "native";
 		}
 
 		private static string TranslateNotFoundBehaviourEnum(NotFoundBehaviour notFoundBehaviourEnum)
