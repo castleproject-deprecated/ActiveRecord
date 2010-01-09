@@ -986,7 +986,11 @@ namespace Castle.ActiveRecord
 		/// <returns>The <see cref="Array"/> of results</returns>
 		protected internal static Array FindAll(Type targetType)
 		{
-			return FindAll(targetType, (Order[])null);
+			// to ensure we have no duplicates when an outer join is being used.
+			// NOTE: perhaps we could detect such scenario and do it only then?
+			var criteria = DetachedCriteria.For(targetType)
+				.SetResultTransformer(CriteriaSpecification.DistinctRootEntity);
+			return FindAll(targetType, criteria, null);
 		}
 
 		/// <summary>

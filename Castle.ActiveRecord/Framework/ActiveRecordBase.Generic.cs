@@ -350,7 +350,7 @@ namespace Castle.ActiveRecord
 		/// <returns>The <see cref="Array"/> of results.</returns>
 		public static T[] FindAll(Order order, params ICriterion[] criteria)
 		{
-			return (T[]) FindAll(typeof(T), new Order[] {order}, criteria);
+			return (T[]) FindAll(typeof(T), new[] {order}, criteria);
 		}
 
 		/// <summary>

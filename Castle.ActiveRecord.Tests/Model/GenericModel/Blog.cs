@@ -14,75 +14,43 @@
 
 namespace Castle.ActiveRecord.Tests.Model.GenericModel
 {
-	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 
 	using NHibernate;
 
-    using Castle.ActiveRecord;
+	using Castle.ActiveRecord;
 	using Castle.ActiveRecord.Framework;
 
 
 	[ActiveRecord("BlogTable")]
 	public class Blog : ActiveRecordBase<Blog>
 	{
-		private int _id;
-		private String _name;
-		private String _author;
-		private IList<Post> _posts = new List<Post>();
-		private IList _publishedposts;
-		private IList _unpublishedposts;
-		private IList _recentposts;
+		public Blog()
+		{
+			Posts = new List<Post>();
+		}
 
 		[PrimaryKey]
-		public int Id
-		{
-			get { return _id; }
-			set { _id = value; }
-		}
+		public int Id { get; set; }
 
 		[Property]
-		public String Name
-		{
-			get { return _name; }
-			set { _name = value; }
-		}
+		public string Name { get; set; }
 
 		[Property]
-		public String Author
-		{
-			get { return _author; }
-			set { _author = value; }
-		}
+		public string Author { get; set; }
 
-		[HasMany(Table="Posts", ColumnKey="blogid")]
-		public IList<Post> Posts
-		{
-			get { return _posts; }
-			set { _posts = value; }
-		}
+		[HasMany(Table = "Posts", Fetch = FetchEnum.Join, ColumnKey = "blogid")]
+		public IList<Post> Posts { get; set; }
 
-		[HasMany(typeof (Post), Table="Posts", ColumnKey="blogid", Where="published = 1")]
-		public IList PublishedPosts
-		{
-			get { return _publishedposts; }
-			set { _publishedposts = value; }
-		}
+		[HasMany(typeof(Post), Table = "Posts", ColumnKey = "blogid", Where = "published = 1")]
+		public IList PublishedPosts { get; set; }
 
-		[HasMany(typeof (Post), Table="Posts", ColumnKey="blogid", Where="published = 0")]
-		public IList UnPublishedPosts
-		{
-			get { return _unpublishedposts; }
-			set { _unpublishedposts = value; }
-		}
+		[HasMany(typeof(Post), Table = "Posts", ColumnKey = "blogid", Where = "published = 0")]
+		public IList UnPublishedPosts { get; set; }
 
-		[HasMany(typeof (Post), Table="Posts", ColumnKey="blogid", OrderBy="created desc")]
-		public IList RecentPosts
-		{
-			get { return _recentposts; }
-			set { _recentposts = value; }
-		}
+		[HasMany(typeof(Post), Table = "Posts", ColumnKey = "blogid", OrderBy = "created desc")]
+		public IList RecentPosts { get; set; }
 
 		public void CustomAction()
 		{
@@ -99,7 +67,7 @@ namespace Castle.ActiveRecord.Tests.Model.GenericModel
 
 		internal static ISessionFactoryHolder Holder
 		{
-            get { return ActiveRecordMediator<Blog>.GetSessionFactoryHolder(); }
+			get { return ActiveRecordMediator<Blog>.GetSessionFactoryHolder(); }
 		}
-    }
+	}
 }
