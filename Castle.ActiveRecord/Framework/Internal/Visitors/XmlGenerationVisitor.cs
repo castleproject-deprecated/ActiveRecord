@@ -114,6 +114,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 				VisitNodes(model.HasAndBelongsToMany);
 				VisitNodes(model.Components);
 				VisitNodes(model.OneToOnes);
+				VisitNodes(model.CompositeUserType);
 				Dedent();
 				Append("</join>");
 				VisitNodes(model.JoinedTables);
@@ -146,6 +147,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 				VisitNodes(model.HasAndBelongsToMany);
 				VisitNodes(model.Components);
 				VisitNodes(model.OneToOnes);
+				VisitNodes(model.CompositeUserType);
 				VisitNodes(model.JoinedTables);
 				VisitNodes(model.JoinedClasses);
 				VisitNodes(model.Classes);
@@ -171,6 +173,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 				VisitNodes(model.HasAndBelongsToMany);
 				VisitNodes(model.Components);
 				VisitNodes(model.OneToOnes);
+				VisitNodes(model.CompositeUserType);
 				VisitNodes(model.JoinedTables);
 				VisitNodes(model.JoinedClasses);
 				VisitNodes(model.Classes);

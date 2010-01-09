@@ -15,6 +15,9 @@
     native otherwise
 
 - Bugs fixed:
+  AR-ISSUE-180
+  AR-ISSUE-192
+  AR-ISSUE-200
   AR-ISSUE-271
   AR-ISSUE-272
   AR-ISSUE-274
