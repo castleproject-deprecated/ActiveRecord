@@ -104,6 +104,30 @@ namespace Castle.ActiveRecord.Tests
 		}
 
 		[Test]
+		public void Query_by_example()
+		{
+			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Post), typeof(Blog));
+			Recreate();
+
+			Post.DeleteAll();
+			Blog.DeleteAll();
+
+			Blog[] blogs = Blog.FindAll();
+
+			Assert.IsNotNull(blogs);
+			Assert.AreEqual(0, blogs.Length);
+
+			var blog = new Blog { Name = "hammett's blog", Author = "hamilton verissimo" };
+			blog.Create();
+
+			var count = Blog.FetchCount(Example.Create(new Blog { Name = "hammett" })
+                                 				.EnableLike(MatchMode.Start)
+                                 				.ExcludeNulls()
+                                 				.ExcludeZeroes());
+			Assert.AreEqual(1, count);
+		}
+
+		[Test]
 		public void ComponentAttribute()
 		{
 			ActiveRecordStarter.Initialize(GetConfigSource(),

@@ -123,10 +123,21 @@ namespace Castle.ActiveRecord.Framework.Internal
 		{
 			object[] attrs = type.GetCustomAttributes(typeof(ImportAttribute), false);
 
+			if (attrs == null || attrs.Length == 0)
+			{
+				return;
+			}
+
+			if(HasJoinedBase(type))
+			{
+				string message = string.Format("Type {0} declares Imports but it has a joined base class. " +
+				                               "All imports must be declared on a base class.", type);
+				throw new ActiveRecordException(message);
+			}
+
 			foreach (ImportAttribute att in attrs)
 			{
-				ImportModel im = new ImportModel(att);
-				model.Imports.Add(im);
+				model.Imports.Add(new ImportModel(att));
 			}
 		}
 
@@ -264,8 +275,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 						isArProperty = true;
 
 						// Joined Subclasses must not have PrimaryKey
-						if (type.IsDefined(typeof(JoinedBaseAttribute), true) && // JoinedBase in a superclass
-							!type.IsDefined(typeof(JoinedBaseAttribute), false)) // but not here
+						if (HasJoinedBase(type))
 						{
 							throw new ActiveRecordException("You can't specify a PrimaryKeyAttribute in a joined subclass. " +
 															"Check type " + model.Type.FullName);
@@ -507,6 +517,12 @@ namespace Castle.ActiveRecord.Framework.Internal
 					model.NotMappedProperties.Add(prop);
 				}
 			}
+		}
+
+		private static bool HasJoinedBase(Type type)
+		{
+			return type.IsDefined(typeof(JoinedBaseAttribute), true) && // JoinedBase in a superclass
+			       !type.IsDefined(typeof(JoinedBaseAttribute), false);
 		}
 
 		private static void CollectMetaValues(IList<Any.MetaValueAttribute> metaStore, PropertyInfo prop)
