@@ -29,7 +29,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 	/// </summary>
 	public class XmlGenerationVisitor : AbstractDepthFirstVisitor
 	{
-		private StringBuilder xmlBuilder = new StringBuilder();
+		private readonly StringBuilder xmlBuilder = new StringBuilder();
 		private int identLevel = 0;
 		private String currentTable;
 
@@ -606,19 +606,20 @@ namespace Castle.ActiveRecord.Framework.Internal
 
 			if (model.BelongsToAtt.Column == null)
 			{
-				AppendF("<many-to-one{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}>",
+				AppendF("<many-to-one{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}>",
 				        MakeAtt("name", model.Property.Name),
 				        MakeAtt("access", model.BelongsToAtt.AccessString),
 				        MakeAtt("class", MakeTypeName(model.BelongsToAtt.Type)),
 				        WriteIfTrue("not-null", model.BelongsToAtt.NotNull),
 				        WriteIfTrue("unique", model.BelongsToAtt.Unique),
 				        WriteIfNonNull("unique-key", model.BelongsToAtt.UniqueKey),
+				        WriteIfNonNull("index", model.BelongsToAtt.Index),
 				        WriteIfNonNull("cascade", cascade),
 				        WriteIfNonNull("fetch", fetch),
-						WriteIfNonNull("lazy", lazy),
+				        WriteIfNonNull("lazy", lazy),
 				        WriteIfFalse("update", model.BelongsToAtt.Update),
 				        WriteIfFalse("insert", model.BelongsToAtt.Insert),
-						WriteIfNonNull("property-ref", model.BelongsToAtt.PropertyRef),
+				        WriteIfNonNull("property-ref", model.BelongsToAtt.PropertyRef),
 				        WriteIfNonNull("foreign-key", model.BelongsToAtt.ForeignKey),
 				        WriteIfNonNull("not-found", notFoundMode));
 				Ident();
@@ -628,22 +629,23 @@ namespace Castle.ActiveRecord.Framework.Internal
 			}
 			else
 			{
-				AppendF("<many-to-one{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14} />",
+				AppendF("<many-to-one{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15} />",
 				        MakeAtt("name", model.Property.Name),
 				        MakeAtt("access", model.BelongsToAtt.AccessString),
 				        MakeAtt("class", MakeTypeName(model.BelongsToAtt.Type)),
 				        MakeAtt("column", model.BelongsToAtt.Column),
 				        WriteIfFalse("insert", model.BelongsToAtt.Insert),
 				        WriteIfFalse("update", model.BelongsToAtt.Update),
-						WriteIfNonNull("property-ref", model.BelongsToAtt.PropertyRef),
+				        WriteIfNonNull("property-ref", model.BelongsToAtt.PropertyRef),
 				        WriteIfTrue("not-null", model.BelongsToAtt.NotNull),
 				        WriteIfTrue("unique", model.BelongsToAtt.Unique),
 				        WriteIfNonNull("unique-key", model.BelongsToAtt.UniqueKey),
 				        WriteIfNonNull("foreign-key", model.BelongsToAtt.ForeignKey),
+				        WriteIfNonNull("index", model.BelongsToAtt.Index),
 				        WriteIfNonNull("cascade", cascade),
 				        WriteIfNonNull("fetch", fetch),
-						WriteIfNonNull("lazy", lazy),
-						WriteIfNonNull("not-found", notFoundMode));
+				        WriteIfNonNull("lazy", lazy),
+				        WriteIfNonNull("not-found", notFoundMode));
 			}
 		}
 
