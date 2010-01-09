@@ -185,10 +185,11 @@ namespace Castle.ActiveRecord.Framework.Config
 			var names = Enum.GetNames(typeof(DatabaseType));
 			if (!Array.Exists(names, n => n.Equals(name, StringComparison.OrdinalIgnoreCase)))
 			{
-				var builder = new StringBuilder("Specified value ({0}) is not valid for 'database' attribute. Valid values are:");
+				var builder = new StringBuilder();
+				builder.AppendFormat("Specified value ({0}) is not valid for 'database' attribute. Valid values are:", name);
 				foreach (var value in Enum.GetValues(typeof(DatabaseType)))
 				{
-					builder.AppendFormat("'{0}' ", value.ToString());
+					builder.AppendFormat(" '{0}'", value.ToString());
 				}
 
 				builder.Append(".");

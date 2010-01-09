@@ -106,6 +106,23 @@ namespace Castle.ActiveRecord.Tests
 		}
 
 		[Test]
+		public void Throws_when_invalid_database_specified()
+		{
+			var value = @"<activerecord>
+	<config database=""IDontExist!"" connectionStringName=""foobar"" />
+</activerecord>";
+			TestDelegate action = () =>
+
+				BuildConfiguration(ReadConfiguration(value));
+
+			var ex = Assert.Throws<ConfigurationErrorsException>(action);
+			Assert.AreEqual(
+				"Specified value (IDontExist!) is not valid for 'database' attribute. Valid values are: 'MsSqlServer2000' 'MsSqlServer2005' 'MsSqlServer2008' " +
+				"'SQLite' 'MySql' 'MySql5' 'Firebird' 'PostgreSQL' 'PostgreSQL81' 'PostgreSQL82' 'MsSqlCe' 'Oracle8i' 'Oracle9i' 'Oracle10g'.",
+				ex.Message);
+		}
+
+		[Test]
 		public void Can_use_shorthand_attribute_form()
 		{
 			var value = @"<activerecord>
