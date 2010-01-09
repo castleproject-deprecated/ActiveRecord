@@ -329,6 +329,8 @@
     <None Include="App-net-3.5.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveRecordDetachedQueryGenericTestCase.cs" />
+    <Compile Include="ActiveRecordDetachedQueryTestCase.cs" />
     <Compile Include="AnyRelationTestCase.cs" />
     <Compile Include="CompositeNestedClassTestCase.cs" />
     <Compile Include="CompositeUserTypeTestCase.cs" />

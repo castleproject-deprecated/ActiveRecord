@@ -31,6 +31,11 @@ namespace Castle.ActiveRecord.Tests.Model.GenericModel
 			Posts = new List<Post>();
 		}
 
+		public Blog(int i):this()
+		{
+			Id = i;
+		}
+
 		[PrimaryKey]
 		public int Id { get; set; }
 

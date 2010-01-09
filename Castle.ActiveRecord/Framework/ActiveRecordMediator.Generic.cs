@@ -16,6 +16,8 @@ namespace Castle.ActiveRecord
 {
 	using System;
 	using Framework;
+
+	using NHibernate;
 	using NHibernate.Criterion;
 
 	/// <summary>
@@ -103,6 +105,16 @@ namespace Castle.ActiveRecord
 		/// <summary>
 		/// Searches and returns the first row.
 		/// </summary>
+		/// <param name="detachedQuery">The expression query.</param>
+		/// <returns>A <c>targetType</c> instance or <c>null.</c></returns>
+		public static T FindFirst(IDetachedQuery detachedQuery)
+		{
+			return (T)FindFirst(typeof(T), detachedQuery);
+		}
+
+		/// <summary>
+		/// Searches and returns the first row.
+		/// </summary>
 		/// <param name="criterias">The criterias.</param>
 		/// <returns>A instance the targetType or <c>null</c></returns>
 		public static T FindOne(params ICriterion[] criterias)
@@ -119,6 +131,17 @@ namespace Castle.ActiveRecord
 		public static T FindOne(DetachedCriteria criteria)
 		{
 			return (T) FindOne(typeof(T), criteria);
+		}
+
+		/// <summary>
+		/// Searches and returns a row. If more than one is found,
+		/// throws <see cref="ActiveRecordException"/>
+		/// </summary>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>A <c>targetType</c> instance or <c>null</c></returns>
+		public static T FindOne(IDetachedQuery detachedQuery)
+		{
+			return (T)FindOne(typeof(T), detachedQuery);
 		}
 
 		/// <summary>
@@ -185,6 +208,16 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
+		/// Returns all instances found for the specified type according to the criteria
+		/// </summary>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>The <see cref="Array"/> of results.</returns>
+		public static T[] FindAll(IDetachedQuery detachedQuery)
+		{
+			return (T[])FindAll(typeof(T), detachedQuery);
+		}
+
+		/// <summary>
 		/// Returns a portion of the query results (sliced)
 		/// </summary>
 		public static T[] SlicedFindAll(int firstResult, int maxResults, Order[] orders, params ICriterion[] criterias)
@@ -206,6 +239,18 @@ namespace Castle.ActiveRecord
 		public static T[] SlicedFindAll(int firstResult, int maxResults, DetachedCriteria criteria, params Order[] orders)
 		{
 			return (T[]) SlicedFindAll(typeof(T), firstResult, maxResults, orders, criteria);
+		}
+
+		/// <summary>
+		/// Returns a portion of the query results (sliced)
+		/// </summary>
+		/// <param name="firstResult">The number of the first row to retrieve.</param>
+		/// <param name="maxResults">The maximum number of results retrieved.</param>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>The sliced query results.</returns>
+		public static T[] SlicedFindAll(int firstResult, int maxResults, IDetachedQuery detachedQuery)
+		{
+			return (T[])SlicedFindAll(typeof(T), firstResult, maxResults, detachedQuery);
 		}
 
 		/// <summary>
@@ -299,6 +344,16 @@ namespace Castle.ActiveRecord
 		public static bool Exists<PkType>(PkType id)
 		{
 			return ActiveRecordBase<T>.Exists(id);
+		}
+
+		/// <summary>
+		/// Check if any instance matches the query.
+		/// </summary>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns><c>true</c> if an instance is found; otherwise <c>false</c>.</returns>
+		public static bool Exists(IDetachedQuery detachedQuery)
+		{
+			return Exists(typeof(T), detachedQuery);
 		}
 
 		/// <summary>

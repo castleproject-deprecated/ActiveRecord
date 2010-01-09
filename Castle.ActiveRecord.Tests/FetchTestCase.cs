@@ -37,7 +37,7 @@ namespace Castle.ActiveRecord.Tests
 			Assert.IsNotNull(blogs);
 			Assert.AreEqual(0, blogs.Length);
 
-			var blog = new Blog { Name = "Test blog", Author = "Eric Bowen" };
+			var blog = new Blog() { Name = "Test blog", Author = "Eric Bowen" };
 
 			blog.Save();
 

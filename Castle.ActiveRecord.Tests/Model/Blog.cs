@@ -105,10 +105,20 @@ namespace Castle.ActiveRecord.Tests.Model
 			return (Blog[]) ActiveRecordMediator.FindAll(typeof(Blog));
 		}
 
+        public static Blog[] FindAll(IDetachedQuery dq)
+        {
+            return (Blog[]) FindAll(typeof(Blog), dq);
+        }
+
 		public static Blog Find(int id)
 		{
 			return (Blog) ActiveRecordMediator.FindByPrimaryKey(typeof(Blog), id);
 		}
+
+        public static Blog FindOne(IDetachedQuery dq)
+        {
+            return (Blog) FindOne(typeof(Blog), dq);
+        }
 
 		public static int FetchCount()
 		{
@@ -144,6 +154,16 @@ namespace Castle.ActiveRecord.Tests.Model
 		{
 			return Exists(typeof(Blog), criteria);
 		}
+
+        public static bool Exists(IDetachedQuery dq)
+        {
+            return Exists(typeof(Blog), dq);
+        }
+
+        public static Blog[] SlicedFindAll(int FirstResult, int MaxResult, IDetachedQuery dq)
+        {
+            return (Blog[]) SlicedFindAll(typeof(Blog), FirstResult, MaxResult, dq);
+        }
 
 		public static Blog[] FindByProperty(String property, object value)
 		{
