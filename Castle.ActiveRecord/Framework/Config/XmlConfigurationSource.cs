@@ -18,6 +18,7 @@ namespace Castle.ActiveRecord.Framework.Config
 	using System.Collections.Generic;
 	using System.Configuration;
 	using System.IO;
+	using System.Reflection;
 	using System.Text;
 	using System.Xml;
 
@@ -80,6 +81,11 @@ namespace Castle.ActiveRecord.Framework.Config
 			XmlAttribute verifyModelsAgainstDBSchemaAtt = section.Attributes["verifyModelsAgainstDBSchema"];
 			XmlAttribute defaultFlushType = section.Attributes["flush"];
 			XmlAttribute searchable = section.Attributes["searchable"];
+
+			if (isWebAtt != null && "auto" == isWebAtt.Value)
+			{
+				isWebAtt.Value = (Assembly.GetEntryAssembly() == null ? "true" : "false");
+			}
 
 			SetUpThreadInfoType(isWebAtt != null && "true" == isWebAtt.Value,
 			                    threadInfoAtt != null ? threadInfoAtt.Value : String.Empty);
