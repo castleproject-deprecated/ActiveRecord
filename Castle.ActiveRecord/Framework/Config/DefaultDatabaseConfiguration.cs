@@ -29,6 +29,7 @@ namespace Castle.ActiveRecord.Framework.Config
 	public class DefaultDatabaseConfiguration
 	{
 		private const string cache_use_second_level_cache = "cache.use_second_level_cache";
+		private const string connection_connection_release_mode = "connection.release_mode";
 		private const string connection_driver_class = "connection.driver_class";
 		private const string connection_isolation = "connection.isolation";
 		private const string connection_provider = "connection.provider";
@@ -73,7 +74,7 @@ namespace Castle.ActiveRecord.Framework.Config
 				case DatabaseType.PostgreSQL82:
 					return Configure<NpgsqlDriver, PostgreSQL82Dialect>();
 				case DatabaseType.MsSqlCe:
-					return Configure<SqlServerCeDriver, MsSqlCeDialect>();
+					return Configure<SqlServerCeDriver, MsSqlCeDialect>(MsSqlCe());
 				// using oracle's own data driver since Microsoft
 				// discontinued theirs, and that's what everyone
 				// seems to be using anyway.
@@ -111,6 +112,17 @@ namespace Castle.ActiveRecord.Framework.Config
 			return new Dictionary<string, string>
 			{
 				{ query_substitutions, "true=1;false=0" }
+			};
+		}
+
+		private Dictionary<string, string> MsSqlCe()
+		{
+			// to workaround exception being thrown with default setting
+			// when an implicit transaction is used with identity id
+			// see: AR-ISSUE-273 for details
+			return new Dictionary<string, string>
+			{
+				{ connection_connection_release_mode, "on_close" }
 			};
 		}
 
