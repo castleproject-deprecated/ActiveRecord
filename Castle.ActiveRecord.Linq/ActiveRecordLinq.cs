@@ -15,48 +15,51 @@
 
 namespace Castle.ActiveRecord.Linq
 {
-    using System;
-    using System.Linq;
-    using NHibernate;
+	using System.Linq;
+	using NHibernate;
 
-    /// <summary>
-    /// Class to provide a static mechanism for using active record classes in
-    /// Linq expressions. This approach is less visually elegant than the 
-    /// ActiveRecordLinqBase's Table property, but has the advantage of working
-    /// on classes that are descended from ActiveRecordBase.
-    /// </summary>
-    public static class ActiveRecordLinq
-    {
-        /// <summary>
-        /// AsQueryable enables you to use an active record class in a Linq expression even
-        /// though the base class does not provide a static Table property.
-        /// 
-        /// Examples include:
-        /// var items = from f in ActiveRecordLinq.AsQueryable&lt;foo&gt;() select f;
-        /// var item = ActiveRecordLinq.AsQueryable&lt;foo&gt;().First();
-        /// var items = from f in ActiveRecordLinq.AsQueryable&lt;foo&gt;() where f.Name == theName select f;
-        /// var item = ActiveRecordLinq.AsQueryable&lt;foo&gt;().First(f => f.Name == theName);
-        /// </summary>
-        public static IOrderedQueryable<T> AsQueryable<T>()
-        {
-            return (IOrderedQueryable<T>)ActiveRecordMediator.ExecuteQuery(new LinqQuery<T>());
-        }
+	/// <summary>
+	/// Class to provide a static mechanism for using active record classes in
+	/// Linq expressions. This approach is less visually elegant than the 
+	/// ActiveRecordLinqBase's Table property, but has the advantage of working
+	/// on classes that are descended from ActiveRecordBase.
+	/// </summary>
+	public static class ActiveRecordLinq
+	{
+		/// <summary>
+		/// AsQueryable enables you to use an active record class in a Linq expression even
+		/// though the base class does not provide a static Table property.
+		/// 
+		/// Examples include:
+		/// var items = from f in ActiveRecordLinq.AsQueryable&lt;foo&gt;() select f;
+		/// var item = ActiveRecordLinq.AsQueryable&lt;foo&gt;().First();
+		/// var items = from f in ActiveRecordLinq.AsQueryable&lt;foo&gt;() where f.Name == theName select f;
+		/// var item = ActiveRecordLinq.AsQueryable&lt;foo&gt;().First(f => f.Name == theName);
+		/// </summary>
+		public static IOrderedQueryable<T> AsQueryable<T>()
+		{
+			return ActiveRecordLinqBase<T>.Queryable;
+		}
 
-        /// <summary>
-        /// Extension method to ISession which creates a source for a Linq expression.
-        /// </summary>
-        public static IOrderedQueryable<T> AsQueryable<T>(this ISession session)
-        {
-            return new LinqQuery<T>().Execute(session);
-        }
+		/// <summary>
+		/// Extension method to ISession which creates a source for a Linq expression.
+		/// </summary>
+		public static IOrderedQueryable<T> AsQueryable<T>(this ISession session)
+		{
+			return AsQueryable<T>();
 
-        /// <summary>
-        /// Extension method to ISessionScope which creates a source for a Linq expression.
-        /// </summary>
-        public static IOrderedQueryable<T> AsQueryable<T>(this ISessionScope scope)
-        {
-            return (IOrderedQueryable<T>)ActiveRecordMediator.ExecuteQuery(new LinqQuery<T>());
-        }
+			// NOTE: should we use this instead?
+			// var options = new QueryOptions();
+			// return new Query<T>(new NHibernateQueryProvider(session,options), options);
+		}
 
-    }
+		/// <summary>
+		/// Extension method to ISessionScope which creates a source for a Linq expression.
+		/// </summary>
+		public static IOrderedQueryable<T> AsQueryable<T>(this ISessionScope scope)
+		{
+			return AsQueryable<T>();
+		}
+
+	}
 }

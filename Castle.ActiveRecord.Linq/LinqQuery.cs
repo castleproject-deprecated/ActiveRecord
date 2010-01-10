@@ -15,68 +15,58 @@
 
 namespace Castle.ActiveRecord.Linq
 {
-    using System;
-    using System.Linq;
-    using NHibernate;
-    using NHibernate.Linq;
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq.Expressions;
 
-    /// <summary>
-    /// Class used internally to glue NHibernate.Linq, NHibernate, and ActiveRecord together
-    /// via ExecuteQuery. This appeared to be the cleanest way of connecting to the appropriate
-    /// type and scope specific ISession instance. 
-    /// </summary>
-    /// <typeparam name="T">The type of the active record class the Linq collection 
-    /// is being bound against.</typeparam>
-    public class LinqQuery<T> : IActiveRecordQuery<IOrderedQueryable<T>>
-    {
-        #region IActiveRecordQuery<IOrderedQueryable<T>> Members
+	using NHibernate;
+	using NHibernate.Linq;
 
-		/// <summary>
-		/// Executes the query using specified session.
-		/// </summary>
-		/// <param name="session">The session.</param>
-		/// <returns></returns>
-        public IOrderedQueryable<T> Execute(ISession session)
-        {
-			QueryOptions options = new QueryOptions();
-
-            return new Query<T>(new NHibernateQueryProvider(session, options), options);
-        }
-
-        #endregion
-
-        #region IActiveRecordQuery Members
+	/// <summary>
+	/// Linq Active Record Query
+	/// </summary>
+	public class LinqQuery<T>:IActiveRecordQuery
+	{
+		private readonly QueryOptions options;
+		private readonly Expression expression;
+		private readonly Type rootType;
 
 		/// <summary>
-		/// Enumerates over the result of the query.
-		/// Note: Only use if you expect most of your values to already exist in the second level cache!
+		/// 
 		/// </summary>
-		/// <param name="session"></param>
-		/// <returns></returns>
-        System.Collections.IEnumerable IActiveRecordQuery.Enumerate(ISession session)
-        {
-            return Execute(session);
-        }
+		/// <param name="options"></param>
+		/// <param name="expression"></param>
+		/// <param name="rootType"></param>
+		public LinqQuery(QueryOptions options, Expression expression,Type rootType)
+		{
+			this.options = options;
+			this.expression = expression;
+			this.rootType = rootType;
+		}
 
-		/// <summary>
-		/// Executes the specified query and return the results
-		/// </summary>
-		/// <param name="session">The session to execute the query in.</param>
-		/// <returns></returns>
-        object IActiveRecordQuery.Execute(ISession session)
-        {
-            return Execute(session);
-        }
+		/// <inheritDoc/>
+		public Type RootType
+		{
+			get { return rootType; }
+		}
 
-		/// <summary>
-		/// Gets the target type of this query
-		/// </summary>
-		/// <value></value>
-        Type IActiveRecordQuery.RootType
-        {
-            get { return typeof(T); }
-        }
+		/// <inheritDoc/>
+		public List<T> Result { get; private set; }
 
-        #endregion
-    }
+		/// <inheritDoc />
+		public object Execute(ISession session)
+		{
+			var result = new NHibernateQueryProvider(session, options).Execute(expression);
+			if (result is IEnumerable<T>)
+				Result = new List<T>(result as IEnumerable<T>);
+			return result;
+		}
+
+		/// <inheritDoc />
+		public IEnumerable Enumerate(ISession session)
+		{
+			return (IEnumerable)Execute(session);
+		}
+	}
 }

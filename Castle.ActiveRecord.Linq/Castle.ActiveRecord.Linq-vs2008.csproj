@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="ActiveRecordLinq.cs" />
     <Compile Include="ActiveRecordLinqBase.cs" />
+    <Compile Include="QueryProvider.cs" />
     <Compile Include="LinqQuery.cs" />
   </ItemGroup>
   <ItemGroup>
