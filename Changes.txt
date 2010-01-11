@@ -13,6 +13,8 @@
     guid.comb for guids
     assigned for strings
     native otherwise
+- Added basic support for CpBT (see IConversation interface and tests for usage)
+
 
 - Bugs fixed:
   AR-ISSUE-157

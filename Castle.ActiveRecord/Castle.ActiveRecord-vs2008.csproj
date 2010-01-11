@@ -386,6 +386,10 @@
     <Compile Include="Framework\Config\XmlNhibernateMapping.cs" />
     <Compile Include="Framework\NHSearchContributor.cs" />
     <Compile Include="Framework\Queries\ValueAndTypeTuple.cs" />
+    <Compile Include="Framework\Scopes\ConversationalScope.cs" />
+    <Compile Include="Framework\Scopes\IConversation.cs" />
+    <Compile Include="Framework\Scopes\IScopeConversation.cs" />
+    <Compile Include="Framework\Scopes\ScopedConversation.cs" />
     <Compile Include="Framework\StatelessSessionWrapper.cs" />
     <Compile Include="Framework\INHContributor.cs" />
     <Compile Include="Framework\Internal\EventListener\EventListenerConfig.cs" />
