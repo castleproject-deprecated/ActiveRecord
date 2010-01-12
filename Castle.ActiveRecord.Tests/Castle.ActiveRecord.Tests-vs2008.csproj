@@ -338,6 +338,7 @@
     <Compile Include="Config\ConfigureTests.cs" />
     <Compile Include="Config\StorageConfigurationTests.cs" />
     <Compile Include="Conversation\ConversationScenarioTest.cs" />
+    <Compile Include="Conversation\ScopedConversationTests.cs" />
     <Compile Include="DefaultConfigurationsTestCase.cs" />
     <Compile Include="FetchTestCase.cs" />
     <Compile Include="Model\CompositeUserType\BadProduct.cs" />

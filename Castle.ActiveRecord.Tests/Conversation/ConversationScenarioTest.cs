@@ -61,26 +61,6 @@ namespace Castle.ActiveRecord.Tests.Conversation
             conversation.Dispose();
         }
 
-    	private void ArrangeRecords()
-    	{
-    		BlogLazy blog = new BlogLazy()
-    		                	{
-    		                		Author = "Markus",
-    		                		Name = "Conversations"
-    		                	};
-    		PostLazy post = new PostLazy()
-    		                	{
-    		                		Blog = blog,
-    		                		Category = "Scenario",
-    		                		Title = "The Convesration is here",
-    		                		Contents = "A new way for AR in fat clients",
-    		                		Created = new DateTime(2010, 1, 1),
-    		                		Published = true
-    		                	};
-    		blog.Save();
-    		post.Save();
-    	}
-
     	[Test]
 		public void CanCancelConversations()
 		{
@@ -104,38 +84,106 @@ namespace Castle.ActiveRecord.Tests.Conversation
     		}
 			Assert.That(BlogLazy.FindAll().First().Author, Is.EqualTo("Markus"));
 		}
-    }
 
-	[TestFixture]
-	public class ScopedConversationTests : NUnitInMemoryTest
-	{
-		public override Type[] GetTypes()
-		{
-			return new[] { typeof(BlogLazy), typeof(PostLazy) };
-		}
-		
 		[Test]
-		public void SessionsAreKeptThroughoutTheConversation()
+		public void CanSetFlushModeToNever()
 		{
-			IScopeConversation conversation = new ScopedConversation();
-			ISession session = null;
+			ArrangeRecords();
 
-			using (new ConversationalScope(conversation))
+			using (var conversation = new ScopedConversation(ConversationFlushMode.Explicit))
 			{
-				BlogLazy.FindAll();
-				session = BlogLazy.Holder.CreateSession(typeof (BlogLazy));
+				BlogLazy blog;
+				using (new ConversationalScope(conversation))
+				{
+					blog = BlogLazy.FindAll().First();
+					blog.Author = "Anonymous";
+					blog.Save();
+					BlogLazy.FindAll(); // Triggers flushing if allowed
+				}
+
+				Assert.That(blog.Author, Is.EqualTo("Anonymous"));
+
+				// Outside any ConversationalScope session-per-request is used
+				Assert.That(BlogLazy.FindAll().First().Author, Is.EqualTo("Markus"));
+
+				conversation.Flush();
 			}
 
-			Assert.That(session.IsOpen);
-
-			using (new ConversationalScope(conversation))
-			{
-				BlogLazy.FindAll();
-				Assert.That(BlogLazy.Holder.CreateSession(typeof(BlogLazy)), Is.SameAs(session));
-			}
-
-			conversation.Dispose();
-			Assert.That(session.IsOpen, Is.False);
+			Assert.That(BlogLazy.FindAll().First().Author, Is.EqualTo("Anonymous"));
 		}
-	}
+
+		[Test]
+		public void CanSetFlushModeToOnClose()
+		{
+			ArrangeRecords();
+
+			using (var conversation = new ScopedConversation(ConversationFlushMode.OnClose))
+			{
+				BlogLazy blog;
+				using (new ConversationalScope(conversation))
+				{
+					blog = BlogLazy.FindAll().First();
+					blog.Author = "Anonymous";
+					blog.Save();
+					BlogLazy.FindAll(); // Triggers flushing if allowed
+				}
+
+				Assert.That(blog.Author, Is.EqualTo("Anonymous"));
+
+				// Outside any ConversationalScope session-per-request is used
+				Assert.That(BlogLazy.FindAll().First().Author, Is.EqualTo("Markus"));
+
+				// conversation.Flush(); // Only needed when set to explicit
+			}
+
+			Assert.That(BlogLazy.FindAll().First().Author, Is.EqualTo("Anonymous"));
+		}
+
+    	[Test]
+    	public void CanRestartAConversationWithFreshSessions()
+    	{
+    		ISession s1, s2;
+    		using (var c = new ScopedConversation())
+    		{
+    			using (new ConversationalScope(c))
+    			{
+    				BlogLazy.FindAll();
+    				s1 = BlogLazy.Holder.CreateSession(typeof (BlogLazy));
+    			}
+				
+				c.Restart();
+
+				using (new ConversationalScope(c))
+				{
+					BlogLazy.FindAll();
+					s2 = BlogLazy.Holder.CreateSession(typeof(BlogLazy));
+				}    			
+
+				Assert.That(s1, Is.Not.SameAs(s2));
+    			Assert.That(s1.IsOpen, Is.False);
+    			Assert.That(s2.IsOpen, Is.True);
+    		}
+    	}
+
+
+    	private void ArrangeRecords()
+    	{
+    		BlogLazy blog = new BlogLazy()
+    		                	{
+    		                		Author = "Markus",
+    		                		Name = "Conversations"
+    		                	};
+    		PostLazy post = new PostLazy()
+    		                	{
+    		                		Blog = blog,
+    		                		Category = "Scenario",
+    		                		Title = "The Convesration is here",
+    		                		Contents = "A new way for AR in fat clients",
+    		                		Created = new DateTime(2010, 1, 1),
+    		                		Published = true
+    		                	};
+    		blog.Save();
+    		post.Save();
+    	}
+    }
 }

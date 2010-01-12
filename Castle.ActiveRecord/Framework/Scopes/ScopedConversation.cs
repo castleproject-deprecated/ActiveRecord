@@ -27,24 +27,49 @@ namespace Castle.ActiveRecord
 	/// </summary>
 	public class ScopedConversation : IScopeConversation
 	{
+		/// <summary>
+		/// Creates a conversation with <see cref="ConversationFlushMode.Automatic"/>.
+		/// </summary>
+		public ScopedConversation() : this(ConversationFlushMode.Automatic)
+		{
+		}
+
+		/// <summary>
+		/// Creates a conversation with the chosen flush mode.
+		/// </summary>
+		/// <param name="mode">The flush mode to use</param>
+		public ScopedConversation(ConversationFlushMode mode)
+		{
+			flushMode = mode;
+		}
+
+		private ConversationFlushMode flushMode;
+
 		private bool canceled = false;
+		private Dictionary<ISessionFactory, ISession> openedSessions = new Dictionary<ISessionFactory,ISession>();
 
 		/// <inheritDoc />
 		public void Dispose()
 		{
-			//todo: Add possibility to rollback on failure
+			ClearSessions();
+		}
+
+		private void ClearSessions()
+		{
 			foreach (var session in openedSessions.Values)
 			{
 				if (canceled)
 					session.Transaction.Rollback();
 				else
 				{
+					if (flushMode != ConversationFlushMode.Explicit)
+						session.Flush();
 					session.Transaction.Commit();
-					session.Flush();
 				}
 
 				session.Dispose();
 			}
+			openedSessions.Clear();
 		}
 
 		/// <inheritDoc />
@@ -54,30 +79,75 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <inheritDoc />
+		public void Flush()
+		{
+			AssertNotCanceled();
+			foreach (var session in openedSessions.Values)
+			{
+				session.Flush();
+			}
+		}
+
+		/// <inheritDoc />
+		public void Restart()
+		{
+			ClearSessions();
+			canceled = false;
+		}
+
+		/// <inheritDoc />
+		public ConversationFlushMode FlushMode
+		{
+			get { return flushMode; }
+			set
+			{
+				if (openedSessions.Count > 0)
+					throw new ActiveRecordException(
+						"The FlushMode cannot be set after the "+
+						"conversation was used for the first time. "+
+						"A session was already opened, setting the "+
+						"FlushMode must be done before any sessions "+
+						"are opened.");
+				flushMode = value;
+			}
+		}
+
+		/// <inheritDoc />
+		public bool Canceled
+		{
+			get { return canceled; }
+		}
+
+		/// <inheritDoc />
 		public ISession GetSession(ISessionFactory factory, IInterceptor interceptor)
+		{
+			AssertNotCanceled();
+			if (!openedSessions.ContainsKey(factory))
+				CreateSession(factory, interceptor);
+			return openedSessions[factory];
+		}
+
+		private void AssertNotCanceled()
 		{
 			if (canceled)
 			{
 				throw new ActiveRecordException(
 					"A session was requested from a conversation that has "+
-                    "been already canceled. Please check that after the "+
+					"been already canceled. Please check that after the "+
 					"cancellation of a conversation no more "+
-                    "ConversationalScopes are opened using it.");
+					"ConversationalScopes are opened using it.");
 			}
-			if (!openedSessions.ContainsKey(factory))
-				CreateSession(factory, interceptor);
-			return openedSessions[factory];
 		}
 
 		private void CreateSession(ISessionFactory factory, IInterceptor interceptor)
 		{
 			var session = factory.OpenSession(interceptor);
 			session.BeginTransaction();
-			// todo: allow to configure this
-			session.FlushMode = FlushMode.Auto;
+			session.FlushMode =
+				flushMode == ConversationFlushMode.Automatic ? NHibernate.FlushMode.Auto :
+				flushMode == ConversationFlushMode.OnClose ? NHibernate.FlushMode.Commit :
+				NHibernate.FlushMode.Never;
 			openedSessions.Add(factory,session);
 		}
-
-		private Dictionary<ISessionFactory, ISession> openedSessions = new Dictionary<ISessionFactory,ISession>();
 	}
 }
