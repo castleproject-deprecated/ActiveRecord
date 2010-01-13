@@ -165,6 +165,32 @@ namespace Castle.ActiveRecord.Tests.Conversation
     		}
     	}
 
+    	[Test]
+    	public void CanUseIConversationDirectly()
+    	{
+    		ArrangeRecords();
+
+    		using (IConversation conversation = new ScopedConversation())
+    		{
+    			BlogLazy blog = null;
+    			conversation.Execute(() => { blog = BlogLazy.FindAll().First(); });
+
+				Assert.That(blog, Is.Not.Null);
+				Assume.That(blog.Author, Is.EqualTo("Markus"));
+
+				// Lazy access
+				Assert.That(blog.PublishedPosts.Count, Is.EqualTo(1));
+
+    			blog.Author = "Anonymous";
+
+    			conversation.Execute(() => blog.Save());
+				
+    		}
+
+			Assert.That(BlogLazy.FindAll().First().Author, Is.EqualTo("Anonymous"));
+    	}
+
+
 
     	private void ArrangeRecords()
     	{

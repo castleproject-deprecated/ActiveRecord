@@ -117,9 +117,9 @@ namespace Castle.ActiveRecord.Tests.Conversation
 		{
 			using (var c = new ScopedConversation())
 			{
-				Assert.That(c.Canceled, Is.False);
+				Assert.That(c.IsCanceled, Is.False);
 				c.Cancel();
-				Assert.That(c.Canceled);
+				Assert.That(c.IsCanceled);
 			}
 		}
 
@@ -128,15 +128,85 @@ namespace Castle.ActiveRecord.Tests.Conversation
 		{
 			using (var c = new ScopedConversation())
 			{
-				Assert.That(c.Canceled, Is.False);
+				Assert.That(c.IsCanceled, Is.False);
 				c.Cancel();
-				Assert.That(c.Canceled);
+				Assert.That(c.IsCanceled);
 				c.Restart();
-				Assert.That(c.Canceled, Is.False);
+				Assert.That(c.IsCanceled, Is.False);
 			}
 		}
 
+		[Test]
+		public void ConversationIsCanceledAfterErrorInExecute()
+		{
+			using (var c = new ScopedConversation())
+			{
+				Assert.Throws<ApplicationException>(() => c.Execute(() => new PostLazy().SaveWithException()));
+				Assert.That(c.IsCanceled);
+			}
+		}
 
+		[Test]
+		public void ConversationIsCanceledAfterSilentError()
+		{
+			using (var c = new ScopedConversation())
+			{
+				c.ExecuteSilently(() => new PostLazy().SaveWithException());
+				Assert.That(c.IsCanceled);
+			}
+		}
+
+		[Test]
+		public void TriggersEventWhenCanceling()
+		{
+
+			bool triggered = false;
+			using (var c = new ScopedConversation())
+			{
+				c.Canceled += (conv,args) => triggered = true;
+				c.Cancel();
+			}
+
+			Assert.That(triggered);
+		}
+
+		[Test]
+		public void TriggersWithRightArgsWhenCanceling()
+		{
+
+			bool triggered = false;
+			bool userCancel = false;
+			using (var c = new ScopedConversation())
+			{
+				c.Canceled += (conv, args) => { triggered = true;
+				                              	userCancel = args.CanceledByUser; };
+				c.Cancel();
+			}
+
+			Assert.That(triggered);
+			Assert.That(userCancel);
+		}
+
+		[Test]
+		public void TriggersWithRightArgsWhenCancelingAfterException()
+		{
+
+			bool triggered = false;
+			Exception ex = null;
+			using (var c = new ScopedConversation())
+			{
+				c.Canceled += (conv, args) =>
+				{
+					triggered = true;
+					ex = args.Exception;
+				};
+				c.ExecuteSilently(()=>new PostLazy().SaveWithException());
+			}
+
+			Assert.That(triggered);
+			Assert.That(ex, Is.Not.Null
+				.And.InstanceOf<ApplicationException>());
+		}
 
 	}
 }

@@ -80,6 +80,35 @@ namespace Castle.ActiveRecord
 		/// <summary>
 		/// Whether the conversation is canceled
 		/// </summary>
-		bool Canceled { get; }
+		bool IsCanceled { get; }
+
+		/// <summary>
+		/// Executes a block of code in the context of the
+		/// conversation. This allows to use ActiveRecord
+		/// without any scopes by doing all persistence calls
+		/// within Execute.
+		/// If an exception is caught, the conversation is
+		/// automatically canceled and the exception handed
+		/// down to the calling code. 
+		/// </summary>
+		/// <param name="action">The code to execute</param>
+		/// <remarks>
+		/// This allows to use the interface directly, for example
+		/// if it is served through an IoC-Container.
+		/// </remarks>
+		void Execute(Action action);
+
+		/// <summary>
+		/// Executes a block of code. The conversation is canceled
+		/// if an exception occurs, but the exception will not be
+		/// handed to the calling code.
+		/// </summary>
+		/// <param name="action">The code to execute</param>
+		void ExecuteSilently(Action action);
+
+		/// <summary>
+		/// Fired when the conversation is canceled.
+		/// </summary>
+		event EventHandler<ConversationCanceledEventArgs> Canceled;
     }
 }

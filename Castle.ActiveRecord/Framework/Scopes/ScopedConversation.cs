@@ -45,7 +45,7 @@ namespace Castle.ActiveRecord
 
 		private ConversationFlushMode flushMode;
 
-		private bool canceled = false;
+		private bool _isCanceled = false;
 		private Dictionary<ISessionFactory, ISession> openedSessions = new Dictionary<ISessionFactory,ISession>();
 
 		/// <inheritDoc />
@@ -58,7 +58,7 @@ namespace Castle.ActiveRecord
 		{
 			foreach (var session in openedSessions.Values)
 			{
-				if (canceled)
+				if (_isCanceled)
 					session.Transaction.Rollback();
 				else
 				{
@@ -75,7 +75,14 @@ namespace Castle.ActiveRecord
 		/// <inheritDoc />
 		public void Cancel()
 		{
-			canceled = true;
+			DoCancel(true, null);
+		}
+
+		private void DoCancel(bool userCanceled, Exception exceptionCaught)
+		{
+			_isCanceled = true;
+			var args = new ConversationCanceledEventArgs(userCanceled, exceptionCaught);
+			TriggerCanceled(args);
 		}
 
 		/// <inheritDoc />
@@ -92,7 +99,7 @@ namespace Castle.ActiveRecord
 		public void Restart()
 		{
 			ClearSessions();
-			canceled = false;
+			_isCanceled = false;
 		}
 
 		/// <inheritDoc />
@@ -113,9 +120,31 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <inheritDoc />
-		public bool Canceled
+		public bool IsCanceled
 		{
-			get { return canceled; }
+			get { return _isCanceled; }
+		}
+
+		/// <summary>
+		/// Executes the action.
+		/// </summary>
+		/// <param name="action">The action</param>
+		/// <param name="silently">Whether to throw on exception</param>
+		public void Execute(Action action, bool silently)
+		{
+			try
+			{
+				using (new ConversationalScope(this))
+				{
+					action();
+				}
+			}
+			catch (Exception ex)
+			{
+				DoCancel(false, ex);
+				if (!silently) 
+					throw;
+			}
 		}
 
 		/// <inheritDoc />
@@ -129,11 +158,11 @@ namespace Castle.ActiveRecord
 
 		private void AssertNotCanceled()
 		{
-			if (canceled)
+			if (_isCanceled)
 			{
 				throw new ActiveRecordException(
 					"A session was requested from a conversation that has "+
-					"been already canceled. Please check that after the "+
+					"been already _isCanceled. Please check that after the "+
 					"cancellation of a conversation no more "+
 					"ConversationalScopes are opened using it.");
 			}
@@ -148,6 +177,27 @@ namespace Castle.ActiveRecord
 				flushMode == ConversationFlushMode.OnClose ? NHibernate.FlushMode.Commit :
 				NHibernate.FlushMode.Never;
 			openedSessions.Add(factory,session);
+		}
+
+		/// <inheritDoc />
+		public void Execute(Action action)
+		{
+			Execute(action,false);
+		}
+
+		/// <inheritDoc />
+		public void ExecuteSilently(Action action)
+		{
+			Execute(action, true);
+		}
+
+		/// <inheritDoc />
+		public event EventHandler<ConversationCanceledEventArgs> Canceled;
+
+		private void TriggerCanceled(ConversationCanceledEventArgs args)
+		{
+			if (Canceled != null)
+				Canceled(this, args);
 		}
 	}
 }
