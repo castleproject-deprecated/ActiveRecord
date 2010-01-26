@@ -317,6 +317,17 @@ namespace Castle.ActiveRecord
 			return Exists(typeof(T), detachedCriteria);
 		}
 
+		/// <summary>
+		/// Check if any instance matching the query exists in the database.
+		/// </summary>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>true if an instance is found; otherwise false.</returns>
+		public static bool Exists(IDetachedQuery detachedQuery)
+		{
+			return Exists(typeof(T), detachedQuery);
+		}
+
+
 		#endregion
 
 		#region FindAll
@@ -350,7 +361,7 @@ namespace Castle.ActiveRecord
 		/// <returns>The <see cref="Array"/> of results.</returns>
 		public static T[] FindAll(Order order, params ICriterion[] criteria)
 		{
-			return (T[]) FindAll(typeof(T), new Order[] {order}, criteria);
+			return (T[]) FindAll(typeof(T), new[] {order}, criteria);
 		}
 
 		/// <summary>
@@ -375,6 +386,17 @@ namespace Castle.ActiveRecord
 		{
 			return (T[]) FindAll(typeof(T), criteria);
 		}
+
+		/// <summary>
+		/// Returns all instances found for the specified type according to the criteria
+		/// </summary>
+		/// <param name="detachedQuery">The query expression.</param>
+		/// <returns>All entities that match the query</returns>
+		public static T[] FindAll(IDetachedQuery detachedQuery)
+		{
+			return (T[])FindAll(typeof(T), detachedQuery);
+		}
+
 
 		#endregion
 
@@ -500,6 +522,17 @@ namespace Castle.ActiveRecord
 			return (T) FindFirst(typeof(T), criteria);
 		}
 
+		/// <summary>
+		/// Searches and returns the first row. 
+		/// </summary>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>A <c>targetType</c> instance or <c>null.</c></returns>
+		public static T FindFirst(IDetachedQuery detachedQuery) 
+		{
+			return (T)FindFirst(typeof(T), detachedQuery);
+		}
+
+
 		#endregion
 
 		#region FindOne
@@ -525,6 +558,18 @@ namespace Castle.ActiveRecord
 		{
 			return (T) FindOne(typeof(T), criteria);
 		}
+
+		/// <summary>
+		/// Searches and returns a row. If more than one is found, 
+		/// throws <see cref="ActiveRecordException"/>
+		/// <param name="detachedQuery">The query expression</param>
+		/// </summary>
+		/// <returns>A <c>targetType</c> instance or <c>null</c></returns>
+		public static T FindOne(IDetachedQuery detachedQuery) 
+		{
+			return (T)FindOne(typeof(T), detachedQuery);
+		}
+
 
 		#endregion
 
@@ -569,6 +614,19 @@ namespace Castle.ActiveRecord
 		{
 			return (T[]) SlicedFindAll(typeof(T), firstResult, maxResults, orders, criteria);
 		}
+
+		/// <summary>
+		/// Returns a portion of the query results (sliced)
+		/// </summary>
+		/// <param name="firstResult">The number of the first row to retrieve.</param>
+		/// <param name="maxResults">The maximum number of results retrieved.</param>
+		/// <returns>The sliced query results.</returns>
+		/// <param name="detachedQuery">The query expression</param>
+		public static T[] SlicedFindAll(int firstResult, int maxResults, IDetachedQuery detachedQuery) 
+		{
+			return (T[])SlicedFindAll(typeof(T), firstResult, maxResults, detachedQuery);
+		}
+
 
 		#endregion
 

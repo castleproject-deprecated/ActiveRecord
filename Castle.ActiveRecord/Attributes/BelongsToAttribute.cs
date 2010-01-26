@@ -72,6 +72,7 @@ namespace Castle.ActiveRecord
 		private bool insert = true;
 		private bool notnull;
 		private bool unique;
+		private String index;
 		private String propertyRef;
 		private FetchEnum fetchMethod = FetchEnum.Unspecified;
 		private FetchWhen lazy = FetchWhen.OnInvoke;
@@ -267,6 +268,17 @@ namespace Castle.ActiveRecord
 		{
 			get { return uniqueKey; }
 			set { uniqueKey = value; }
+		}
+
+		/// <summary>
+		/// From NHibernate documentation:
+		/// specifies the name of a (multi-column) index
+		/// </summary>
+		/// <value>index name</value>
+		public string Index
+		{
+			get { return index; }
+			set { index = value; }
 		}
 
 		/// <summary>

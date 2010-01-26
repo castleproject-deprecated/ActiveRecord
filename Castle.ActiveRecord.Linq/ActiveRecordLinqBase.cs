@@ -14,32 +14,34 @@
 
 namespace Castle.ActiveRecord.Linq
 {
-    using System;
-    using System.Linq;
+	using System.Linq;
 
-    /// <summary>
-    /// A variation of the ActiveRecordBase class which provides the
-    /// ability to use the record type in a linq expression.
-    /// </summary>
-    /// <typeparam name="T">The class which defines the active record entity.</typeparam>
-    public class ActiveRecordLinqBase<T> : ActiveRecordBase<T>
-    {
-        /// <summary>
-        /// The static property Table on the active record class is used as a Linq collection
-        /// or as the in argument in a Linq expression. 
-        /// 
-        /// Examples include:
-        /// var items = from f in Foo.Table select f;
-        /// var item = Foo.Table.First();
-        /// var items = from f in Foo.Table where f.Name == theName select f;
-        /// var item = Foo.Table.First(f => f.Name == theName);
-        /// </summary>
-        public static IOrderedQueryable<T> Queryable
-        {
-            get
-            {
-                return ExecuteQuery2(new LinqQuery<T>());
-            }
-        }
-    }
+	using NHibernate.Linq;
+
+	/// <summary>
+	/// A variation of the ActiveRecordBase class which provides the
+	/// ability to use the record type in a linq expression.
+	/// </summary>
+	/// <typeparam name="T">The class which defines the active record entity.</typeparam>
+	public class ActiveRecordLinqBase<T> : ActiveRecordBase<T>
+	{
+		/// <summary>
+		/// The static property Table on the active record class is used as a Linq collection
+		/// or as the in argument in a Linq expression. 
+		/// 
+		/// Examples include:
+		/// var items = from f in Foo.Table select f;
+		/// var item = Foo.Table.First();
+		/// var items = from f in Foo.Table where f.Name == theName select f;
+		/// var item = Foo.Table.First(f => f.Name == theName);
+		/// </summary>
+		public static IOrderedQueryable<T> Queryable
+		{
+			get
+			{
+				var options = new QueryOptions();
+				return new Query<T>(new QueryProvider<T>(options), options);
+			}
+		}
+	}
 }

@@ -32,6 +32,18 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests.Model
 		}
 
 		[Test]
+		public void ReadOnly()
+		{
+			Assert.AreEqual("readonly", PropertyAccessHelper.ToString(PropertyAccess.ReadOnly));
+		}
+
+		[Test]
+		public void AutomaticProperty()
+		{
+			Assert.AreEqual("backfield", PropertyAccessHelper.ToString(PropertyAccess.AutomaticProperty));
+		}
+
+		[Test]
 		public void FieldCamelCase()
 		{
 			Assert.AreEqual("field.camelcase", PropertyAccessHelper.ToString(PropertyAccess.FieldCamelcase));

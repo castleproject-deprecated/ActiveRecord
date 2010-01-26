@@ -18,6 +18,7 @@ namespace Castle.ActiveRecord.Framework.Config
 	using System.Collections.Generic;
 	using System.Configuration;
 	using System.IO;
+	using System.Text;
 	using System.Xml;
 
 	/// <summary>
@@ -135,42 +136,81 @@ namespace Castle.ActiveRecord.Framework.Config
 
 				Type targetType = typeof(ActiveRecordBase);
 
+				IDictionary<string, string> defaults = null;
 				if (node.Attributes.Count != 0)
 				{
 					XmlAttribute typeNameAtt = node.Attributes["type"];
 
-					if (typeNameAtt == null)
+					if (typeNameAtt != null)
 					{
-						String message = String.Format("Invalid attribute at node '{0}'. " +
-						                               "The only supported attribute is 'type'", Config_Node_Name);
+						String typeName = typeNameAtt.Value;
 
-						throw new ConfigurationErrorsException(message);
+						targetType = Type.GetType(typeName, false, false);
+
+						if (targetType == null)
+						{
+							String message = String.Format("Could not obtain type from name '{0}'", typeName);
+
+							throw new ConfigurationErrorsException(message);
+						}
 					}
 
-					String typeName = typeNameAtt.Value;
-
-					targetType = Type.GetType(typeName, false, false);
-
-					if (targetType == null)
+					var databaseName = node.Attributes["database"] ?? node.Attributes["db"];
+					var connectionStringName = node.Attributes["connectionStringName"] ?? node.Attributes["csn"];
+					if (databaseName != null && connectionStringName != null)
 					{
-						String message = String.Format("Could not obtain type from name '{0}'", typeName);
-
+						defaults = SetDefaults(databaseName.Value, connectionStringName.Value);
+					}
+					else if (databaseName != null || connectionStringName != null)
+					{
+						var message =
+							String.Format(
+								"Using short form of configuration requires both 'database' and 'connectionStringName' attributes to be specified.");
 						throw new ConfigurationErrorsException(message);
 					}
 				}
 
-				Add(targetType, BuildProperties(node));
+				Add(targetType, BuildProperties(node, defaults));
 			}
+		}
+
+		/// <summary>
+		/// Sets the default configuration for database specifiend by <paramref name="name"/>.
+		/// </summary>
+		/// <param name="name">Name of the database type.</param>
+		/// <param name="connectionStringName">name of the connection string specified in connectionStrings configuration section</param>
+		/// <returns></returns>
+		protected IDictionary<string, string> SetDefaults(string name, string connectionStringName)
+		{
+			var names = Enum.GetNames(typeof(DatabaseType));
+			if (!Array.Exists(names, n => n.Equals(name, StringComparison.OrdinalIgnoreCase)))
+			{
+				var builder = new StringBuilder();
+				builder.AppendFormat("Specified value ({0}) is not valid for 'database' attribute. Valid values are:", name);
+				foreach (var value in Enum.GetValues(typeof(DatabaseType)))
+				{
+					builder.AppendFormat(" '{0}'", value.ToString());
+				}
+
+				builder.Append(".");
+				throw new ConfigurationErrorsException(builder.ToString());
+			}
+
+			var type = (DatabaseType)Enum.Parse(typeof(DatabaseType), name, true);
+			var defaults = new DefaultDatabaseConfiguration().For(type);
+			defaults["connection.connection_string_name"] = connectionStringName;
+			return defaults;
 		}
 
 		/// <summary>
 		/// Builds the configuration properties.
 		/// </summary>
 		/// <param name="node">The node.</param>
+		/// <param name="defaults"></param>
 		/// <returns></returns>
-		protected IDictionary<string,string> BuildProperties(XmlNode node)
+		protected IDictionary<string, string> BuildProperties(XmlNode node, IDictionary<string, string> defaults)
 		{
-			Dictionary<string,string> dict = new Dictionary<string,string>();
+			var dict = defaults ?? new Dictionary<string, string>();
 
 			foreach(XmlNode addNode in node.SelectNodes("add"))
 			{
@@ -185,7 +225,7 @@ namespace Castle.ActiveRecord.Framework.Config
 				}
 				string value = valueAtt.Value;
 
-				dict.Add(keyAtt.Value, value);
+				dict[keyAtt.Value] = value;
 			}
 
 			return dict;

@@ -47,21 +47,13 @@ namespace Castle.ActiveRecord
 	[AttributeUsage(AttributeTargets.Property), Serializable]
 	public class PropertyAttribute : WithAccessOptionalTableAttribute
 	{
-		private string column, formula, @default;
-		private string type, uniqueKey, index;
-		private string sqlType, check;
-		private int length;
-		private bool notNull;
-		private bool unique;
-		private bool update = true;
-		private bool insert = true;
-		private bool isOverride;
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PropertyAttribute"/> class.
 		/// </summary>
-		public PropertyAttribute() 
+		public PropertyAttribute()
 		{
+			Insert = true;
+			Update = true;
 		}
 
 		/// <summary>
@@ -70,7 +62,7 @@ namespace Castle.ActiveRecord
 		/// <param name="column">The column.</param>
 		public PropertyAttribute(String column) : this()
 		{
-			this.column = column;
+			Column = column;
 		}
 
 		/// <summary>
@@ -80,86 +72,54 @@ namespace Castle.ActiveRecord
 		/// <param name="type">The type.</param>
 		public PropertyAttribute(String column, String type) : this(column)
 		{
-			this.type = type;
+			ColumnType = type;
 		}
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this property allow null.
 		/// </summary>
 		/// <value><c>true</c> if allow null; otherwise, <c>false</c>.</value>
-		public bool NotNull
-		{
-			get { return notNull; }
-			set { notNull = value; }
-		}
+		public bool NotNull { get; set; }
 
 		/// <summary>
 		/// Gets or sets the length of the property (for strings - nvarchar(50) )
 		/// </summary>
 		/// <value>The length.</value>
-		public int Length
-		{
-			get { return length; }
-			set { length = value; }
-		}
+		public int Length { get; set; }
 
 		/// <summary>
 		/// Gets or sets the column name
 		/// </summary>
 		/// <value>The column.</value>
-		public String Column
-		{
-			get { return column; }
-			set { column = value; }
-		}
+		public string Column { get; set; }
 
 		/// <summary>
 		/// Set to <c>false</c> to ignore this property when updating entities of this ActiveRecord class.
 		/// </summary>
-		public bool Update
-		{
-			get { return update; }
-			set { update = value; }
-		}
+		public bool Update { get; set; }
 
 		/// <summary>
 		/// Set to <c>false</c> to ignore this property when inserting entities of this ActiveRecord class.
 		/// </summary>
-		public bool Insert
-		{
-			get { return insert; }
-			set { insert = value; }
-		}
+		public bool Insert { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="PropertyAttribute"/> is unique.
 		/// </summary>
 		/// <value><c>true</c> if unique; otherwise, <c>false</c>.</value>
-		public bool Unique
-		{
-			get { return unique; }
-			set { unique = value; }
-		}
+		public bool Unique { get; set; }
 
 		/// <summary>
 		/// Gets or sets the formula used to calculate this property
 		/// </summary>
 		/// <value>The formula.</value>
-		public String Formula
-		{
-			get { return formula; }
-			set { formula = value; }
-		}
+		public string Formula { get; set; }
 
 		/// <summary>
 		/// Gets or sets the type of the column.
 		/// </summary>
 		/// <value>The type of the column.</value>
-		public String ColumnType
-		{
-			get { return type; }
-			set { type = value; }
-		}
+		public string ColumnType { get; set; }
 
 		/// <summary>
 		/// From NHibernate documentation:
@@ -173,44 +133,28 @@ namespace Castle.ActiveRecord
 		/// used to name the constraint, only to group the columns 
 		/// in the mapping file.
 		/// </remarks>
-		public string UniqueKey
-		{
-			get { return uniqueKey; }
-			set { uniqueKey = value; }
-		}
+		public string UniqueKey { get; set; }
 
 		/// <summary>
 		/// From NHibernate documentation:
 		/// specifies the name of a (multi-column) index
 		/// </summary>
 		/// <value>index name</value>
-		public string Index
-		{
-			get { return index; }
-			set { index = value; }
-		}
+		public string Index { get; set; }
 
 		/// <summary>
 		/// From NHibernate documentation:
 		/// overrides the default column type
 		/// </summary>
 		/// <value>column_type</value>
-		public string SqlType
-		{
-			get { return sqlType; }
-			set { sqlType = value; }
-		}
+		public string SqlType { get; set; }
 
 		/// <summary>
 		/// From NHibernate documentation:
 		/// create an SQL check constraint on either column or table
 		/// </summary>
 		/// <value>Sql Expression</value>
-		public string Check
-		{
-			get { return check; }
-			set { check = value; }
-		}
+		public string Check { get; set; }
 
 		/// <summary>
 		/// Gets or sets the default value for a column (used by schema generation). 
@@ -218,19 +162,11 @@ namespace Castle.ActiveRecord
 		/// as the default on the database. 
 		/// </summary>
 		/// <value>The default value for the column.</value>
-		public string Default
-		{
-			get { return @default; }
-			set { @default = value; }
-		}
+		public string Default { get; set; }
 
 		/// <summary>
 		/// Set to <c>true</c> if this property overrides a property in a base class
 		/// </summary>
-		public bool IsOverride
-		{
-			get { return isOverride; }
-			set { isOverride = value; }
-		}
+		public bool IsOverride { get; set; }
 	}
 }

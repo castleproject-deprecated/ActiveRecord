@@ -935,7 +935,20 @@ namespace Castle.ActiveRecord
 		{
 			return Count(targetType, detachedCriteria) > 0;
 		}
-		
+
+		/// <summary>
+		/// Check if there is any records in the db for the target type
+		/// </summary>
+		/// <param name="targetType">The target type.</param>
+		/// <param name="detachedQuery"></param>
+		/// <returns><c>true</c> if there's at least one row</returns>
+		protected internal static bool Exists(Type targetType, IDetachedQuery detachedQuery)
+		{
+			Array array = SlicedFindAll(targetType, 0, 1, detachedQuery);
+
+			return array.Length > 0;
+		}
+
 		#endregion
 
 		#region FindAll
@@ -986,7 +999,11 @@ namespace Castle.ActiveRecord
 		/// <returns>The <see cref="Array"/> of results</returns>
 		protected internal static Array FindAll(Type targetType)
 		{
-			return FindAll(targetType, (Order[])null);
+			// to ensure we have no duplicates when an outer join is being used.
+			// NOTE: perhaps we could detect such scenario and do it only then?
+			var criteria = DetachedCriteria.For(targetType)
+				.SetResultTransformer(CriteriaSpecification.DistinctRootEntity);
+			return FindAll(targetType, criteria, null);
 		}
 
 		/// <summary>
@@ -1056,6 +1073,39 @@ namespace Castle.ActiveRecord
 		{
 			return FindAll(targetType, null, criteria);
 		}
+
+		/// <summary>
+		/// Returns all instances found for the specified type according to the criteria
+		/// </summary>
+		/// <param name="targetType">The target type.</param>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>The <see cref="Array"/> of results.</returns>
+		protected internal static Array FindAll(Type targetType, IDetachedQuery detachedQuery)
+		{
+			EnsureInitialized(targetType);
+
+			ISession session = holder.CreateSession(targetType);
+			try
+			{
+				IQuery executableQuery = detachedQuery.GetExecutableQuery(session);
+				return SupportingUtils.BuildArray(targetType, executableQuery.List());
+			}
+			catch (ValidationException)
+			{
+				holder.FailSession(session);
+				throw;
+			}
+			catch (Exception exception)
+			{
+				holder.FailSession(session);
+				throw new ActiveRecordException("Could not perform FindAll for " + targetType.Name, exception);
+			}
+			finally
+			{
+				holder.ReleaseSession(session);
+			}
+		}
+
 
 		#endregion
 
@@ -1210,6 +1260,22 @@ namespace Castle.ActiveRecord
 			return FindFirst(targetType, null, criteria);
 		}
 
+		/// <summary>
+		/// Searches and returns the first row.
+		/// </summary>
+		/// <param name="targetType">The target type.</param>
+		/// <param name="detachedQuery">The expression query.</param>
+		/// <returns>A <c>targetType</c> instance or <c>null.</c></returns>
+		protected internal static object FindFirst(Type targetType, IDetachedQuery detachedQuery)
+		{
+			Array array = SlicedFindAll(targetType, 0, 1, detachedQuery);
+			if ((array != null) && (array.Length > 0))
+			{
+				return array.GetValue(0);
+			}
+			return null;
+		}
+
 		#endregion
 
 		#region FindOne
@@ -1252,6 +1318,29 @@ namespace Castle.ActiveRecord
 			}
 
 			return (result.Length == 0) ? null : result.GetValue(0);
+		}
+
+		/// <summary>
+		/// Searches and returns a row. If more than one is found,
+		/// throws <see cref="ActiveRecordException"/>
+		/// </summary>
+		/// <param name="targetType">The target type</param>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>A <c>targetType</c> instance or <c>null</c></returns>
+		protected internal static object FindOne(Type targetType, IDetachedQuery detachedQuery)
+		{
+			Array array = SlicedFindAll(targetType, 0, 2, detachedQuery);
+			if (array.Length > 1)
+			{
+				throw new ActiveRecordException(
+					string.Concat(
+						new object[] { targetType.Name, ".FindOne returned ", array.Length, " rows. Expecting one or none" }));
+			}
+			if (array.Length != 0)
+			{
+				return array.GetValue(0);
+			}
+			return null;
 		}
 
 		#endregion
@@ -1384,6 +1473,43 @@ namespace Castle.ActiveRecord
 		{
 			return SlicedFindAll(targetType, firstResult, maxResults, null, criteria);
 		}
+
+		/// <summary>
+		/// Returns a portion of the query results (sliced)
+		/// </summary>
+		/// <param name="targetType">The target type.</param>
+		/// <param name="firstResult">The number of the first row to retrieve.</param>
+		/// <param name="maxResults">The maximum number of results retrieved.</param>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>The sliced query results.</returns>
+		public static Array SlicedFindAll(Type targetType, int firstResult, int maxResults, IDetachedQuery detachedQuery)
+		{
+
+			EnsureInitialized(targetType);
+			ISession session = holder.CreateSession(targetType);
+			try
+			{
+				IQuery executableQuery = detachedQuery.GetExecutableQuery(session);
+				executableQuery.SetFirstResult(firstResult);
+				executableQuery.SetMaxResults(maxResults);
+				return SupportingUtils.BuildArray(targetType, executableQuery.List());
+			}
+			catch (ValidationException)
+			{
+				holder.FailSession(session);
+				throw;
+			}
+			catch (Exception exception)
+			{
+				holder.FailSession(session);
+				throw new ActiveRecordException("Could not perform SlicedFindAll for " + targetType.Name, exception);
+			}
+			finally
+			{
+				holder.ReleaseSession(session);
+			}
+		}
+
 
 		#endregion
 

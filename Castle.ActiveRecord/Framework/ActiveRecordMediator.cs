@@ -21,14 +21,14 @@ namespace Castle.ActiveRecord
 	using Castle.ActiveRecord.Framework;
 
 	/// <summary>
-	/// Allow programmers to use the 
+	/// Allow programmers to use the
 	/// ActiveRecord functionality without direct reference
 	/// to <see cref="ActiveRecordBase"/>
 	/// </summary>
 	public class ActiveRecordMediator
 	{
 		/// <summary>
-		/// Invokes the specified delegate passing a valid 
+		/// Invokes the specified delegate passing a valid
 		/// NHibernate session. Used for custom NHibernate queries.
 		/// </summary>
 		/// <param name="targetType">The target ActiveRecordType</param>
@@ -47,7 +47,7 @@ namespace Castle.ActiveRecord
 		/// <param name="id">ID value</param>
 		/// <param name="throwOnNotFound"><c>true</c> if you want an exception to be thrown
 		/// if the object is not found</param>
-		/// <exception cref="ObjectNotFoundException">if <c>throwOnNotFound</c> is set to 
+		/// <exception cref="ObjectNotFoundException">if <c>throwOnNotFound</c> is set to
 		/// <c>true</c> and the row is not found</exception>
 		public static object FindByPrimaryKey(Type targetType, object id, bool throwOnNotFound)
 		{
@@ -111,7 +111,19 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Searches and returns the a row. If more than one is found, 
+		/// Searches and returns the first row.
+		/// </summary>
+		/// <param name="targetType">The target type.</param>
+		/// <param name="detachedQuery">The expression query.</param>
+		/// <returns>A <c>targetType</c> instance or <c>null.</c></returns>
+		public static object FindFirst(Type targetType, IDetachedQuery detachedQuery)
+		{
+			return ActiveRecordBase.FindFirst(targetType, detachedQuery);
+		}
+
+
+		/// <summary>
+		/// Searches and returns the a row. If more than one is found,
 		/// throws <see cref="ActiveRecordException"/>
 		/// </summary>
 		/// <param name="targetType">The target type</param>
@@ -123,7 +135,7 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Searches and returns a row. If more than one is found, 
+		/// Searches and returns a row. If more than one is found,
 		/// throws <see cref="ActiveRecordException"/>
 		/// </summary>
 		/// <param name="targetType">The target type</param>
@@ -132,6 +144,18 @@ namespace Castle.ActiveRecord
 		public static object FindOne(Type targetType, DetachedCriteria criteria)
 		{
 			return ActiveRecordBase.FindOne(targetType, criteria);
+		}
+
+		/// <summary>
+		/// Searches and returns a row. If more than one is found,
+		/// throws <see cref="ActiveRecordException"/>
+		/// </summary>
+		/// <param name="targetType">The target type</param>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>A <c>targetType</c> instance or <c>null</c></returns>
+		public static object FindOne(Type targetType, IDetachedQuery detachedQuery)
+		{
+			return ActiveRecordBase.FindOne(targetType, detachedQuery);
 		}
 
 		/// <summary>
@@ -156,7 +180,7 @@ namespace Castle.ActiveRecord
 		/// Returns a portion of the query results (sliced)
 		/// </summary>
 		public static Array SlicedFindAll(Type targetType, int firstResult, int maxResults,
-													  Order[] orders, DetachedCriteria criteria)
+		                                  Order[] orders, DetachedCriteria criteria)
 		{
 			return ActiveRecordBase.SlicedFindAll(targetType, firstResult, maxResults, orders, criteria);
 		}
@@ -165,11 +189,25 @@ namespace Castle.ActiveRecord
 		/// Returns a portion of the query results (sliced)
 		/// </summary>
 		public static Array SlicedFindAll(Type targetType, int firstResult, int maxResults,
-													  DetachedCriteria criteria)
+		                                  DetachedCriteria criteria)
 		{
 			return ActiveRecordBase.SlicedFindAll(targetType, firstResult, maxResults, criteria);
 		}
 
+		/// <summary>
+		/// Returns a portion of the query results (sliced)
+		/// </summary>
+		/// <param name="targetType">The target type.</param>
+		/// <param name="firstResult">The number of the first row to retrieve.</param>
+		/// <param name="maxResults">The maximum number of results retrieved.</param>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>The sliced query results.</returns>
+		public static Array SlicedFindAll(Type targetType, int firstResult, int maxResults,
+		                                  IDetachedQuery detachedQuery)
+		{
+			return ActiveRecordBase.SlicedFindAll(targetType, firstResult, maxResults, detachedQuery);
+		}
+		
 		/// <summary>
 		/// Returns all instances found for the specified type.
 		/// </summary>
@@ -181,7 +219,7 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Returns all instances found for the specified type 
+		/// Returns all instances found for the specified type
 		/// using sort orders and criterias.
 		/// </summary>
 		/// <param name="targetType"></param>
@@ -194,7 +232,7 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Returns all instances found for the specified type 
+		/// Returns all instances found for the specified type
 		/// using criterias.
 		/// </summary>
 		/// <param name="targetType"></param>
@@ -214,7 +252,18 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Finds records based on a property value - automatically converts null values to IS NULL style queries. 
+		/// Returns all instances found for the specified type according to the criteria
+		/// </summary>
+		/// <param name="targetType">The target type.</param>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns>The <see cref="Array"/> of results.</returns>
+		public static Array FindAll(Type targetType, IDetachedQuery detachedQuery)
+		{
+			return ActiveRecordBase.FindAll(targetType, detachedQuery);
+		}
+
+		/// <summary>
+		/// Finds records based on a property value - automatically converts null values to IS NULL style queries.
 		/// </summary>
 		/// <param name="targetType">The target type</param>
 		/// <param name="property">A property name (not a column name)</param>
@@ -226,7 +275,7 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Finds records based on a property value - automatically converts null values to IS NULL style queries. 
+		/// Finds records based on a property value - automatically converts null values to IS NULL style queries.
 		/// </summary>
 		/// <param name="targetType">The target type</param>
 		/// <param name="orderByColumn">The column name to be ordered ASC</param>
@@ -291,7 +340,7 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Returns the number of records of the specified 
+		/// Returns the number of records of the specified
 		/// type in the database
 		/// </summary>
 		/// <example>
@@ -300,7 +349,7 @@ namespace Castle.ActiveRecord
 		/// public class User : ActiveRecordBase
 		/// {
 		///   ...
-		///   
+		///
 		///   public static int CountUsers()
 		///   {
 		///     return Count(typeof(User));
@@ -316,7 +365,7 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Returns the number of records of the specified 
+		/// Returns the number of records of the specified
 		/// type in the database
 		/// </summary>
 		/// <example>
@@ -325,7 +374,7 @@ namespace Castle.ActiveRecord
 		/// public class User : ActiveRecordBase
 		/// {
 		///   ...
-		///   
+		///
 		///   public static int CountUsersLocked()
 		///   {
 		///     return Count(typeof(User), "IsLocked = ?", true);
@@ -343,7 +392,7 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Returns the number of records of the specified 
+		/// Returns the number of records of the specified
 		/// type in the database
 		/// </summary>
 		/// <param name="targetType">The target type.</param>
@@ -354,7 +403,7 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// Returns the number of records of the specified 
+		/// Returns the number of records of the specified
 		/// type in the database
 		/// </summary>
 		/// <param name="targetType">The target type.</param>
@@ -412,11 +461,22 @@ namespace Castle.ActiveRecord
 		/// Check if any instance matching the criteria exists in the database.
 		/// </summary>
 		/// <param name="targetType">The target type.</param>
-		/// <param name="detachedCriteria">The criteria expression</param>		
+		/// <param name="detachedCriteria">The criteria expression</param>
 		/// <returns><c>true</c> if an instance is found; otherwise <c>false</c>.</returns>
 		public static bool Exists(Type targetType, DetachedCriteria detachedCriteria)
 		{
 			return ActiveRecordBase.Exists(targetType, detachedCriteria);
+		}
+
+		/// <summary>
+		/// Check if any instance matches the query.
+		/// </summary>
+		/// <param name="targetType">target Type</param>
+		/// <param name="detachedQuery">The query expression</param>
+		/// <returns><c>true</c> if an instance is found; otherwise <c>false</c>.</returns>
+		public static bool Exists(Type targetType, IDetachedQuery detachedQuery)
+		{
+			return ActiveRecordBase.Exists(targetType, detachedQuery);
 		}
 
 		/// <summary>
@@ -442,30 +502,30 @@ namespace Castle.ActiveRecord
 			ActiveRecordBase.SaveAndFlush(instance);
 		}
 
-        /// <summary>
-        /// Saves a copy of instance to the database
-        /// </summary>
-        /// <param name="instance">The transient instance to be copied</param>
-        /// <returns>The saved ActiveRecord instance</returns>
-        public static object SaveCopy(object instance)
-        {
-            return ActiveRecordBase.SaveCopy(instance);
-        }
+		/// <summary>
+		/// Saves a copy of instance to the database
+		/// </summary>
+		/// <param name="instance">The transient instance to be copied</param>
+		/// <returns>The saved ActiveRecord instance</returns>
+		public static object SaveCopy(object instance)
+		{
+			return ActiveRecordBase.SaveCopy(instance);
+		}
 
-        /// <summary>
-        /// Saves a copy of the instance to the database and flushes the session. If the primary key is unitialized
-        /// it creates the instance on the database. Otherwise it updates it.
-        /// <para>
-        /// If the primary key is assigned, then you must invoke <see cref="Create(object)"/>
-        /// or <see cref="Update(object)"/> instead.
-        /// </para>
-        /// </summary>
-        /// <param name="instance">The transient instance to be copied</param>
-        /// <returns>The saved ActiveRecord instance</returns>
-        public static void SaveCopyAndFlush(object instance)
-        {
-            ActiveRecordBase.SaveCopyAndFlush(instance);
-        }
+		/// <summary>
+		/// Saves a copy of the instance to the database and flushes the session. If the primary key is unitialized
+		/// it creates the instance on the database. Otherwise it updates it.
+		/// <para>
+		/// If the primary key is assigned, then you must invoke <see cref="Create(object)"/>
+		/// or <see cref="Update(object)"/> instead.
+		/// </para>
+		/// </summary>
+		/// <param name="instance">The transient instance to be copied</param>
+		/// <returns>The saved ActiveRecord instance</returns>
+		public static void SaveCopyAndFlush(object instance)
+		{
+			ActiveRecordBase.SaveCopyAndFlush(instance);
+		}
 
 		/// <summary>
 		/// Creates (Saves) a new instance to the database.
@@ -541,8 +601,8 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
-		/// From NHibernate documentation: 
-		/// Persist all reachable transient objects, reusing the current identifier 
+		/// From NHibernate documentation:
+		/// Persist all reachable transient objects, reusing the current identifier
 		/// values. Note that this will not trigger the Interceptor of the Session.
 		/// </summary>
 		/// <param name="instance">The instance.</param>

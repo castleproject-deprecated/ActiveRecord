@@ -29,7 +29,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 	/// </summary>
 	public class XmlGenerationVisitor : AbstractDepthFirstVisitor
 	{
-		private StringBuilder xmlBuilder = new StringBuilder();
+		private readonly StringBuilder xmlBuilder = new StringBuilder();
 		private int identLevel = 0;
 		private String currentTable;
 
@@ -114,6 +114,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 				VisitNodes(model.HasAndBelongsToMany);
 				VisitNodes(model.Components);
 				VisitNodes(model.OneToOnes);
+				VisitNodes(model.CompositeUserType);
 				Dedent();
 				Append("</join>");
 				VisitNodes(model.JoinedTables);
@@ -146,6 +147,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 				VisitNodes(model.HasAndBelongsToMany);
 				VisitNodes(model.Components);
 				VisitNodes(model.OneToOnes);
+				VisitNodes(model.CompositeUserType);
 				VisitNodes(model.JoinedTables);
 				VisitNodes(model.JoinedClasses);
 				VisitNodes(model.Classes);
@@ -171,6 +173,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 				VisitNodes(model.HasAndBelongsToMany);
 				VisitNodes(model.Components);
 				VisitNodes(model.OneToOnes);
+				VisitNodes(model.CompositeUserType);
 				VisitNodes(model.JoinedTables);
 				VisitNodes(model.JoinedClasses);
 				VisitNodes(model.Classes);
@@ -270,42 +273,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 
 			Ident();
 
-			String className = null;
-
-			switch(model.PrimaryKeyAtt.Generator)
-			{
-				case PrimaryKeyType.Identity:
-				case PrimaryKeyType.Sequence:
-				case PrimaryKeyType.HiLo:
-				case PrimaryKeyType.SeqHiLo:
-				case PrimaryKeyType.Guid:
-				case PrimaryKeyType.Native:
-				case PrimaryKeyType.Assigned:
-				case PrimaryKeyType.Foreign:
-				case PrimaryKeyType.Increment:
-					className = model.PrimaryKeyAtt.Generator.ToString().ToLower(CultureInfo.InvariantCulture);
-					break;
-
-				case PrimaryKeyType.GuidComb:
-					className = "guid.comb";
-					break;
-
-				case PrimaryKeyType.UuidHex:
-					className = "uuid.hex";
-					break;
-
-				case PrimaryKeyType.UuidString:
-					className = "uuid.string";
-					break;
-
-				case PrimaryKeyType.Counter:
-					className = "vm";
-					break;
-
-				case PrimaryKeyType.Custom:
-					className = MakeTypeName(model.PrimaryKeyAtt.CustomGenerator);
-					break;
-			}
+			string className = GetGeneratorClassName(model);
 
 			AppendF("<generator{0}>", MakeAtt("class", className));
 
@@ -641,19 +609,20 @@ namespace Castle.ActiveRecord.Framework.Internal
 
 			if (model.BelongsToAtt.Column == null)
 			{
-				AppendF("<many-to-one{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}>",
+				AppendF("<many-to-one{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}>",
 				        MakeAtt("name", model.Property.Name),
 				        MakeAtt("access", model.BelongsToAtt.AccessString),
 				        MakeAtt("class", MakeTypeName(model.BelongsToAtt.Type)),
 				        WriteIfTrue("not-null", model.BelongsToAtt.NotNull),
 				        WriteIfTrue("unique", model.BelongsToAtt.Unique),
 				        WriteIfNonNull("unique-key", model.BelongsToAtt.UniqueKey),
+				        WriteIfNonNull("index", model.BelongsToAtt.Index),
 				        WriteIfNonNull("cascade", cascade),
 				        WriteIfNonNull("fetch", fetch),
-						WriteIfNonNull("lazy", lazy),
+				        WriteIfNonNull("lazy", lazy),
 				        WriteIfFalse("update", model.BelongsToAtt.Update),
 				        WriteIfFalse("insert", model.BelongsToAtt.Insert),
-						WriteIfNonNull("property-ref", model.BelongsToAtt.PropertyRef),
+				        WriteIfNonNull("property-ref", model.BelongsToAtt.PropertyRef),
 				        WriteIfNonNull("foreign-key", model.BelongsToAtt.ForeignKey),
 				        WriteIfNonNull("not-found", notFoundMode));
 				Ident();
@@ -663,22 +632,23 @@ namespace Castle.ActiveRecord.Framework.Internal
 			}
 			else
 			{
-				AppendF("<many-to-one{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14} />",
+				AppendF("<many-to-one{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15} />",
 				        MakeAtt("name", model.Property.Name),
 				        MakeAtt("access", model.BelongsToAtt.AccessString),
 				        MakeAtt("class", MakeTypeName(model.BelongsToAtt.Type)),
 				        MakeAtt("column", model.BelongsToAtt.Column),
 				        WriteIfFalse("insert", model.BelongsToAtt.Insert),
 				        WriteIfFalse("update", model.BelongsToAtt.Update),
-						WriteIfNonNull("property-ref", model.BelongsToAtt.PropertyRef),
+				        WriteIfNonNull("property-ref", model.BelongsToAtt.PropertyRef),
 				        WriteIfTrue("not-null", model.BelongsToAtt.NotNull),
 				        WriteIfTrue("unique", model.BelongsToAtt.Unique),
 				        WriteIfNonNull("unique-key", model.BelongsToAtt.UniqueKey),
 				        WriteIfNonNull("foreign-key", model.BelongsToAtt.ForeignKey),
+				        WriteIfNonNull("index", model.BelongsToAtt.Index),
 				        WriteIfNonNull("cascade", cascade),
 				        WriteIfNonNull("fetch", fetch),
-						WriteIfNonNull("lazy", lazy),
-						WriteIfNonNull("not-found", notFoundMode));
+				        WriteIfNonNull("lazy", lazy),
+				        WriteIfNonNull("not-found", notFoundMode));
 			}
 		}
 
@@ -1022,6 +992,61 @@ namespace Castle.ActiveRecord.Framework.Internal
 			Dedent();
 
 			Append(closingTag);
+		}
+
+		private static string GetGeneratorClassName(PrimaryKeyModel model)
+		{
+			if (model.PrimaryKeyAtt.TypeSpecified == false)
+			{
+				return GuessGeneratorClassName(model);
+			}
+
+			String className = null;
+			switch (model.PrimaryKeyAtt.Generator)
+			{
+				case PrimaryKeyType.Identity:
+				case PrimaryKeyType.Sequence:
+				case PrimaryKeyType.HiLo:
+				case PrimaryKeyType.SeqHiLo:
+				case PrimaryKeyType.Guid:
+				case PrimaryKeyType.Native:
+				case PrimaryKeyType.Assigned:
+				case PrimaryKeyType.Foreign:
+				case PrimaryKeyType.Increment:
+					className = model.PrimaryKeyAtt.Generator.ToString().ToLower(CultureInfo.InvariantCulture);
+					break;
+
+				case PrimaryKeyType.GuidComb:
+					className = "guid.comb";
+					break;
+
+				case PrimaryKeyType.UuidHex:
+					className = "uuid.hex";
+					break;
+
+				case PrimaryKeyType.UuidString:
+					className = "uuid.string";
+					break;
+
+				case PrimaryKeyType.Counter:
+					className = "vm";
+					break;
+
+				case PrimaryKeyType.Custom:
+					className = MakeTypeName(model.PrimaryKeyAtt.CustomGenerator);
+					break;
+			}
+			return className;
+		}
+
+		private static string GuessGeneratorClassName(PrimaryKeyModel model)
+		{
+			if (model.Property.PropertyType == typeof(Guid))
+				return "guid.comb";
+			if (model.Property.PropertyType == typeof(string))
+				return "assigned";
+			// NOTE: perhaps this could be extended to some other 
+			return "native";
 		}
 
 		private static string TranslateNotFoundBehaviourEnum(NotFoundBehaviour notFoundBehaviourEnum)

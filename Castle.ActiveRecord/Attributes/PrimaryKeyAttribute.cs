@@ -110,20 +110,13 @@ namespace Castle.ActiveRecord
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple=false), Serializable]
 	public class PrimaryKeyAttribute : WithAccessAttribute
 	{
-		private PrimaryKeyType generator = PrimaryKeyType.Native;
-		private Type customGenerator;
-		private String column;
-		private String unsavedValue;
-		private String sequenceName;
-		private String type;
-		private String _params;
-		private int length;
-		private bool isOverride;
+		private static readonly PrimaryKeyType defaultPrimaryKeyType = PrimaryKeyType.Native;
+		private PrimaryKeyType? generator;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PrimaryKeyAttribute"/> class.
 		/// </summary>
-		public PrimaryKeyAttribute() : this(PrimaryKeyType.Native)
+		public PrimaryKeyAttribute()
 		{
 		}
 
@@ -134,7 +127,7 @@ namespace Castle.ActiveRecord
 		/// generator (that implements <see cref="NHibernate.Id.IIdentifierGenerator"/>).</param>
 		public PrimaryKeyAttribute(Type customGenerator) : this(PrimaryKeyType.Custom)
 		{
-			this.customGenerator = customGenerator;
+			CustomGenerator = customGenerator;
 		}
 
 		/// <summary>
@@ -153,7 +146,7 @@ namespace Castle.ActiveRecord
 		/// <param name="column">The PK column.</param>
 		public PrimaryKeyAttribute(PrimaryKeyType generator, String column) : this(generator)
 		{
-			this.column = column;
+			Column = column;
 		}
 
 		/// <summary>
@@ -162,7 +155,7 @@ namespace Castle.ActiveRecord
 		/// <param name="column">The PK column.</param>
 		public PrimaryKeyAttribute(string column)
 		{
-			this.column = column;
+			Column = column;
 		}
 
 		/// <summary>
@@ -171,7 +164,7 @@ namespace Castle.ActiveRecord
 		/// <value>The generator.</value>
 		public PrimaryKeyType Generator
 		{
-			get { return generator; }
+			get { return generator ?? defaultPrimaryKeyType; }
 			set { generator = value; }
 		}
 
@@ -179,79 +172,53 @@ namespace Castle.ActiveRecord
 		/// Gets or sets the column name
 		/// </summary>
 		/// <value>The column.</value>
-		public String Column
-		{
-			get { return column; }
-			set { column = value; }
-		}
+		public string Column { get; set; }
 
 		/// <summary>
 		/// Gets or sets the unsaved value.
 		/// </summary>
 		/// <value>The unsaved value.</value>
-		public String UnsavedValue
-		{
-			get { return unsavedValue; }
-			set { unsavedValue = value; }
-		}
+		public string UnsavedValue { get; set; }
 
 		/// <summary>
 		/// Gets or sets the name of the sequence.
 		/// </summary>
 		/// <value>The name of the sequence.</value>
-		public String SequenceName
-		{
-			get { return sequenceName; }
-			set { sequenceName = value; }
-		}
+		public string SequenceName { get; set; }
 
 		/// <summary>
 		/// Gets or sets the type of the column.
 		/// </summary>
 		/// <value>The type of the column.</value>
-		public String ColumnType
-		{
-			get { return type; }
-			set { type = value; }
-		}
+		public string ColumnType { get; set; }
 
 		/// <summary>
 		/// Gets or sets the length of values in the column
 		/// </summary>
 		/// <value>The length.</value>
-		public int Length
-		{
-			get { return length; }
-			set { length = value; }
-		}
+		public int Length { get; set; }
 
 		/// <summary>
 		/// Gets or sets the custom generator. 
 		/// The generator must implement <see cref="NHibernate.Id.IIdentifierGenerator"/>
 		/// </summary>
 		/// <value>The custom generator type.</value>
-		public Type CustomGenerator
-		{
-			get { return customGenerator; }
-			set { customGenerator = value; }
-		}
+		public Type CustomGenerator { get; set; }
 
 		/// <summary>
 		/// Comma separated value of parameters to the generator
 		/// </summary>
-		public String Params
-		{
-			get { return _params; }
-			set { _params = value; }
-		}
+		public string Params { get; set; }
 
 		/// <summary>
 		/// Set to <c>true</c> if this primary key overrides a primary key in a base class
 		/// </summary>
-		public bool IsOverride
+		public bool IsOverride { get; set; }
+
+		internal bool TypeSpecified
 		{
-			get { return isOverride; }
-			set { isOverride = value; }
+			get { return generator.HasValue; }
 		}
+
 	}
 }

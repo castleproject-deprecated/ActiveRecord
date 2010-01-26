@@ -56,4 +56,19 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests.Model
 			set { age = value; }
 		}
 	}
+
+	public abstract class GenIntermediateClass<T> : GenBaseJoinedClass<T> where T:class
+	{
+		
+	}
+
+	[ActiveRecord("disctableG", Lazy=false)]
+	public class GenGrandsonClass : GenIntermediateClass<GenGrandsonClass>
+	{
+		[JoinedKey]
+		public int AId { get; set; }
+
+		[Property]
+		public int AProperty { get; set; }
+	}
 }

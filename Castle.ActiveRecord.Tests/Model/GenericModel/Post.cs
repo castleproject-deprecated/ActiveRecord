@@ -22,74 +22,38 @@ namespace Castle.ActiveRecord.Tests.Model.GenericModel
 	[ActiveRecord("PostTable")]
 	public class Post : ActiveRecordBase<Post>
 	{
-		private int _id;
-		private String _title;
-		private String _contents;
-		private String _category;
-		private DateTime _created;
-		private bool _published;
-		private Blog _blog;
-
 		public Post()
 		{
 		}
 
 		public Post(Blog blog, String title, String contents, String category)
 		{
-			_blog = blog;
-			_title = title;
-			_contents = contents;
-			_category = category;
+			Blog = blog;
+			Title = title;
+			Contents = contents;
+			Category = category;
 		}
 
 		[PrimaryKey]
-		public int Id
-		{
-			get { return _id; }
-			set { _id = value; }
-		}
+		public int Id { get; set; }
 
 		[Property]
-		public String Title
-		{
-			get { return _title; }
-			set { _title = value; }
-		}
+		public string Title { get; set; }
 
 		[Property(ColumnType="StringClob")]
-		public String Contents
-		{
-			get { return _contents; }
-			set { _contents = value; }
-		}
+		public string Contents { get; set; }
 
 		[Property]
-		public String Category
-		{
-			get { return _category; }
-			set { _category = value; }
-		}
+		public string Category { get; set; }
 
 		[BelongsTo("blogid")]
-		public Blog Blog
-		{
-			get { return _blog; }
-			set { _blog = value; }
-		}
+		public Blog Blog { get; set; }
 
 		[Property("created")]
-		public DateTime Created
-		{
-			get { return _created; }
-			set { _created = value; }
-		}
+		public DateTime Created { get; set; }
 
 		[Property("published")]
-		public bool Published
-		{
-			get { return _published; }
-			set { _published = value; }
-		}
+		public bool Published { get; set; }
 
 		public void SaveWithException()
 		{

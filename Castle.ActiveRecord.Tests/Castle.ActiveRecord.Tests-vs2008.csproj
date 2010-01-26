@@ -105,6 +105,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\net-3.5\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
+    <Reference Include="HibernatingRhinos.Profiler.Appender, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\dev\nh\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Iesi.Collections.dll</HintPath>
@@ -325,18 +329,28 @@
     <None Include="App-net-3.5.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveRecordDetachedQueryGenericTestCase.cs" />
+    <Compile Include="ActiveRecordDetachedQueryTestCase.cs" />
     <Compile Include="AnyRelationTestCase.cs" />
+    <Compile Include="Bugs\ARIssue157TestCase.cs" />
     <Compile Include="CompositeNestedClassTestCase.cs" />
     <Compile Include="CompositeUserTypeTestCase.cs" />
     <Compile Include="Config\ConfigureTests.cs" />
     <Compile Include="Config\StorageConfigurationTests.cs" />
+    <Compile Include="Conversation\ConversationScenarioTest.cs" />
+    <Compile Include="Conversation\ScopedConversationTests.cs" />
+    <Compile Include="DefaultConfigurationsTestCase.cs" />
+    <Compile Include="FetchTestCase.cs" />
     <Compile Include="Model\CompositeUserType\BadProduct.cs" />
     <Compile Include="Model\ProductWithGuid.cs" />
     <Compile Include="NHSearchTestCase.cs" />
     <Compile Include="Model\SimpleBlog.cs" />
     <Compile Include="Model\SimplePost.cs" />
     <Compile Include="Model\SSAFEntity.cs" />
-    <Compile Include="ShortLivedSessions\LazyWithoutScopeTest.cs" />
+    <Compile Include="NUnitInMemoryTest.cs" />
+    <Compile Include="PropertyAccessTests\Project.cs" />
+    <Compile Include="PropertyAccessTests\Task.cs" />
+    <Compile Include="PropertyAccessTests\TestCases.cs" />
     <Compile Include="SimpleQueryWithParameterTypesTestCase.cs" />
     <Compile Include="StatelessSessionScopeTestCase.cs" />
     <Compile Include="EnumModelTestCase.cs" />
@@ -369,7 +383,6 @@
     <Compile Include="SessionScopeAutoflushTestCase.cs" />
     <Compile Include="Testing\CustomizationTest.cs" />
     <Compile Include="Testing\InitializationTest.cs" />
-    <Compile Include="Testing\NUnitInMemoryTest.cs" />
     <Compile Include="Validation\ARValidatorTestCase.cs" />
     <Compile Include="VerifyModelsAgainstDBSchemaTestCase.cs" />
     <Compile Include="LazyTestCase.cs" />

@@ -182,7 +182,12 @@ namespace Castle.ActiveRecord.Framework.Internal
 			// generic check
 			if (child.Type.BaseType.IsGenericType)
 			{
-				if (child.Type.BaseType.GetGenericTypeDefinition() == model.Type) return true;
+				var baseType = child.Type.BaseType;
+				while (baseType != null && baseType.IsGenericType)
+				{
+					if (baseType.GetGenericTypeDefinition() == model.Type) return true;
+					baseType = baseType.BaseType;
+				}
 			}
 
 			// Direct decendant
