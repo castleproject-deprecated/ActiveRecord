@@ -29,6 +29,7 @@
   AR-ISSUE-276
   AR-ISSUE-277
   AR-ISSUE-278
+  AR-ISSUE-280
 
 2.0 Beta1
 ===
