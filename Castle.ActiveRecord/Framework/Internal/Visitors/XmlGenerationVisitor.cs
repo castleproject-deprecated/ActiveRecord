@@ -496,7 +496,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 
 			Type mapType = GuessType(att.MapType, model.Property.PropertyType);
 			WriteCollection(att.Cascade, mapType, att.RelationType, model.Property.Name,
-			                model.HasManyToAnyAtt.AccessString, att.Table, att.Schema, att.Lazy, att.Inverse, att.OrderBy,
+                            model.HasManyToAnyAtt.AccessString, att.Table, att.Schema, att.LazyAttributeValue, att.Inverse, att.OrderBy,
 			                att.Where, att.Sort, att.ColumnKey, null, null, null, null, null, model.Configuration, att.Index,
 			                att.IndexType,
 							att.Cache, att.CacheRegion, att.NotFoundBehaviour, att.Fetch, att.BatchSize, att.CollectionType);
@@ -662,7 +662,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 
 			Type mapType = GuessType(att.MapType, model.Property.PropertyType);
 			WriteCollection(att.Cascade, mapType, att.RelationType, model.Property.Name,
-			                model.HasManyAtt.AccessString, att.Table, att.Schema, att.Lazy, att.Inverse, att.OrderBy,
+                            model.HasManyAtt.AccessString, att.Table, att.Schema, att.LazyAttributeValue, att.Inverse, att.OrderBy,
 			                att.Where, att.Sort, att.ColumnKey, att.CompositeKeyColumnKeys, att.Element, att.ElementType, null, null,
 			                model.DependentObjectModel, att.Index, att.IndexType,
 							att.Cache, att.CacheRegion, att.NotFoundBehaviour, att.Fetch, att.BatchSize, att.CollectionType);
@@ -678,7 +678,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 
 			Type mapType = GuessType(att.MapType, model.Property.PropertyType);
 			WriteCollection(att.Cascade, mapType, att.RelationType, model.Property.Name,
-			                att.AccessString, att.Table, att.Schema, att.Lazy, att.Inverse, att.OrderBy,
+                            att.AccessString, att.Table, att.Schema, att.LazyAttributeValue, att.Inverse, att.OrderBy,
 			                att.Where, att.Sort, att.ColumnKey, att.CompositeKeyColumnKeys, att.Element, att.ElementType, 
 							att.ColumnRef,
 							att.CompositeKeyColumnRefs, model.CollectionID, att.Index, att.IndexType, att.Cache, att.CacheRegion, 
@@ -826,7 +826,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 
 		private void WriteCollection(ManyRelationCascadeEnum cascadeEnum,
 		                             Type targetType, RelationType type, string name,
-		                             string accessString, string table, string schema, bool lazy,
+		                             string accessString, string table, string schema, string lazy,
 		                             bool inverse, string orderBy, string where, string sort,
 		                             string columnKey, string[] compositeKeyColumnKeys, string element, Type elementType,
 		                             string columnRef, string[] compositeKeyColumnRefs,

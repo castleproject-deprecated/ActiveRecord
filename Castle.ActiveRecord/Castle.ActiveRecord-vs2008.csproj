@@ -387,6 +387,7 @@
     <Compile Include="Framework\NHSearchContributor.cs" />
     <Compile Include="Framework\Queries\ValueAndTypeTuple.cs" />
     <Compile Include="Framework\Scopes\ConversationalScope.cs" />
+    <Compile Include="Framework\Scopes\ConversationCanceledEventArgs.cs" />
     <Compile Include="Framework\Scopes\IConversation.cs" />
     <Compile Include="Framework\Scopes\IScopeConversation.cs" />
     <Compile Include="Framework\Scopes\ScopedConversation.cs" />
