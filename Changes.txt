@@ -15,7 +15,8 @@
     assigned for strings
     native otherwise
 - Added basic support for CpBT (see IConversation interface and tests for usage)
-
+- Added support for lazy="extra" by setting Lazy=true and ExtraLazy=true
+  (Patch by Eddie Cianci, AR-ISSUE-279)
 
 - Bugs fixed:
   AR-ISSUE-157
@@ -28,6 +29,7 @@
   AR-ISSUE-276
   AR-ISSUE-277
   AR-ISSUE-278
+  AR-ISSUE-280
 
 2.0 Beta1
 ===

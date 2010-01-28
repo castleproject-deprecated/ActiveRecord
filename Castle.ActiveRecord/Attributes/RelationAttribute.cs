@@ -67,6 +67,7 @@ namespace Castle.ActiveRecord
 		internal Type elementType;
 		internal bool lazy;
 		internal bool lazySpecified = false;
+        internal bool extraLazy;
 		internal bool inverse;
 		internal ManyRelationCascadeEnum cascade = ManyRelationCascadeEnum.None;
 		internal RelationType relType = RelationType.Guess;
@@ -131,6 +132,36 @@ namespace Castle.ActiveRecord
 				lazySpecified = true;
 			}
 		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="RelationAttribute"/> is extra lazy.
+        /// Lazy must be <c>true</c> for this to work.
+		/// </summary>
+		/// <value><c>true</c> if extra lazy; otherwise, <c>false</c>.</value>
+		public bool ExtraLazy
+		{
+			get
+			{
+			    return extraLazy;
+			}
+			set
+			{
+                extraLazy = value;
+			}
+		}
+
+	    internal string LazyAttributeValue {
+	        get {
+				var value = Lazy.ToString().ToLower();
+
+                if(Lazy && ExtraLazy)
+                {
+                    value = "extra";
+                }
+
+                return value;
+	        }
+	    }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="RelationAttribute"/> is inverse.

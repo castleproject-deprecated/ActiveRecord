@@ -204,6 +204,23 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
+		/// If the <see cref="AbstractScope.WantsToCreateTheSession"/> returned
+		/// <c>true</c> then this method is invoked to allow
+		/// the scope to create a properly configured session
+		/// </summary>
+		/// <param name="sessionFactory">From where to open the session</param>
+		/// <param name="interceptor">the NHibernate interceptor</param>
+		/// <returns>the newly created session</returns>
+		public override ISession OpenSession(ISessionFactory sessionFactory, IInterceptor interceptor)
+		{
+			ISession session = sessionFactory.OpenSession(interceptor);
+			SetFlushMode(session);
+			session.BeginTransaction(isolationLevel);
+
+			return session;	
+		}
+
+		/// <summary>
 		/// This method is invoked when the
 		/// <see cref="Castle.ActiveRecord.Framework.ISessionFactoryHolder"/>
 		/// instance needs a session instance. Instead of creating one it interrogates
