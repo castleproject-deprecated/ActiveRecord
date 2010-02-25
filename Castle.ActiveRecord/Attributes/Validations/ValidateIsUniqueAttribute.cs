@@ -23,7 +23,7 @@ namespace Castle.ActiveRecord
 	/// <summary>
 	/// Validate that the property's value is unique in the database when saved
 	/// </summary>
-	[Serializable, CLSCompliant(false)]
+	[Serializable]
 	public class ValidateIsUniqueAttribute : AbstractValidationAttribute
 	{
 		private readonly IValidator validator;
