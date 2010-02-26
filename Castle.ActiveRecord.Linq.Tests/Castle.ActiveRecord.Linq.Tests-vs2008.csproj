@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Castle.ActiveRecord.Linq.Tests.build" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Castle.ActiveRecord.Linq\Castle.ActiveRecord.Linq-vs2008.csproj">

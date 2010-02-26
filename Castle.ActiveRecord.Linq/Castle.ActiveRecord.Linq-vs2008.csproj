@@ -72,9 +72,6 @@
     <Compile Include="LinqQuery.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Castle.ActiveRecord.Linq.build" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Castle.ActiveRecord\Castle.ActiveRecord-vs2008.csproj">
       <Project>{652F95D4-86E2-40B6-919D-CFC6E449386B}</Project>
       <Name>Castle.ActiveRecord-vs2008</Name>
