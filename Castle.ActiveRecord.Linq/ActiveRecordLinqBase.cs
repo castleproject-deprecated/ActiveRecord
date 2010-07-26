@@ -14,6 +14,7 @@
 
 namespace Castle.ActiveRecord.Linq
 {
+	using System;
 	using System.Linq;
 
 	using NHibernate.Linq;
@@ -23,6 +24,7 @@ namespace Castle.ActiveRecord.Linq
 	/// ability to use the record type in a linq expression.
 	/// </summary>
 	/// <typeparam name="T">The class which defines the active record entity.</typeparam>
+	[Serializable]
 	public class ActiveRecordLinqBase<T> : ActiveRecordBase<T>
 	{
 		/// <summary>
