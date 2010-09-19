@@ -21,6 +21,8 @@ using NUnit.Framework;
 
 namespace Castle.ActiveRecord.Tests
 {
+	using NHibernate.Exceptions;
+
 	[TestFixture]
 	public class SimpleQueryWithParameterTypesTestCase : AbstractActiveRecordTest
 	{
@@ -36,10 +38,10 @@ namespace Castle.ActiveRecord.Tests
 
 			Recreate();
 
-			var product1 = new ProductWithGuid() { Key = Key1 };
+			var product1 = new ProductWithGuid { Key = Key1 };
 			product1.Save();
 
-			var product2 = new ProductWithGuid() { Key = Key2 };
+			var product2 = new ProductWithGuid { Key = Key2 };
 			product2.Save();
 		}
 
@@ -54,7 +56,7 @@ namespace Castle.ActiveRecord.Tests
 		{
 			var exception = Assert.Throws<ActiveRecordException>(() => new SimpleQuery<ProductWithGuid>(Query, Key1.ToString()[0] + "%").Execute());
 			Assert.That(exception.InnerException, Is.Not.Null);
-			Assert.That(exception.InnerException, Is.TypeOf<ADOException>());
+			Assert.That(exception.InnerException, Is.TypeOf<GenericADOException>());
 			Assert.That(exception.InnerException.InnerException, Is.TypeOf<InvalidCastException>());
 		}
 

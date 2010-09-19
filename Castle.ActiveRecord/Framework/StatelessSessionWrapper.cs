@@ -102,6 +102,11 @@ namespace Castle.ActiveRecord.Framework
 			return statelessSession.CreateQuery(queryString);
 		}
 
+		public IQuery CreateQuery(IQueryExpression queryExpression)
+		{
+			throw new NotImplementedException();
+		}
+
 		public ISQLQuery CreateSQLQuery(string queryString)
 		{
 			return statelessSession.CreateSQLQuery(queryString);
@@ -509,6 +514,30 @@ namespace Castle.ActiveRecord.Framework
 			throw new NotWrappedException();
 		}
 
+		/// <summary>
+		/// Creates a new <c>IQueryOver&lt;T&gt;</c> for the entity class.
+		/// </summary>
+		/// <typeparam name="T">The entity class</typeparam>
+		/// <returns>
+		/// An ICriteria&lt;T&gt; object
+		/// </returns>
+		public IQueryOver<T, T> QueryOver<T>() where T : class
+		{
+			throw new NotWrappedException();
+		}
+
+		/// <summary>
+		/// Creates a new <c>IQueryOver&lt;T&gt;</c> for the entity class.
+		/// </summary>
+		/// <typeparam name="T">The entity class</typeparam>
+		/// <returns>
+		/// An ICriteria&lt;T&gt; object
+		/// </returns>
+		public IQueryOver<T, T> QueryOver<T>(System.Linq.Expressions.Expression<Func<T>> alias) where T : class
+		{
+			throw new NotWrappedException();
+		}
+
 		#endregion
 
 		#region IDisposable Members
@@ -523,8 +552,8 @@ namespace Castle.ActiveRecord.Framework
 	}
 
 	/// <summary>
-	/// Wraps a NotImplementedException with a preconfigured Catle-like
-	/// excweption message.
+	/// Wraps a NotImplementedException with a preconfigured Castle-like
+	/// exception message.
 	/// </summary>
 	public class NotWrappedException : NotImplementedException
 	{

@@ -16,7 +16,7 @@ namespace Castle.ActiveRecord.Linq
 {
 	using System;
 	using System.Linq;
-
+	using NHibernate;
 	using NHibernate.Linq;
 
 	/// <summary>
@@ -41,8 +41,9 @@ namespace Castle.ActiveRecord.Linq
 		{
 			get
 			{
-				var options = new QueryOptions();
-				return new Query<T>(new QueryProvider<T>(options), options);
+				ISession session = holder.CreateSession(typeof(T));
+
+				return new NhQueryable<T>(session);
 			}
 		}
 	}

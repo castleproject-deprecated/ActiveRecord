@@ -23,7 +23,8 @@ namespace Castle.ActiveRecord
 	using Castle.Core.Logging;
 
 	using NHibernate;
-	
+	using ILogger = Core.Logging.ILogger;
+
 	/// <summary>
 	/// Base class for all ActiveRecord queries.
 	/// </summary>

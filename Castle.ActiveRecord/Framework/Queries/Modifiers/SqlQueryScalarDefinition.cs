@@ -21,7 +21,7 @@ namespace Castle.ActiveRecord.Queries.Modifiers
 
 	/// <summary>
 	/// Represents a SQL query scalar definition.
-	/// See <see cref="NHibernate.ISession.CreateSQLQuery(string,string[],Type[])"/> for more information.
+	/// See <see cref="NHibernate.ISession.CreateSQLQuery(string)"/> for more information.
 	/// </summary>
 	public class SqlQueryScalarDefinition : IQueryModifier
 	{

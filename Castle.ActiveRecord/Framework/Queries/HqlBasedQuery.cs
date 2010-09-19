@@ -184,7 +184,7 @@ namespace Castle.ActiveRecord.Queries
 
 		/// <summary>
 		/// Adds a SQL query return definition.
-		/// See <see cref="NHibernate.ISession.CreateSQLQuery(string,string[],Type[])"/> for more information.
+		/// See <see cref="NHibernate.ISession.CreateSQLQuery(string)"/> for more information.
 		/// </summary>
 		public void AddSqlReturnDefinition(Type returnType, String returnAlias)
 		{
@@ -193,7 +193,7 @@ namespace Castle.ActiveRecord.Queries
 
 		/// <summary>
 		/// Adds a SQL query join definition.
-		/// See <see cref="NHibernate.ISession.CreateSQLQuery(string,string[],Type[])"/> for more information.
+		/// See <see cref="NHibernate.ISession.CreateSQLQuery(string)"/> for more information.
 		/// </summary>
 		public void AddSqlJoinDefinition(String associationPath, String associationAlias)
 		{
@@ -202,7 +202,7 @@ namespace Castle.ActiveRecord.Queries
 
 		/// <summary>
 		/// Adds a SQL query scalar definition.
-		/// See <see cref="NHibernate.ISession.CreateSQLQuery(string,string[],Type[])"/> for more information.
+		/// See <see cref="NHibernate.ISession.CreateSQLQuery(string)"/> for more information.
 		/// </summary>
 		public void AddSqlScalarDefinition(IType scalarType, String columnAlias)
 		{

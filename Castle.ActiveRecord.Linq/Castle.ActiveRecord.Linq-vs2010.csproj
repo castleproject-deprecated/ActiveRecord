@@ -65,10 +65,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.Linq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=444cf6a87fdab271, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\net-3.5\NHibernate.Linq.dll</HintPath>
-    </Reference>
+    <Reference Include="Remotion.Data.Linq, Version=1.13.41.2, Culture=neutral, PublicKeyToken=cab60358ab4081ea, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -89,7 +86,6 @@
     <Compile Include="ActiveRecordLinq.cs" />
     <Compile Include="ActiveRecordLinqBase.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="QueryProvider.cs" />
     <Compile Include="LinqQuery.cs" />
   </ItemGroup>
   <ItemGroup>

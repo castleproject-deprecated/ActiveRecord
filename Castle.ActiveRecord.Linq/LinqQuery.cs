@@ -28,19 +28,17 @@ namespace Castle.ActiveRecord.Linq
 	/// </summary>
 	public class LinqQuery<T>:IActiveRecordQuery
 	{
-		private readonly QueryOptions options;
 		private readonly Expression expression;
 		private readonly Type rootType;
 
 		/// <summary>
-		/// 
+		/// ctor
 		/// </summary>
-		/// <param name="options"></param>
 		/// <param name="expression"></param>
 		/// <param name="rootType"></param>
-		public LinqQuery(QueryOptions options, Expression expression,Type rootType)
+		public LinqQuery(Expression expression,Type rootType)
 		{
-			this.options = options;
+			//this.options = options;
 			this.expression = expression;
 			this.rootType = rootType;
 		}
@@ -57,7 +55,7 @@ namespace Castle.ActiveRecord.Linq
 		/// <inheritDoc />
 		public object Execute(ISession session)
 		{
-			var result = new NHibernateQueryProvider(session, options).Execute(expression);
+			var result = new NhQueryProvider(session).Execute(expression);
 			if (result is IEnumerable<T>)
 				Result = new List<T>(result as IEnumerable<T>);
 			return result;
