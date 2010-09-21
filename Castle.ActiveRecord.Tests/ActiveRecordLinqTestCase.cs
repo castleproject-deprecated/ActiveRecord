@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.ActiveRecord.Linq.Tests.Model;
+using Castle.ActiveRecord.Tests.Model.Linq;
 
-namespace Castle.ActiveRecord.Linq.Tests
+namespace Castle.ActiveRecord.Tests
 {
 	using System.Linq;
 

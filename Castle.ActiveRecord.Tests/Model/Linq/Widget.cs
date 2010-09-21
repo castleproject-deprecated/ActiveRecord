@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.ActiveRecord.Linq.Tests.Model
+namespace Castle.ActiveRecord.Tests.Model.Linq
 {
     [ActiveRecord]
     public class Widget : ActiveRecordBase

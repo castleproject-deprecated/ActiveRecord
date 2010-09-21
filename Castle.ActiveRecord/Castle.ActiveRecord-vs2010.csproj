@@ -134,6 +134,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.Search.dll</HintPath>
     </Reference>
+    <Reference Include="Remotion.Data.Linq">
+      <HintPath>..\Castle.ActiveRecord.Linq\bin\Release\Remotion.Data.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -218,6 +221,8 @@
     <Compile Include="Framework\ActiveRecordException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Framework\ActiveRecordLinq.cs" />
+    <Compile Include="Framework\ActiveRecordLinqBase.cs" />
     <Compile Include="Framework\ActiveRecordMediator.cs" />
     <Compile Include="Framework\ActiveRecordMediator.Generic.cs" />
     <Compile Include="Framework\ActiveRecordStarter.cs">
@@ -323,6 +328,7 @@
     </Compile>
     <Compile Include="Framework\Queries\ActiveRecordBaseQuery.cs" />
     <Compile Include="Framework\Queries\IActiveRecordQuery.cs" />
+    <Compile Include="Framework\Queries\LinqQuery.cs" />
     <Compile Include="Framework\Queries\ScalarQuery.cs" />
     <Compile Include="Framework\Queries\SimpleQuery.cs" />
     <Compile Include="Framework\Scopes\AbstractScope.cs">

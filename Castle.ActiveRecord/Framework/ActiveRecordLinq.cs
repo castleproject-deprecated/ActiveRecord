@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-namespace Castle.ActiveRecord.Linq
+namespace Castle.ActiveRecord.Framework
 {
 	using System.Linq;
 	using NHibernate;

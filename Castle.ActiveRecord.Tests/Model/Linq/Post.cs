@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.ActiveRecord.Linq.Tests.Model
+namespace Castle.ActiveRecord.Tests.Model.Linq
 {
     using System;
     using System.Collections;
+    using Framework;
 
-    [ActiveRecord("PostTable")]
+	[ActiveRecord("PostTable")]
     public class Post : ActiveRecordLinqBase<Post>
     {
         private int _id;

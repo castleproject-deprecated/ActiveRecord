@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.ActiveRecord.Linq.Tests.Model
+namespace Castle.ActiveRecord.Tests.Model.Linq
 {
-    using System;
-    using System.Collections;
-    using Castle.ActiveRecord.Framework;
-    using NHibernate;
-    using NHibernate.Criterion;
+	using System;
+	using System.Collections;
+	using Castle.ActiveRecord.Framework;
 
-    [ActiveRecord("BlogTable")]
+	[ActiveRecord("BlogTable")]
     public class Blog : ActiveRecordLinqBase<Blog>
     {
         private int _id;

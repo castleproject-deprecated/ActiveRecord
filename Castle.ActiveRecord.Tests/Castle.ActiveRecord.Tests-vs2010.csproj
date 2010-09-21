@@ -164,6 +164,7 @@
     <Compile Include="AbstractActiveRecordTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ActiveRecordLinqTestCase.cs" />
     <Compile Include="ActiveRecordTestCase.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -175,6 +176,9 @@
     <Compile Include="JoinedSubClassTestCase.cs" />
     <Compile Include="Model\GenericModel\Entity.cs" />
     <Compile Include="Model\GenericModel\SurveyAssociation.cs" />
+    <Compile Include="Model\Linq\Blog.cs" />
+    <Compile Include="Model\Linq\Post.cs" />
+    <Compile Include="Model\Linq\Widget.cs" />
     <Compile Include="NestedClassWithPrefixTestCase.cs" />
     <Compile Include="DifferentDatabaseScopeTestCase.cs" />
     <Compile Include="Model\CompositeModel\Agent.cs" />
