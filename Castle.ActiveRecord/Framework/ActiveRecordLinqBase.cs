@@ -28,14 +28,14 @@ namespace Castle.ActiveRecord.Framework
 	public class ActiveRecordLinqBase<T> : ActiveRecordBase<T>
 	{
 		/// <summary>
-		/// The static property Table on the active record class is used as a Linq collection
+		/// The static property Queryable on the active record class is used as a Linq collection
 		/// or as the in argument in a Linq expression. 
 		/// 
 		/// Examples include:
-		/// var items = from f in Foo.Table select f;
-		/// var item = Foo.Table.First();
-		/// var items = from f in Foo.Table where f.Name == theName select f;
-		/// var item = Foo.Table.First(f => f.Name == theName);
+		/// var items = from f in Foo.Queryable select f;
+		/// var item = Foo.Queryable.First();
+		/// var items = from f in Foo.Queryable where f.Name == theName select f;
+		/// var item = Foo.Queryable.First(f => f.Name == theName);
 		/// </summary>
 		public static IOrderedQueryable<T> Queryable
 		{
@@ -43,7 +43,7 @@ namespace Castle.ActiveRecord.Framework
 			{
 				ISession session = holder.CreateSession(typeof(T));
 
-				return new NhQueryable<T>(session);
+				return session.AsQueryable<T>();
 			}
 		}
 	}

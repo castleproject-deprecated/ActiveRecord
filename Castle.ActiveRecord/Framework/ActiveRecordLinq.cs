@@ -17,6 +17,7 @@ namespace Castle.ActiveRecord.Framework
 {
 	using System.Linq;
 	using NHibernate;
+	using NHibernate.Linq;
 
 	/// <summary>
 	/// Class to provide a static mechanism for using active record classes in
@@ -46,11 +47,7 @@ namespace Castle.ActiveRecord.Framework
 		/// </summary>
 		public static IOrderedQueryable<T> AsQueryable<T>(this ISession session)
 		{
-			return AsQueryable<T>();
-
-			// NOTE: should we use this instead?
-			// var options = new QueryOptions();
-			// return new Query<T>(new NHibernateQueryProvider(session,options), options);
+			return new NhQueryable<T>(session);
 		}
 
 		/// <summary>
@@ -60,6 +57,5 @@ namespace Castle.ActiveRecord.Framework
 		{
 			return AsQueryable<T>();
 		}
-
 	}
 }
