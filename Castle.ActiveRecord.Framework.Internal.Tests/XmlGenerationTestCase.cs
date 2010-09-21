@@ -341,7 +341,11 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      <generator class=\"native\">\r\n" +
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
+#if DOTNET35
 				"    <any name=\"PaymentMethod\" access=\"property\" id-type=\"System.Nullable`1[[System.Int64, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]\" meta-type=\"System.String\" cascade=\"save-update\" not-null=\"true\">\r\n" +
+#else
+				"    <any name=\"PaymentMethod\" access=\"property\" id-type=\"System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]\" meta-type=\"System.String\" cascade=\"save-update\" not-null=\"true\">\r\n" +
+#endif
 				"      <meta-value value=\"BANK_ACCOUNT\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.BankAccount, Castle.ActiveRecord.Framework.Internal.Tests\" />\r\n" +
 				"      <column name=\"BILLING_DETAILS_TYPE\" />\r\n" +
 				"      <column name=\"BILLING_DETAILS_ID\" />\r\n" +
