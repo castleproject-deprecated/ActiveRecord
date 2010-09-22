@@ -76,6 +76,7 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>$(DefineConstants);$(BuildConstants)</DefineConstants>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DocumentationFile>
