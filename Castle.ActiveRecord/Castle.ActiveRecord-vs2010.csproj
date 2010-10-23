@@ -3,7 +3,7 @@
   <!-- Root Path definition relative for actual build file -->
   <PropertyGroup>
     <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..</RootPath>
-    <TargetFrameworkVersion>$(TargetFrameworkVersion)</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <DefineConstants>$(DefineConstants);$(BuildConstants)</DefineConstants>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -20,7 +20,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -117,10 +117,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\$(BuildConfigKey)\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="NHibernate, Version=2.1.0.2002, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NHibernate.dll</HintPath>
@@ -147,7 +143,6 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
@@ -355,9 +350,6 @@
     <Compile Include="Framework\Scopes\TransactionScope.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Framework\Scopes\WebThreadScopeInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Framework\SessionFactoryHolder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -460,10 +452,9 @@
     <Compile Include="Framework\Scopes\StatelessSessionScope.cs" />
     <Compile Include="Framework\Scopes\DifferentDatabaseScope.cs" />
     <Compile Include="Framework\Scopes\FlushAction.cs" />
-    <Compile Include="Framework\Scopes\HybridWebThreadScopeInfo.cs" />
     <Compile Include="Framework\Scopes\ScopeUtil.cs" />
-    <Compile Include="Framework\SessionScopeWebModule.cs" />
     <Compile Include="Framework\Validators\IsUniqueValidator.cs" />
+    <Compile Include="PrivateAssemblyInfo.cs" />
     <Compile Include="Testing\InMemoryConnectionProvider.cs" />
     <Compile Include="Testing\InMemoryTest.cs" />
   </ItemGroup>

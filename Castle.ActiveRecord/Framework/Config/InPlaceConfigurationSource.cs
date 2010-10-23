@@ -246,7 +246,7 @@ namespace Castle.ActiveRecord.Framework.Config
 
 			if (isWeb)
 			{
-				threadInfoType = typeof(WebThreadScopeInfo);
+				threadInfoType = Type.GetType("Castle.ActiveRecord.Framework.Scopes.WebThreadScopeInfo, Castle.ActiveRecord.Web");
 			}
 
 			if (!string.IsNullOrEmpty(customType))

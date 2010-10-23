@@ -101,6 +101,10 @@
       <Project>{DC2D80AC-4641-4798-B059-C90AA162D2AB}</Project>
       <Name>Castle.ActiveRecord.Tests.Model-vs2010</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Castle.ActiveRecord.Web\Castle.ActiveRecord.Web.csproj">
+      <Project>{3A0B9A64-8140-429E-A3F0-5B1617CEB466}</Project>
+      <Name>Castle.ActiveRecord.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Castle.ActiveRecord\Castle.ActiveRecord-vs2010.csproj">
       <Project>{652F95D4-86E2-40B6-919D-CFC6E449386B}</Project>
       <Name>Castle.ActiveRecord-vs2010</Name>
