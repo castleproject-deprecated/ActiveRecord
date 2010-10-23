@@ -187,6 +187,7 @@
     <Compile Include="Model\CompositeKeyForClassWithCompositeKey.cs" />
     <Compile Include="Model\ClassADynamicInsertUpdate.cs" />
     <Compile Include="Model\ClassWithExtraLazyOnHasMany.cs" />
+    <Compile Include="Model\ClassWithOptimisticLock.cs" />
     <Compile Include="Model\HasManyToAnyWithBadList.cs" />
     <Compile Include="Model\HasAndBelongsToManyWithBadList.cs" />
     <Compile Include="Model\HasManyWithBadList.cs" />

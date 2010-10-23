@@ -46,10 +46,10 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name1\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name1\"/>\r\n" +
+				"      <column name=\"Name1\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Insertion\" access=\"property\" type=\"System.DateTime\">\r\n" +
-				"      <column name=\"Insertion\" default=\"getdate()\"/>\r\n" +
+				"      <column name=\"Insertion\" default=\"getdate()\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -83,7 +83,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"    <component name=\"Nested\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.NestedComponent, Castle.ActiveRecord.Framework.Internal.Tests\" access=\"property\">\r\n" +
 				"      <parent name=\"Parent\"/>\r\n" +
 				"      <property name=\"NestedProperty\" access=\"property\" type=\"String\">\r\n" +
-				"        <column name=\"NestedProperty\"/>\r\n" +
+				"        <column name=\"NestedProperty\" />\r\n" +
 				"      </property>\r\n" +
 				"    </component>\r\n" +
 				"  </class>\r\n" +
@@ -119,7 +119,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"    <component name=\"Nested\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.NestedComponent, Castle.ActiveRecord.Framework.Internal.Tests\" access=\"nosetter.camelcase\">\r\n" +
 				"      <parent name=\"Parent\"/>\r\n" +
 				"      <property name=\"NestedProperty\" access=\"property\" type=\"String\">\r\n" +
-				"        <column name=\"NestedProperty\"/>\r\n" +
+				"        <column name=\"NestedProperty\" />\r\n" +
 				"      </property>\r\n" +
 				"    </component>\r\n" +
 				"  </class>\r\n" +
@@ -153,16 +153,16 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name1\" access=\"property\" type=\"String\" insert=\"false\" update=\"false\">\r\n" +
-				"      <column name=\"Name1\"/>\r\n" +
+				"      <column name=\"Name1\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Name2\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name2\"/>\r\n" +
+				"      <column name=\"Name2\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Name3\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name3\" not-null=\"true\" unique=\"true\"/>\r\n" +
+				"      <column name=\"Name3\" not-null=\"true\" unique=\"true\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Text\" access=\"property\" type=\"StringClob\">\r\n" +
-				"      <column name=\"Text\"/>\r\n" +
+				"      <column name=\"Text\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -194,16 +194,16 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name1\" access=\"property\" type=\"String\" insert=\"false\" update=\"false\">\r\n" +
-				"      <column name=\"Name1\"/>\r\n" +
+				"      <column name=\"Name1\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Name2\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name2\"/>\r\n" +
+				"      <column name=\"Name2\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Name3\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name3\" not-null=\"true\" unique=\"true\"/>\r\n" +
+				"      <column name=\"Name3\" not-null=\"true\" unique=\"true\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Text\" access=\"property\" type=\"StringClob\">\r\n" +
-				"      <column name=\"Text\"/>\r\n" +
+				"      <column name=\"Text\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -235,16 +235,16 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name1\" access=\"property\" type=\"String\" insert=\"false\" update=\"false\">\r\n" +
-				"      <column name=\"Name1\"/>\r\n" +
+				"      <column name=\"Name1\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Name2\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name2\"/>\r\n" +
+				"      <column name=\"Name2\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Name3\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name3\" not-null=\"true\" unique=\"true\"/>\r\n" +
+				"      <column name=\"Name3\" not-null=\"true\" unique=\"true\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"Text\" access=\"property\" type=\"StringClob\">\r\n" +
-				"      <column name=\"Text\"/>\r\n" +
+				"      <column name=\"Text\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -276,7 +276,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name1\" access=\"property\" type=\"String\" insert=\"false\" update=\"false\">\r\n" +
-				"      <column name=\"Name1\"/>\r\n" +
+				"      <column name=\"Name1\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -445,10 +445,10 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 									"      </generator>\r\n" +
 									"    </id>\r\n" +
 									"    <property name=\"name1\" access=\"field\" type=\"String\">\r\n" +
-									"      <column name=\"MyCustomName\"/>\r\n" +
+									"      <column name=\"MyCustomName\" />\r\n" +
 									"    </property>\r\n" +
 									"    <property name=\"Value\" access=\"CustomAccess\" type=\"Int32\">\r\n" +
-									"      <column name=\"Value\"/>\r\n" +
+									"      <column name=\"Value\" />\r\n" +
 									"    </property>\r\n" +
 									"  </class>\r\n" +
 									"</hibernate-mapping>\r\n";
@@ -515,7 +515,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 									"    </id>\r\n" +
 									"    <bag name=\"Elements\" access=\"property\" table=\"Elements\" lazy=\"false\">\r\n" +
 									"      <key column=\"ClassId\" />\r\n" +
-									"      <element  column=\"Name\"  type=\"System.String, mscorlib\"/>\r\n" +
+									"      <element column=\"Name\" type=\"System.String, mscorlib\" />\r\n" +
 									"    </bag>\r\n" +
 									"  </class>\r\n" +
 									"</hibernate-mapping>\r\n";
@@ -540,7 +540,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 									"    </id>\r\n" +
 									"    <bag name=\"Roles\" access=\"property\" table=\"Roles\" lazy=\"false\">\r\n" +
 									"      <key column=\"EnumModelId\" />\r\n" +
-									"      <element  column=\"RoleId\"  type=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.Role, Castle.ActiveRecord.Framework.Internal.Tests\"/>\r\n" +
+									"      <element column=\"RoleId\" type=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.Role, Castle.ActiveRecord.Framework.Internal.Tests\" />\r\n" +
 									"    </bag>\r\n" +
 									"  </class>\r\n" +
 									"</hibernate-mapping>\r\n";
@@ -567,11 +567,11 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 									"    </id>\r\n" +
 									"    <discriminator column=\"type\" type=\"String\" />\r\n" +
 									"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-									"      <column name=\"Name\"/>\r\n" +
+									"      <column name=\"Name\" />\r\n" +
 									"    </property>\r\n" +
 									"    <subclass name=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ClassDiscriminatorA, Castle.ActiveRecord.Framework.Internal.Tests\" discriminator-value=\"A\">\r\n" +
 									"      <property name=\"Age\" access=\"property\" type=\"Int32\">\r\n" +
-									"        <column name=\"Age\"/>\r\n" +
+									"        <column name=\"Age\" />\r\n" +
 									"      </property>\r\n" +
 									"    </subclass>\r\n" +
 									"  </class>\r\n" +
@@ -600,11 +600,11 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"    </id>\r\n" +
 				"    <discriminator column=\"type\" type=\"String\" length=\"10\" />\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"    <subclass name=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ClassDiscriminatorB, Castle.ActiveRecord.Framework.Internal.Tests\" discriminator-value=\"B\">\r\n" +
 				"      <property name=\"Age\" access=\"property\" type=\"Int32\">\r\n" +
-				"        <column name=\"Age\"/>\r\n" +
+				"        <column name=\"Age\" />\r\n" +
 				"      </property>\r\n" +
 				"    </subclass>\r\n" +
 				"  </class>\r\n" +
@@ -632,12 +632,12 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"    <joined-subclass name=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.GenClassJoinedSubClassA, Castle.ActiveRecord.Framework.Internal.Tests\" table=\"disctablea\" lazy=\"false\">\r\n" +
 				"      <key column=\"AId\" />\r\n" +
 				"      <property name=\"Age\" access=\"property\" type=\"Int32\">\r\n" +
-				"        <column name=\"Age\"/>\r\n" +
+				"        <column name=\"Age\" />\r\n" +
 				"      </property>\r\n" +
 				"    </joined-subclass>\r\n" +
 				"  </class>\r\n" +
@@ -665,12 +665,12 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"    <joined-subclass name=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.SubClassJoinedClass, Castle.ActiveRecord.Framework.Internal.Tests\" table=\"disctablea\" lazy=\"false\">\r\n" +
 				"      <key column=\"AId\" />\r\n" +
 				"      <property name=\"Age\" access=\"property\" type=\"Int32\">\r\n" +
-				"        <column name=\"Age\"/>\r\n" +
+				"        <column name=\"Age\" />\r\n" +
 				"      </property>\r\n" +
 				"    </joined-subclass>\r\n" +
 				"  </class>\r\n" +
@@ -699,12 +699,12 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"    <joined-subclass name=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.GenSubClassJoinedClass, Castle.ActiveRecord.Framework.Internal.Tests\" table=\"disctablea\" lazy=\"false\">\r\n" +
 				"      <key column=\"AId\" />\r\n" +
 				"      <property name=\"Age\" access=\"property\" type=\"Int32\">\r\n" +
-				"        <column name=\"Age\"/>\r\n" +
+				"        <column name=\"Age\" />\r\n" +
 				"      </property>\r\n" +
 				"    </joined-subclass>\r\n" +
 				"  </class>\r\n" +
@@ -732,12 +732,12 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"    <joined-subclass name=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ClassJoinedSubClassA, Castle.ActiveRecord.Framework.Internal.Tests\" table=\"disctablea\" lazy=\"false\">\r\n" +
 				"      <key column=\"AId\" />\r\n" +
 				"      <property name=\"Age\" access=\"property\" type=\"Int32\">\r\n" +
-				"        <column name=\"Age\"/>\r\n" +
+				"        <column name=\"Age\" />\r\n" +
 				"      </property>\r\n" +
 				"    </joined-subclass>\r\n" +
 				"  </class>\r\n" +
@@ -765,7 +765,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"    </id>\r\n" +
 				"    <version name=\"Ver\" access=\"property\" column=\"Ver\" type=\"String\" />\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -792,7 +792,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"    </id>\r\n" +
 				"    <timestamp name=\"Ts\" access=\"property\" column=\"Ts\" />\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -1020,7 +1020,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"    <many-to-one name=\"Parent\" access=\"property\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.Category, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"parent_id\" lazy=\"proxy\" />\r\n" +
 				"    <bag name=\"SubCategories\" access=\"property\" table=\"Category\" lazy=\"false\">\r\n" +
@@ -1076,10 +1076,10 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"FirstName\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"FirstName\"/>\r\n" +
+				"      <column name=\"FirstName\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"LastName\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"LastName\"/>\r\n" +
+				"      <column name=\"LastName\" />\r\n" +
 				"    </property>\r\n" +
 				"    <one-to-one name=\"Award\" access=\"property\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.Award, Castle.ActiveRecord.Framework.Internal.Tests\" foreign-key=\"FK_FOREIGN_KEY\" fetch=\"join\" constrained=\"true\" />\r\n" +
 				"  </class>\r\n" +
@@ -1099,7 +1099,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Description\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Description\"/>\r\n" +
+				"      <column name=\"Description\" />\r\n" +
 				"    </property>\r\n" +
 				"    <one-to-one name=\"Employee\" access=\"property\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.Employee, Castle.ActiveRecord.Framework.Internal.Tests\" />\r\n" +
 				"  </class>\r\n" +
@@ -1127,7 +1127,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"    <many-to-one name=\"Parent\" access=\"property\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.CacheClass, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"parent_id\" lazy=\"proxy\" />\r\n" +
 				"    <bag name=\"SubClasses\" access=\"property\" table=\"CacheClass\" lazy=\"false\">\r\n" +
@@ -1166,7 +1166,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"    </bag>\r\n" +
 				"    <bag name=\"ManySubClasses\" access=\"property\" table=\"ManySubClasses\" lazy=\"false\">\r\n" +
 				"      <key column=\"id\" />\r\n" +
-				"      <many-to-many class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.RelationalFoobar, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"ref_id\" not-found=\"ignore\"/>\r\n" +
+				"      <many-to-many class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.RelationalFoobar, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"ref_id\" not-found=\"ignore\" />\r\n" +
 				"    </bag>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -1186,7 +1186,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"    <many-to-one name=\"NotFoundBehaviourClass\" access=\"property\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.NotFoundBehaviourClass, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"NotFoundBehaviourClass\" lazy=\"proxy\" not-found=\"ignore\" />\r\n" +
 				"    <bag name=\"NotFoundBehaviourClassList\" access=\"property\" table=\"ManySubClasses\" lazy=\"false\">\r\n" +
 				"      <key column=\"id\" />\r\n" +
-				"      <many-to-many class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.NotFoundBehaviourClass, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"ref_id\" not-found=\"ignore\"/>\r\n" +
+				"      <many-to-many class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.NotFoundBehaviourClass, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"ref_id\" not-found=\"ignore\" />\r\n" +
 				"    </bag>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -1212,10 +1212,10 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"NoColumnType\" access=\"property\">\r\n" +
-				"      <column name=\"NoColumnType\"/>\r\n" +
+				"      <column name=\"NoColumnType\" />\r\n" +
 				"    </property>\r\n" +
 				"    <property name=\"WithColumnType\" access=\"property\" type=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.GenericEnumStringType`1[[Castle.ActiveRecord.Framework.Internal.Tests.Model.EnumVal, Castle.ActiveRecord.Framework.Internal.Tests]], Castle.ActiveRecord.Framework.Internal.Tests\">\r\n" +
-				"      <column name=\"WithColumnType\"/>\r\n" +
+				"      <column name=\"WithColumnType\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -1257,7 +1257,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"    <map name=\"Snippet\" access=\"property\" table=\"DictionaryModel_Snippet\" lazy=\"false\">\r\n" +
 				"      <key column=\"id\" />\r\n" +
 				"      <index column=\"LangCode\" type=\"String\" />\r\n" +
-				"      <element  column=\"Text\"  type=\"System.String, mscorlib\"/>\r\n" +
+				"      <element column=\"Text\" type=\"System.String, mscorlib\" />\r\n" +
 				"    </map>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -1287,7 +1287,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      <index column=\"pos\" />\r\n" +
 				"      <composite-element class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.Component, Castle.ActiveRecord.Framework.Internal.Tests\">\r\n" +
 				"        <property name=\"Value\" access=\"property\" type=\"String\">\r\n" +
-				"          <column name=\"Value\"/>\r\n" +
+				"          <column name=\"Value\" />\r\n" +
 				"        </property>\r\n" +
 				"      </composite-element>\r\n" +
 				"    </list>\r\n" +
@@ -1320,7 +1320,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      <composite-element class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ComponentWithNested, Castle.ActiveRecord.Framework.Internal.Tests\">\r\n" +
 				"        <nested-composite-element name=\"Component\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.Component, Castle.ActiveRecord.Framework.Internal.Tests\" access=\"property\">\r\n" +
 				"          <property name=\"Value\" access=\"property\" type=\"String\">\r\n" +
-				"            <column name=\"Value\"/>\r\n" +
+				"            <column name=\"Value\" />\r\n" +
 				"          </property>\r\n" +
 				"        </nested-composite-element>\r\n" +
 				"      </composite-element>\r\n" +
@@ -1355,7 +1355,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"        <nested-composite-element name=\"ComponentWithNested\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ComponentWithNested, Castle.ActiveRecord.Framework.Internal.Tests\" access=\"property\">\r\n" +
 				"          <nested-composite-element name=\"Component\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.Component, Castle.ActiveRecord.Framework.Internal.Tests\" access=\"property\">\r\n" +
 				"            <property name=\"Value\" access=\"property\" type=\"String\">\r\n" +
-				"              <column name=\"Value\"/>\r\n" +
+				"              <column name=\"Value\" />\r\n" +
 				"            </property>\r\n" +
 				"          </nested-composite-element>\r\n" +
 				"        </nested-composite-element>\r\n" +
@@ -1388,7 +1388,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      <index column=\"pos\" />\r\n" +
 				"      <composite-element class=\"Castle.ActiveRecord.Framework.Internal.Tests.ComponentManyToClassA, Castle.ActiveRecord.Framework.Internal.Tests\">\r\n" +
 				"        <property name=\"Value\" access=\"property\" type=\"String\">\r\n" +
-				"          <column name=\"Value\"/>\r\n" +
+				"          <column name=\"Value\" />\r\n" +
 				"        </property>\r\n" +
 				"        <many-to-one name=\"A\" access=\"property\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ClassA, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"aId\" lazy=\"proxy\" />\r\n" +
 				"      </composite-element>\r\n" +
@@ -1420,7 +1420,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"        </generator>\r\n" +
 				"      </collection-id>\r\n" +
 				"      <key column=\"keyid\" />\r\n" +
-				"      <element  type=\"System.String\" />\r\n" + 
+				"      <element type=\"System.String\" />\r\n" + 
 				"    </idbag>\r\n" + 
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -1445,7 +1445,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\"/>\r\n" +
+				"      <column name=\"Name\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -1466,7 +1466,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 				"      </generator>\r\n" +
 				"    </id>\r\n" +
 				"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-				"      <column name=\"Name\" length=\"50\"/>\r\n" +
+				"      <column name=\"Name\" length=\"50\" />\r\n" +
 				"    </property>\r\n" +
 				"  </class>\r\n" +
 				"</hibernate-mapping>\r\n";
@@ -1599,5 +1599,44 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 
             Assert.AreEqual(expected, xml);
         }
-	}
+
+        [Test]
+        public void OptimisticLock()
+        {
+            ActiveRecordModelBuilder builder = new ActiveRecordModelBuilder();
+            ActiveRecordModel model = builder.Create(typeof(ClassWithOptimisticLock));
+            Assert.IsNotNull(model);
+
+            String xml = Process(builder, model);
+
+            const string expected =
+                "<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n" +
+                "<hibernate-mapping  auto-import=\"true\" default-lazy=\"false\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"urn:nhibernate-mapping-2.2\">\r\n" +
+                "  <class name=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ClassWithOptimisticLock, Castle.ActiveRecord.Framework.Internal.Tests\" table=\"ClassWithOptimisticLock\">\r\n" +
+                "    <id name=\"Id\" access=\"property\" column=\"Id\" type=\"Int32\" unsaved-value=\"0\">\r\n" +
+                "      <generator class=\"native\">\r\n" +
+                "      </generator>\r\n" +
+                "    </id>\r\n" +
+                "    <property name=\"OptimisticProperty\" access=\"property\" type=\"String\">\r\n" +
+                "      <column name=\"OptimisticProperty\" />\r\n" +
+                "    </property>\r\n" +
+                "    <property name=\"PessimisticProperty\" access=\"property\" type=\"String\" optimistic-lock=\"false\">\r\n" +
+                "      <column name=\"PessimisticProperty\" />\r\n" +
+                "    </property>\r\n" +
+                "    <many-to-one name=\"OptimisticParent\" access=\"property\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ClassWithOptimisticLock, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"OptimisticParent\" lazy=\"proxy\" />\r\n" +
+                "    <many-to-one name=\"PessimisticParent\" access=\"property\" class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ClassWithOptimisticLock, Castle.ActiveRecord.Framework.Internal.Tests\" column=\"PessimisticParent\" lazy=\"proxy\" optimistic-lock=\"false\" />\r\n" +
+                "    <bag name=\"OptimisticChildren\" access=\"property\" table=\"ClassWithOptimisticLock\" lazy=\"false\">\r\n" +
+                "      <key column=\"OptimisticParent\" />\r\n" +
+                "      <one-to-many class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ClassWithOptimisticLock, Castle.ActiveRecord.Framework.Internal.Tests\" />\r\n" +
+                "    </bag>\r\n" +
+                "    <bag name=\"PessimisticChildren\" access=\"property\" table=\"ClassWithOptimisticLock\" lazy=\"false\" optimistic-lock=\"false\">\r\n" +
+                "      <key column=\"OptimisticParent\" />\r\n" +
+                "      <one-to-many class=\"Castle.ActiveRecord.Framework.Internal.Tests.Model.ClassWithOptimisticLock, Castle.ActiveRecord.Framework.Internal.Tests\" />\r\n" +
+                "    </bag>\r\n" +
+                "  </class>\r\n" +
+                "</hibernate-mapping>\r\n";
+
+            Assert.AreEqual(expected, xml);
+        }
+    }
 }

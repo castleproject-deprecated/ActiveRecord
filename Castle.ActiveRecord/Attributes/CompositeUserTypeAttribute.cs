@@ -58,6 +58,8 @@ namespace Castle.ActiveRecord
 		private bool update = true;
 		private bool insert = true;
 
+	    private bool optimisticLock = true;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CompositeUserTypeAttribute"/> class.
 		/// </summary>
@@ -146,5 +148,14 @@ namespace Castle.ActiveRecord
 			get { return insert; }
 			set { insert = value; }
 		}
-	}
+
+        /// <summary>
+        /// Gets or sets a value indicating if changes to this property will increment the containing entity's version.
+        /// </summary>
+        public bool OptimisticLock
+        {
+            get { return optimisticLock; }
+            set { optimisticLock = value; }
+        }
+    }
 }

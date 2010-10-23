@@ -73,6 +73,7 @@ namespace Castle.ActiveRecord
 		internal RelationType relType = RelationType.Guess;
 		internal NotFoundBehaviour notFoundBehaviour = NotFoundBehaviour.Default;
 	    private int batchSize = 1;
+	    private bool optimisticLock = true;
 
 	    /// <summary>
 		/// Gets or sets the type of the relation.
@@ -265,5 +266,14 @@ namespace Castle.ActiveRecord
 	        get { return batchSize; }
 	        set { batchSize = value; }
 	    }
-	}
+
+        /// <summary>
+        /// Gets or sets a value indicating if changes to this property will increment the containing entity's version.
+        /// </summary>
+        public bool OptimisticLock
+        {
+            get { return optimisticLock; }
+            set { optimisticLock = value; }
+        }
+    }
 }

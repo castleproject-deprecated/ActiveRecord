@@ -23,6 +23,7 @@ namespace Castle.ActiveRecord
 	public abstract class WithAccessOptionalTableAttribute : WithAccessAttribute
 	{
 		private String table;
+	    private bool optimisticLock = true;
 
 		/// <summary>
 		/// Gets or sets the table name if joined
@@ -32,5 +33,14 @@ namespace Castle.ActiveRecord
 			get { return table; }
 			set { table = value; }
 		}
-	}
+
+        /// <summary>
+        /// Gets or sets a value indicating if changes to this member will increment the containing entity's version.
+        /// </summary>
+        public bool OptimisticLock
+        {
+            get { return optimisticLock; }
+            set { optimisticLock = value; }
+        }
+    }
 }
