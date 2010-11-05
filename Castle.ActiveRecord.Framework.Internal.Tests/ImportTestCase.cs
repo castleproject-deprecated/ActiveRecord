@@ -40,7 +40,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 					"      </generator>\r\n" +
 					"    </id>\r\n" +
 					"    <property name=\"Name\" access=\"property\" type=\"String\">\r\n" +
-					"      <column name=\"Name\"/>\r\n" + 
+					"      <column name=\"Name\" />\r\n" + 
 					"    </property>\r\n" +
 					"  </class>\r\n" +
 					"</hibernate-mapping>\r\n";

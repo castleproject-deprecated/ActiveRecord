@@ -81,14 +81,14 @@ namespace Castle.ActiveRecord.Tests
                 "    </id>\r\n"+
                 "    <discriminator column=\"discriminator\" />\r\n"+
                 "    <property name=\"Count\" access=\"property\" type=\"Int32\">\r\n"+
-                "      <column name=\"Count\"/>\r\n" + 
+                "      <column name=\"Count\" />\r\n" + 
                 "    </property>\r\n" +
                 "    <subclass name=\"Castle.ActiveRecord.Tests.Model.RulesModel.WorkDaysRules, Castle.ActiveRecord.Tests\" discriminator-value=\"2\" lazy=\"false\">\r\n"+
                 "      <property name=\"Name\" access=\"property\" type=\"String\">\r\n"+
-				"        <column name=\"Name\"/>\r\n" + 
+				"        <column name=\"Name\" />\r\n" + 
 				"      </property>\r\n" +
 				"      <property name=\"Days\" access=\"property\" type=\"Int32\">\r\n"+
-				"        <column name=\"Days\"/>\r\n" + 
+				"        <column name=\"Days\" />\r\n" + 
 				"      </property>\r\n" +
 				"    </subclass>\r\n"+
                 "  </class>\r\n"+
