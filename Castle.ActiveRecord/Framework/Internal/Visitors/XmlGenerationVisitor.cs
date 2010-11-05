@@ -813,7 +813,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 			if (attribute.Length.Length != attribute.ColumnNames.Length)
 				throw new ActiveRecordException(string.Format("Length and ColumnNames lengths do not match for CompositeUserTypeAttribute on class '{0}', member '{1}'", model.Member.DeclaringType, model.Member.Name));
 
-			BeginWriteProperty(attribute.AccessString, MakeTypeName(attribute.CompositeType), null, attribute.Insert,
+			BeginWriteProperty(attribute.AccessString, MakeTypeName(attribute.CompositeType), attribute.Insert,
 			                   model.Member.Name, model.MemberType, attribute.Update, attribute.OptimisticLock);
 
 			Ident();
@@ -1309,11 +1309,12 @@ namespace Castle.ActiveRecord.Framework.Internal
 		                           String uniqueKey, String sqlType, String index, String check, String @default,
                                    bool optimisticLock)
 		{
-			BeginWriteProperty(accessString, columnType, formula, insert, name, propType, update, optimisticLock);
+			BeginWriteProperty(accessString, columnType, insert, name, propType, update, optimisticLock);
 			
 			Ident();
 
 			WriteColumn(check, column, index, length, notNull, sqlType, unique, uniqueKey, @default);
+			WriteFormula(formula);
 			
 			Dedent();
 
@@ -1340,7 +1341,13 @@ namespace Castle.ActiveRecord.Framework.Internal
 			        WriteIfNonNull("default", @default));
 		}
 
-		private void BeginWriteProperty(string accessString, string columnType, string formula, bool insert, string name, Type propType, bool update, bool optimisticLock)
+		private void WriteFormula(String formula)
+		{
+			if (!string.IsNullOrEmpty(formula))
+				AppendF("<formula>{0}</formula>", formula);
+		}
+
+		private void BeginWriteProperty(string accessString, string columnType, bool insert, string name, Type propType, bool update, bool optimisticLock)
 		{
 			AppendStartTag("property",
 			        MakeAtt("name", name),
@@ -1348,8 +1355,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 			        MakeTypeAtt(propType, columnType),
 			        WriteIfFalse("insert", insert),
 			        WriteIfFalse("update", update),
-                    WriteIfFalse("optimistic-lock", optimisticLock),
-                    WriteIfNonNull("formula", formula));
+                    WriteIfFalse("optimistic-lock", optimisticLock));
 		}
 
 		private void WriteTuplizer(Type tuplizer)

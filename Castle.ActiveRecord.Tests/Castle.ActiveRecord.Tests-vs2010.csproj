@@ -169,6 +169,7 @@
     </Compile>
     <Compile Include="ActiveRecordWithoutBaseTestCase.cs" />
     <Compile Include="ActiveRecordBaseGenericsTestCase.cs" />
+    <Compile Include="Bugs\ARIssue293TestCase.cs" />
     <Compile Include="BugTestCase.cs" />
     <Compile Include="Config\AspNet2.0ConfigurationIntegration.cs" />
     <Compile Include="Config\ConfigurationSource.cs" />

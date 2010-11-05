@@ -90,6 +90,9 @@ namespace Castle.ActiveRecord.Tests.Model
 			set { _recentposts = value; }
 		}
 
+		[Property(Formula = "1 + 1")]
+		public int SomeFormula { get; set; }
+
 		public static void DeleteAll()
 		{
 			ActiveRecordMediator.DeleteAll(typeof(Blog));
