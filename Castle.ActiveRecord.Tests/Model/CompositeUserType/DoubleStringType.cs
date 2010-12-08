@@ -36,6 +36,11 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeUserType
 			}
 		}
 
+		//public void NullSafeSet(IDbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
+		//{
+		//    throw new NotImplementedException();
+		//}
+
 		public Object DeepCopy(Object x)
 		{
 			if (x == null) return null;
@@ -59,12 +64,12 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeUserType
 			return (first == null && second == null) ? null : new string[] { first, second };
 		}
 
-		public void NullSafeSet(IDbCommand st, Object value, int index, ISessionImplementor session)
+		public void NullSafeSet(IDbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
 		{
 			string[] strings = (value == null) ? new string[2] : (string[]) value;
 
-			NHibernateUtil.String.NullSafeSet(st, strings[0], index, session);
-			NHibernateUtil.String.NullSafeSet(st, strings[1], index + 1, session);
+			NHibernateUtil.String.NullSafeSet(cmd, strings[0], index, settable, session);
+			NHibernateUtil.String.NullSafeSet(cmd, strings[1], index + 1, settable, session);
 		}
 
 		public string[] PropertyNames

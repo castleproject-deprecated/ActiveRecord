@@ -80,7 +80,7 @@ namespace Castle.ActiveRecord.Framework.Scopes
 		{
 			if (scopeInfo == null)
 			{
-				throw new ActiveRecordException("A scope tried to register itself within the framework, " +
+				throw new ActiveRecordException("A scope tried to registered itself within the framework, " +
 				                                "but the Active Record was not initialized");
 			}
 			scopeInfo.RegisterScope(scope);
