@@ -88,6 +88,20 @@ namespace Castle.ActiveRecord
 		/// </code>
 		/// </example>
 		FieldCamelcaseUnderscore,
+        /// <summary>
+        /// Use the field that is the backing store for this property to get/set the value of this property.
+        /// The field is using the same name as the property, in pascal case and with an initial m underscore.
+        /// _Name for the property Name.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// string _UserName;//this will be use to get or set the value
+        /// 
+        /// [Property(Access=PropertyAccess.FieldPascalcaseMUnderscore)]
+        /// public string UserName { get {... } set { ... } }
+        /// </code>
+        /// </example>
+        FieldPascalcaseUnderscore,
 		/// <summary>
 		/// Use the field that is the backing store for this property to get/set the value of this property.
 		/// The field is using the same name as the property, in pascal case and with an initial m and then underscore.
@@ -220,6 +234,8 @@ namespace Castle.ActiveRecord
 					return "field.camelcase";
 				case PropertyAccess.FieldCamelcaseUnderscore:
 					return "field.camelcase-underscore";
+                case PropertyAccess.FieldPascalcaseUnderscore:
+                    return "field.pascalcase-underscore";
 				case PropertyAccess.FieldPascalcaseMUnderscore:
 					return "field.pascalcase-m-underscore";
 				case PropertyAccess.FieldLowercaseUnderscore:

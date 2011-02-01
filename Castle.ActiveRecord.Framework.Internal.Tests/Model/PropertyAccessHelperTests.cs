@@ -61,6 +61,11 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests.Model
 			Assert.AreEqual("field.lowercase-underscore", PropertyAccessHelper.ToString(PropertyAccess.FieldLowercaseUnderscore));
 		}
 
+        [Test]
+        public void FieldPascalCase_Underscore() {
+            Assert.AreEqual("field.pascalcase-underscore", PropertyAccessHelper.ToString(PropertyAccess.FieldPascalcaseUnderscore));
+        }
+
 		[Test]
 		public void FieldPascalCase_M_Underscore()
 		{
