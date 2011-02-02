@@ -384,7 +384,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 			{
 				WriteProperty(model.Property.Name, model.Property.PropertyType, att.AccessString,
 							  att.ColumnType, att.Insert,
-							  att.Update, att.Formula, att.Column,
+							  att.Update, att.Lazy, att.Formula, att.Column,
 							  att.Length, att.NotNull, att.Unique, att.UniqueKey, att.SqlType, att.Index, att.Check, att.Default,
                               att.OptimisticLock);
 			}
@@ -433,7 +433,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 			{
 				WriteProperty(model.Field.Name, model.Field.FieldType, att.AccessString,
 							  att.ColumnType, att.Insert,
-							  att.Update, att.Formula, att.Column,
+							  att.Update, att.Lazy, att.Formula, att.Column,
 							  att.Length, att.NotNull, att.Unique, att.UniqueKey, att.SqlType, att.Index, att.Check, att.Default,
                               att.OptimisticLock);
 			}
@@ -814,7 +814,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 				throw new ActiveRecordException(string.Format("Length and ColumnNames lengths do not match for CompositeUserTypeAttribute on class '{0}', member '{1}'", model.Member.DeclaringType, model.Member.Name));
 
 			BeginWriteProperty(attribute.AccessString, MakeTypeName(attribute.CompositeType), attribute.Insert,
-			                   model.Member.Name, model.MemberType, attribute.Update, attribute.OptimisticLock);
+			                   model.Member.Name, model.MemberType, attribute.Update, attribute.OptimisticLock, false);
 
 			Ident();
 
@@ -1304,12 +1304,12 @@ namespace Castle.ActiveRecord.Framework.Internal
 		}
 
 		private void WriteProperty(String name, Type propType, String accessString, String columnType,
-		                           bool insert, bool update, String formula,
+		                           bool insert, bool update, bool lazy, String formula,
 		                           String column, int length, bool notNull, bool unique,
 		                           String uniqueKey, String sqlType, String index, String check, String @default,
                                    bool optimisticLock)
 		{
-			BeginWriteProperty(accessString, columnType, insert, name, propType, update, optimisticLock);
+			BeginWriteProperty(accessString, columnType, insert, name, propType, update, optimisticLock, lazy);
 			
 			Ident();
 
@@ -1347,7 +1347,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 				AppendF("<formula>{0}</formula>", formula);
 		}
 
-		private void BeginWriteProperty(string accessString, string columnType, bool insert, string name, Type propType, bool update, bool optimisticLock)
+		private void BeginWriteProperty(string accessString, string columnType, bool insert, string name, Type propType, bool update, bool optimisticLock, bool lazy)
 		{
 			AppendStartTag("property",
 			        MakeAtt("name", name),
@@ -1355,6 +1355,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 			        MakeTypeAtt(propType, columnType),
 			        WriteIfFalse("insert", insert),
 			        WriteIfFalse("update", update),
+					WriteIfTrue("lazy", columnType == "BinaryBlob" && lazy),
                     WriteIfFalse("optimistic-lock", optimisticLock));
 		}
 

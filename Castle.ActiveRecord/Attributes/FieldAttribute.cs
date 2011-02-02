@@ -187,6 +187,11 @@ namespace Castle.ActiveRecord
 		}
 
 		/// <summary>
+		/// Set to <c>true</c> load this field lazily.
+		/// </summary>
+		public bool Lazy { get; set; }
+
+		/// <summary>
 		/// Gets or sets the formula used to calculate this field
 		/// </summary>
 		/// <value>The formula.</value>

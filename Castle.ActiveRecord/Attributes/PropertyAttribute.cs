@@ -110,6 +110,11 @@ namespace Castle.ActiveRecord
 		public bool Unique { get; set; }
 
 		/// <summary>
+		/// Set to <c>true</c> to load this property lazily.
+		/// </summary>
+		public bool Lazy { get; set; }
+
+		/// <summary>
 		/// Gets or sets the formula used to calculate this property
 		/// </summary>
 		/// <value>The formula.</value>

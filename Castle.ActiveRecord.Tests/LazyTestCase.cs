@@ -56,5 +56,33 @@ namespace Castle.ActiveRecord.Tests
 			lazyFromDb = (VeryLazyObject)ActiveRecordMediator.FindByPrimaryKey(typeof(VeryLazyObject), lazy.Id);
 			Assert.AreEqual("test for update", lazyFromDb.Title);
 		}
+
+		[Test]
+		public void CanLoadLazyProperty()
+		{
+			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(LazyObjectWithLazyBlobProperty));
+			Recreate();
+
+			string teststring = @"data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9YGARc5KB0XV+IAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAF1JREFUGNO9zL0NglAAxPEfdLTs4BZM4DIO4C7OwQg2JoQ9LE1exdlYvBBeZ7jqch9//q1uH4TLzw4d6+ErXMMcXuHWxId3KOETnnXXV6MJpcq2MLaI97CER3N0vr4MkhoXe0rZigAAAABJRU5ErkJggg==";
+			int id;
+
+			using (new SessionScope()) {
+				LazyObjectWithLazyBlobProperty lazy = new LazyObjectWithLazyBlobProperty();
+
+				lazy.BlobData = System.Text.Encoding.UTF8.GetBytes(teststring);
+				ActiveRecordMediator.Save(lazy);
+				id = lazy.Id;
+			}
+
+			using (new SessionScope()) {
+				LazyObjectWithLazyBlobProperty lazyFromDb = (LazyObjectWithLazyBlobProperty) ActiveRecordMediator.FindByPrimaryKey(typeof (LazyObjectWithLazyBlobProperty), id);
+				Assert.True(!NHibernate.NHibernateUtil.IsPropertyInitialized(lazyFromDb, "BlobData"));
+
+				byte[] fromDb = lazyFromDb.BlobData;
+				Assert.True(NHibernate.NHibernateUtil.IsPropertyInitialized(lazyFromDb, "BlobData"));
+
+				Assert.AreEqual(teststring, System.Text.Encoding.UTF8.GetString(fromDb));
+			}
+		}
 	}
 }
