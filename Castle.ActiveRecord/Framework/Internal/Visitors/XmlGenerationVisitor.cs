@@ -502,7 +502,7 @@ namespace Castle.ActiveRecord.Framework.Internal
                             model.HasManyToAnyAtt.AccessString, att.Table, att.Schema, att.LazyAttributeValue, att.Inverse, att.OrderBy,
 			                att.Where, att.Sort, att.ColumnKey, null, null, null, null, null, model.Configuration, att.Index,
 			                att.IndexType,
-							att.Cache, att.CacheRegion, att.NotFoundBehaviour, att.Fetch, att.BatchSize, att.CollectionType,
+							att.Cache, att.CacheRegion, att.NotFoundBehaviour, att.Fetch, att.BatchSize, att.CollectionType, null,
                             att.OptimisticLock);
 		}
 
@@ -671,7 +671,7 @@ namespace Castle.ActiveRecord.Framework.Internal
                             model.HasManyAtt.AccessString, att.Table, att.Schema, att.LazyAttributeValue, att.Inverse, att.OrderBy,
 			                att.Where, att.Sort, att.ColumnKey, att.CompositeKeyColumnKeys, att.Element, att.ElementType, null, null,
 			                model.DependentObjectModel, att.Index, att.IndexType,
-							att.Cache, att.CacheRegion, att.NotFoundBehaviour, att.Fetch, att.BatchSize, att.CollectionType,
+							att.Cache, att.CacheRegion, att.NotFoundBehaviour, att.Fetch, att.BatchSize, att.CollectionType, null,
                             att.OptimisticLock);
 		}
 
@@ -689,7 +689,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 			                att.Where, att.Sort, att.ColumnKey, att.CompositeKeyColumnKeys, att.Element, att.ElementType, 
 							att.ColumnRef,
 							att.CompositeKeyColumnRefs, model.CollectionID, att.Index, att.IndexType, att.Cache, att.CacheRegion, 
-							att.NotFoundBehaviour, att.Fetch, att.BatchSize, att.CollectionType,
+							att.NotFoundBehaviour, att.Fetch, att.BatchSize, att.CollectionType, att.ForeignKey,
                             att.OptimisticLock);
 		}
 
@@ -840,7 +840,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 		                             string columnKey, string[] compositeKeyColumnKeys, string element, Type elementType,
 		                             string columnRef, string[] compositeKeyColumnRefs,
 		                             IVisitable extraModel, string index, string indexType, CacheEnum cache, string cacheregion,
-		                             NotFoundBehaviour notFoundBehaviour, FetchEnum fetch, int batchSize, Type collectionType,
+		                             NotFoundBehaviour notFoundBehaviour, FetchEnum fetch, int batchSize, Type collectionType, string foreignKey, 
                                      bool optimisticLock)
 		{
 			bool extraModelVisited = false;
@@ -996,11 +996,11 @@ namespace Castle.ActiveRecord.Framework.Internal
 			{
 				if (columnRef != null)
 				{
-					WriteManyToMany(targetType, columnRef, notFoundMode);
+					WriteManyToMany(targetType, columnRef, notFoundMode, foreignKey);
 				}
 				else
 				{
-					WriteManyToMany(targetType, compositeKeyColumnRefs, notFoundMode);
+					WriteManyToMany(targetType, compositeKeyColumnRefs, notFoundMode, foreignKey);
 				}
 			}
 
@@ -1246,19 +1246,21 @@ namespace Castle.ActiveRecord.Framework.Internal
 			AppendFullTag("one-to-many", MakeAtt("class", MakeTypeName(type)), WriteIfNonNull("not-found", notFoundMode));
 		}
 
-		private void WriteManyToMany(Type type, String columnRef, String notFoundMode)
+        private void WriteManyToMany(Type type, String columnRef, String notFoundMode, String foreignKey)
 		{
             AppendFullTag("many-to-many",
 			        MakeAtt("class", MakeTypeName(type)),
 			        MakeAtt("column", columnRef),
-			        WriteIfNonNull("not-found", notFoundMode));
+                    WriteIfNonNull("not-found", notFoundMode),
+                    WriteIfNonNull("foreign-key", foreignKey));
 		}
 
-		private void WriteManyToMany(Type type, String[] compositeKeyColumnRefs, String notFoundMode)
+		private void WriteManyToMany(Type type, String[] compositeKeyColumnRefs, String notFoundMode, String foreignKey)
 		{
 			AppendStartTag("many-to-many",
 			        MakeAtt("class", MakeTypeName(type)),
-			        WriteIfNonNull("not-found", notFoundMode));
+                    WriteIfNonNull("not-found", notFoundMode),
+                    WriteIfNonNull("foreign-key", foreignKey));
 			Ident();
 			WriteCompositeColumns(compositeKeyColumnRefs);
 			Dedent();

@@ -45,6 +45,7 @@ namespace Castle.ActiveRecord
 		private String[] compositeKeyColumnKeys;
 		private FetchEnum fetchMethod = FetchEnum.Unspecified;
 		private Type customCollectionType;
+        private String foreignKey;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="HasAndBelongsToManyAttribute"/> class.
@@ -131,5 +132,14 @@ namespace Castle.ActiveRecord
 			get { return customCollectionType; }
 			set { customCollectionType = value; }
 		}
+
+        /// <summary>
+        /// Gets and sets the name of the foreign key constraint 
+        /// generated for an association.
+        /// </summary>
+        public string ForeignKey {
+            get { return foreignKey; }
+            set { foreignKey = value; }
+        }
 	}
 }
