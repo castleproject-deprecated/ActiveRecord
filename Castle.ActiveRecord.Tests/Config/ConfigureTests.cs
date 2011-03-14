@@ -18,7 +18,7 @@ namespace Castle.ActiveRecord.Tests.Config
 	using Castle.ActiveRecord.Framework.Scopes;
 	using NUnit.Framework;
 	using Castle.ActiveRecord.Framework.Config;
-	using NHibernate.ByteCode.Castle;
+	using Castle.ActiveRecord.ByteCode;
 	using NHibernate.Connection;
 	using NHibernate.Dialect;
 	using NHibernate.Driver;

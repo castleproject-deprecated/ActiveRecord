@@ -216,6 +216,9 @@
     <Compile Include="Attributes\WithAccessAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ByteCode\LazyInitializer.cs" />
+    <Compile Include="ByteCode\ProxyFactory.cs" />
+    <Compile Include="ByteCode\ProxyFactoryFactory.cs" />
     <Compile Include="Framework\ActiveRecordBase.cs">
       <SubType>Code</SubType>
     </Compile>

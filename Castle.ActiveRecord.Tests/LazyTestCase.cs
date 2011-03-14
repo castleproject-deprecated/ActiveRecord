@@ -34,7 +34,6 @@ namespace Castle.ActiveRecord.Tests
 
 			PostLazy postFromDb = PostLazy.Find(post.Id);
 			Assert.AreEqual("a", postFromDb.Title);
-			
 		}
 
 		[Test]
@@ -84,5 +83,25 @@ namespace Castle.ActiveRecord.Tests
 				Assert.AreEqual(teststring, System.Text.Encoding.UTF8.GetString(fromDb));
 			}
 		}
+
+        [Test]
+        public void CanLoadLazyBelongsToOutsideOfScope() {
+            ActiveRecordStarter.Initialize(GetConfigSource(),
+                   typeof(ObjectWithLazyAssociation), typeof(VeryLazyObject));
+            Recreate();
+
+            var lazy = new VeryLazyObject();
+            lazy.Title = "test";
+            ActiveRecordMediator.Save(lazy);
+
+            var obj = new ObjectWithLazyAssociation();
+            obj.LazyObj = lazy;
+            ActiveRecordMediator.Save(obj);
+
+            var objFromDb = (ObjectWithLazyAssociation)ActiveRecordMediator.FindByPrimaryKey(typeof(ObjectWithLazyAssociation), obj.Id);
+            Assert.False(NHibernate.NHibernateUtil.IsInitialized(objFromDb.LazyObj));
+            Assert.AreEqual("test", objFromDb.LazyObj.Title);
+            Assert.True(NHibernate.NHibernateUtil.IsInitialized(objFromDb.LazyObj));
+        }
 	}
 }

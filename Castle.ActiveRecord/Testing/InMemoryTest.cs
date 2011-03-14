@@ -39,7 +39,7 @@ namespace Castle.ActiveRecord.Testing
 			properties.Add("dialect", "NHibernate.Dialect.SQLiteDialect");
 			properties.Add("connection.provider", typeof(InMemoryConnectionProvider).AssemblyQualifiedName);
 			properties.Add("connection.connection_string", "Data Source=:memory:;Version=3;New=True");
-			properties.Add("proxyfactory.factory_class", "NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle");
+            properties.Add("proxyfactory.factory_class", "Castle.ActiveRecord.ByteCode.ProxyFactoryFactory, Castle.ActiveRecord");
 			foreach (var p in GetProperties())
 			{
 				properties[p.Key] = p.Value; 

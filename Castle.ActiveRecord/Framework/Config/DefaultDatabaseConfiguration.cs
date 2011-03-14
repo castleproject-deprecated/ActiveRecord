@@ -18,7 +18,8 @@ namespace Castle.ActiveRecord.Framework.Config
 	using System.Collections.Generic;
 	using System.Data;
 
-	using NHibernate.ByteCode.Castle;
+    using Castle.ActiveRecord.ByteCode;
+
 	using NHibernate.Connection;
 	using NHibernate.Dialect;
 	using NHibernate.Driver;

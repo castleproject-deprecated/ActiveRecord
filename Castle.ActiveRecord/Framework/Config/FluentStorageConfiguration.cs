@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.ActiveRecord.Framework.Config
+namespace Castle.ActiveRecord.Framework.Config 
 {
+    using Castle.ActiveRecord.ByteCode;
+
 	using NHibernate.Bytecode;
-	using NHibernate.ByteCode.Castle;
 	using NHibernate.Connection;
 	using NHibernate.Dialect;
 	using NHibernate.Driver;

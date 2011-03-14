@@ -20,8 +20,8 @@ namespace Castle.ActiveRecord.Tests
 
 	using Castle.ActiveRecord.Framework;
 	using Castle.ActiveRecord.Framework.Config;
+	using Castle.ActiveRecord.ByteCode;
 
-	using NHibernate.ByteCode.Castle;
 	using NHibernate.Connection;
 	using NHibernate.Dialect;
 	using NHibernate.Driver;
