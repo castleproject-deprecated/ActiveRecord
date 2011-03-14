@@ -628,7 +628,7 @@ namespace Castle.ActiveRecord
 
             try
             {
-                object persistent = session.SaveOrUpdateCopy(instance);
+                object persistent = session.Merge(instance);
 
                 if (flush)
                 {

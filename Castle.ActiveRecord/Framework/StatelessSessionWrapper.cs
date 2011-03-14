@@ -15,7 +15,9 @@
 namespace Castle.ActiveRecord.Framework
 {
 	using System;
+	using System.Linq.Expressions;
 	using NHibernate;
+	using NHibernate.Engine;
 
 	/// <summary>
 	/// Wraps a NHibernate.IStatelessSession and provides an interface of type
@@ -49,6 +51,12 @@ namespace Castle.ActiveRecord.Framework
 		public bool IsConnected
 		{
 			get { return statelessSession.Connection != null; }
+		}
+
+		public bool DefaultReadOnly
+		{
+			get { return false; }
+			set { }
 		}
 
 		public ITransaction Transaction
@@ -95,6 +103,18 @@ namespace Castle.ActiveRecord.Framework
 		public ICriteria CreateCriteria<T>() where T : class
 		{
 			return statelessSession.CreateCriteria<T>();
+		}
+
+		/// <summary>
+		/// Creates a new <c>IQueryOver&lt;T&gt;</c> for the entity class.
+		/// </summary>
+		/// <typeparam name="T">The entity class</typeparam>
+		/// <returns>
+		/// An ICriteria&lt;T&gt; object
+		/// </returns>
+		public IQueryOver<T, T> QueryOver<T>(System.Linq.Expressions.Expression<Func<T>> alias) where T : class
+		{
+			return statelessSession.QueryOver<T>(alias);
 		}
 
 		public IQuery CreateQuery(string queryString)
@@ -384,6 +404,11 @@ namespace Castle.ActiveRecord.Framework
 			throw new NotWrappedException();
 		}
 
+		public void SetReadOnly(object entityOrProxy, bool readOnly)
+		{
+			throw new NotWrappedException();
+		}
+
 		public object GetIdentifier(object obj)
 		{
 			throw new NotWrappedException();
@@ -395,6 +420,11 @@ namespace Castle.ActiveRecord.Framework
 		}
 
 		public bool IsDirty()
+		{
+			throw new NotWrappedException();
+		}
+
+		public bool IsReadOnly(object entityOrProxy)
 		{
 			throw new NotWrappedException();
 		}
@@ -522,18 +552,6 @@ namespace Castle.ActiveRecord.Framework
 		/// An ICriteria&lt;T&gt; object
 		/// </returns>
 		public IQueryOver<T, T> QueryOver<T>() where T : class
-		{
-			throw new NotWrappedException();
-		}
-
-		/// <summary>
-		/// Creates a new <c>IQueryOver&lt;T&gt;</c> for the entity class.
-		/// </summary>
-		/// <typeparam name="T">The entity class</typeparam>
-		/// <returns>
-		/// An ICriteria&lt;T&gt; object
-		/// </returns>
-		public IQueryOver<T, T> QueryOver<T>(System.Linq.Expressions.Expression<Func<T>> alias) where T : class
 		{
 			throw new NotWrappedException();
 		}

@@ -17,6 +17,7 @@ namespace Castle.ActiveRecord.Framework
 {
 	using System.Linq;
 	using NHibernate;
+	using NHibernate.Engine;
 	using NHibernate.Linq;
 
 	/// <summary>
@@ -47,7 +48,7 @@ namespace Castle.ActiveRecord.Framework
 		/// </summary>
 		public static IOrderedQueryable<T> AsQueryable<T>(this ISession session)
 		{
-			return new NhQueryable<T>(session);
+			return new NhQueryable<T>((ISessionImplementor) session);
 		}
 
 		/// <summary>

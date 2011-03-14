@@ -28,7 +28,14 @@ namespace Castle.ActiveRecord.ByteCode
             return new ProxyFactory();
         }
 
-        public IProxyValidator ProxyValidator 
+    	public bool IsProxy(object entity)
+    	{
+			if (entity == null) return false;
+
+			return entity.GetType().Module.ScopeName == "CastleDynProxy2.dll";
+    	}
+
+    	public IProxyValidator ProxyValidator 
         {
             get { return new DynProxyTypeValidator(); }
         }

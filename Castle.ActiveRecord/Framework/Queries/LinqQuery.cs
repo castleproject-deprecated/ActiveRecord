@@ -21,6 +21,7 @@ namespace Castle.ActiveRecord.Linq
 	using System.Linq.Expressions;
 
 	using NHibernate;
+	using NHibernate.Engine;
 	using NHibernate.Linq;
 
 	/// <summary>
@@ -55,7 +56,7 @@ namespace Castle.ActiveRecord.Linq
 		/// <inheritDoc />
 		public object Execute(ISession session)
 		{
-			var result = new NhQueryProvider(session).Execute(expression);
+			var result = new NhQueryProvider((ISessionImplementor) session).Execute(expression);
 			if (result is IEnumerable<T>)
 				Result = new List<T>(result as IEnumerable<T>);
 			return result;
