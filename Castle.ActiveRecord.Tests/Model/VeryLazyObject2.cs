@@ -14,24 +14,24 @@
 
 namespace Castle.ActiveRecord.Tests.Model
 {
-	[ActiveRecord]
-	public class ObjectWithLazyAssociation : ScopelessLazy
+	[ActiveRecord(Lazy = true)]
+	public class VeryLazyObject2 : ScopelessLazy
 	{
 		private int id;
-		private VeryLazyObject2 lazyObj;
+		private string title;
 
 		[PrimaryKey]
-		public int Id
+		public virtual int Id
 		{
 			get { return id; }
 			set { id = value; }
 		}
 
-		[BelongsTo(Lazy = FetchWhen.OnInvoke)]
-		public VeryLazyObject2 LazyObj
+		[Property]
+		public virtual string Title
 		{
-			get { return lazyObj; }
-			set { lazyObj = value; }
+			get { return title; }
+			set { title = value; }
 		}
 	}
 }

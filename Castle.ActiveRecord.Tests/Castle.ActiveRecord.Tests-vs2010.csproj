@@ -4,7 +4,7 @@
     <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..</RootPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-	<Configuration Condition=" '$(Configuration)' == '' ">NET40-Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">NET40-Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
   </PropertyGroup>
   <PropertyGroup>
@@ -34,11 +34,10 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
-  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NET40-Debug|AnyCPU' ">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
-	</TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <OutputPath>bin\NET40-Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -55,7 +54,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NET40-Release|AnyCPU' ">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
-	</TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <OutputPath>bin\NET40-Release\</OutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -94,7 +93,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\Castle.ActiveRecord.Tests.Model\Castle.ActiveRecord.Tests.Model-vs2010.csproj">
       <Project>{DC2D80AC-4641-4798-B059-C90AA162D2AB}</Project>
@@ -183,6 +181,9 @@
     <Compile Include="Model\Linq\Blog.cs" />
     <Compile Include="Model\Linq\Post.cs" />
     <Compile Include="Model\Linq\Widget.cs" />
+    <Compile Include="Model\ObjectWithLazyAssociation.cs" />
+    <Compile Include="Model\ScopelessLazy.cs" />
+    <Compile Include="Model\VeryLazyObject2.cs" />
     <Compile Include="NestedClassWithPrefixTestCase.cs" />
     <Compile Include="DifferentDatabaseScopeTestCase.cs" />
     <Compile Include="Model\CompositeModel\Agent.cs" />

@@ -14,24 +14,8 @@
 
 namespace Castle.ActiveRecord.Tests.Model
 {
-	[ActiveRecord]
-	public class ObjectWithLazyAssociation : ScopelessLazy
+	public abstract class ScopelessLazy
 	{
-		private int id;
-		private VeryLazyObject2 lazyObj;
-
-		[PrimaryKey]
-		public int Id
-		{
-			get { return id; }
-			set { id = value; }
-		}
-
-		[BelongsTo(Lazy = FetchWhen.OnInvoke)]
-		public VeryLazyObject2 LazyObj
-		{
-			get { return lazyObj; }
-			set { lazyObj = value; }
-		}
+		
 	}
 }

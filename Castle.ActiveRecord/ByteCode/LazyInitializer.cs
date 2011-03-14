@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Reflection;
-using NHibernate;
-using NHibernate.Engine;
-using NHibernate.Type;
-
 namespace Castle.ActiveRecord.ByteCode
 {
+	using System;
+	using System.Reflection;
+	using NHibernate;
+	using NHibernate.Engine;
+	using NHibernate.Type;
+
     class LazyInitializer : NHibernate.ByteCode.Castle.LazyInitializer 
     {
         public LazyInitializer(string entityName, Type persistentClass, object id, 

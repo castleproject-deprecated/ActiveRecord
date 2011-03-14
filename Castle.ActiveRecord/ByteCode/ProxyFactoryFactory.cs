@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using NHibernate.Bytecode;
-using NHibernate.Proxy;
-
 namespace Castle.ActiveRecord.ByteCode 
 {
+	using NHibernate.Bytecode;
+	using NHibernate.Proxy;
+
     /// <summary>
     /// The factory infrastructure used to build AR proxy objects.
     /// Use this one if you want automatic session management durring proxy hydration.
     /// </summary>
     public class ProxyFactoryFactory : IProxyFactoryFactory 
     {
-
         public IProxyFactory BuildProxyFactory() 
         {
             return new ProxyFactory();

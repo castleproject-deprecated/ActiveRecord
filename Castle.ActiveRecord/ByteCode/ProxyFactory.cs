@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using Castle.DynamicProxy;
-using NHibernate;
-using NHibernate.ByteCode.Castle;
-using NHibernate.Engine;
-using NHibernate.Proxy;
-
 namespace Castle.ActiveRecord.ByteCode 
 {
+	using System;
+	using DynamicProxy;
+	using NHibernate;
+	using NHibernate.ByteCode.Castle;
+	using NHibernate.Engine;
+	using NHibernate.Proxy;
+
     class ProxyFactory : AbstractProxyFactory 
     {
-
-        protected static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(ProxyFactory));
+		protected static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(ProxyFactory));
         private static readonly ProxyGenerator ProxyGenerator = new ProxyGenerator();
 
         protected static ProxyGenerator DefaultProxyGenerator 
@@ -33,17 +32,17 @@ namespace Castle.ActiveRecord.ByteCode
         }
 
         /// <summary>
-        /// Build a proxy using the Castle.DynamicProxy library.
+		/// Build a proxy using the Castle.DynamicProxy library, that overrides the default <see cref="NHibernate.ByteCode.Castle.LazyInitializer"/>
         /// </summary>
         /// <param name="id">The value for the Id.</param>
         /// <param name="session">The Session the proxy is in.</param>
         /// <returns>A fully built <c>INHibernateProxy</c>.</returns>
         public override INHibernateProxy GetProxy(object id, ISessionImplementor session) 
         {
-            try 
+            try
             {
-                var initializer = new LazyInitializer(EntityName, PersistentClass, id, GetIdentifierMethod,
-                                                            SetIdentifierMethod, ComponentIdType, session);
+            	var initializer = new LazyInitializer(EntityName, PersistentClass, id, GetIdentifierMethod,
+            	                                      SetIdentifierMethod, ComponentIdType, session);
 
                 object generatedProxy = IsClassProxy
                                             ? ProxyGenerator.CreateClassProxy(PersistentClass, Interfaces, initializer)
@@ -60,6 +59,10 @@ namespace Castle.ActiveRecord.ByteCode
             }
         }
 
+		/// <summary>
+		/// Returns a proxy capable of field interception.
+		/// </summary>
+		/// <returns></returns>
         public override object GetFieldInterceptionProxy() 
         {
             var proxyGenerationOptions = new ProxyGenerationOptions();
