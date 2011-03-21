@@ -30,9 +30,7 @@ namespace Castle.ActiveRecord.ByteCode
 
     	public bool IsProxy(object entity)
     	{
-			if (entity == null) return false;
-
-			return entity.GetType().Module.ScopeName == "CastleDynProxy2.dll";
+			return entity is INHibernateProxy;
     	}
 
     	public IProxyValidator ProxyValidator 
