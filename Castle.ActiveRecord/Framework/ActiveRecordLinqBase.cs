@@ -35,6 +35,7 @@ namespace Castle.ActiveRecord.Framework
 		/// var items = from f in Foo.Queryable where f.Name == theName select f;
 		/// var item = Foo.Queryable.First(f => f.Name == theName);
 		/// </summary>
+		/// <remarks>You must have an open Session Scope.</remarks>
 		public static IOrderedQueryable<T> Queryable
 		{
 			get
