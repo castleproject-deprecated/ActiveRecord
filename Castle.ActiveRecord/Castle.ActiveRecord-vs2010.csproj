@@ -394,7 +394,7 @@
     <Compile Include="Framework\Config\DatabaseType.cs" />
     <Compile Include="Framework\Config\DefaultActiveRecordConfiguration.cs" />
     <Compile Include="Framework\Config\DefaultFlushType.cs" />
-    <Compile Include="Framework\AbstractNHContributor.cs" />
+    <Compile Include="Framework\INHContributor.cs" />
     <Compile Include="Framework\Config\DefaultStorageConfiguration.cs" />
     <Compile Include="Framework\Config\FluentActiveRecordConfiguration.cs" />
     <Compile Include="Framework\Config\FluentNHibernateMapping.cs" />
@@ -416,7 +416,7 @@
     <Compile Include="Framework\Scopes\IScopeConversation.cs" />
     <Compile Include="Framework\Scopes\ScopedConversation.cs" />
     <Compile Include="Framework\StatelessSessionWrapper.cs" />
-    <Compile Include="Framework\INHContributor.cs" />
+    <Compile Include="Framework\AbstractNHContributor.cs" />
     <Compile Include="Framework\Internal\EventListener\EventListenerConfig.cs" />
     <Compile Include="Framework\Internal\EventListener\EventListenerContributor.cs" />
     <Compile Include="Framework\NHEventListeners.cs" />

@@ -18,45 +18,27 @@ namespace Castle.ActiveRecord.Framework
 	using NHibernate.Cfg;
 
 	/// <summary>
-	/// <para>
-	/// Contributors are an extension point of ActiveRecord. Instances of INHContributor
-	/// are registered at <see cref="ActiveRecordStarter"/> before the framework is
-	/// initialized. They are called before the session factory is created and can therefore
-	/// contribute to NHibernate's configuration of the session factory.
-	/// </para>
+	/// Defines an abstract base class for <see cref="INHContributor"/> which applies
+	/// to all root types by default.
 	/// </summary>
-	public interface INHContributor
+	public abstract class AbstractNHContributor : INHContributor
 	{
-		/// <summary>
-		/// This predicate can be set per instance and will be called by the framework to
-		/// determine whether the contributor should add to the actual root type.
-		/// </summary>
-		/// <example><![CDATA[
-		/// public class SampleContributor : INHContributor
-		/// {
-		///		public Predicate<Type> AppliesToRootType
-		///		{
-		///			get { return _appliesToRootType; }
-		///			set { _appliesToRootType = value; }
-		///		}
-		///		
-		///		// Applies to default root type only by default
-		///		private Predicate<Type>_appliesToRootType = ( (type) => type.Equals(typeof(ActiveRecordBase)));
-		///		
-		///		public void Contribute(Configuration c) {}
-		/// }
-		/// ]]></example>
-		Predicate<Type> AppliesToRootType { get; set; }
+
+		private Predicate<Type> _appliesToRootType = ((type) => true);
 
 		/// <summary>
-		/// Called to modify the configuration before the session factory is called.
+		/// Implements <see cref="INHContributor.AppliesToRootType"/>
 		/// </summary>
-		/// <remarks>
-		/// The order in which multiple contributors are called is not determined. The method
-		/// must not assume any fixed order and must therefore not be used to counter 
-		/// modifications by other contributors. 
-		/// </remarks>
-		/// <param name="configuration">The NH configuration to modify.</param>
-		void Contribute(Configuration configuration);
+		public Predicate<Type> AppliesToRootType
+		{
+			get { return _appliesToRootType; }
+			set { _appliesToRootType = value; }
+		}
+
+		/// <summary>
+		/// The actual contribution method.
+		/// </summary>
+		/// <param name="configuration">The configuration to be modified.</param>
+		public abstract void Contribute(Configuration configuration);
 	}
 }
