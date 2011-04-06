@@ -238,7 +238,7 @@ namespace Castle.ActiveRecord.Framework
 			}
 		}
 
-		private static ISession OpenSessionWithScope(ISessionScope scope, ISessionFactory sessionFactory)
+		internal static ISession OpenSessionWithScope(ISessionScope scope, ISessionFactory sessionFactory)
 		{
 			lock(sessionFactory)
 			{

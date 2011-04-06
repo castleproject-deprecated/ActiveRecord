@@ -16,8 +16,6 @@ namespace Castle.ActiveRecord.Framework
 {
 	using System;
 	using System.Linq;
-	using NHibernate;
-	using NHibernate.Linq;
 
 	/// <summary>
 	/// A variation of the ActiveRecordBase class which provides the
@@ -41,7 +39,14 @@ namespace Castle.ActiveRecord.Framework
 		{
 			get
 			{
-				ISession session = holder.CreateSession(typeof(T));
+				var activeScope = holder.ThreadScopeInfo.GetRegisteredScope();
+
+				if (activeScope == null)
+					throw new ActiveRecordException("Could not found a registered Scope. Linq queries needs a underlying a scope to be functional.");
+
+				var key = holder.GetSessionFactory(typeof(T));
+
+				var session = activeScope.IsKeyKnown(key) ? activeScope.GetSession(key) : SessionFactoryHolder.OpenSessionWithScope(activeScope, key);
 
 				return session.AsQueryable<T>();
 			}

@@ -14,8 +14,10 @@
 
 namespace Castle.ActiveRecord.Tests.Model.Linq
 {
-    [ActiveRecord]
-    public class Widget : ActiveRecordBase
+	using System;
+
+	[ActiveRecord]
+    public class Widget : ActiveRecordBase, IEquatable<Widget>
     {
         [PrimaryKey]
         public int Id
@@ -35,5 +37,28 @@ namespace Castle.ActiveRecord.Tests.Model.Linq
         {
             ActiveRecordMediator.DeleteAll(typeof (Widget));
         }
+
+    	public bool Equals(Widget other)
+    	{
+    		if (ReferenceEquals(null, other)) return false;
+    		if (ReferenceEquals(this, other)) return true;
+    		return other.Id == Id && Equals(other.Name, Name);
+    	}
+
+    	public override bool Equals(object obj)
+    	{
+    		if (ReferenceEquals(null, obj)) return false;
+    		if (ReferenceEquals(this, obj)) return true;
+    		if (obj.GetType() != typeof (Widget)) return false;
+    		return Equals((Widget) obj);
+    	}
+
+    	public override int GetHashCode()
+    	{
+    		unchecked
+    		{
+    			return (Id*397) ^ (Name != null ? Name.GetHashCode() : 0);
+    		}
+    	}
     }
 }

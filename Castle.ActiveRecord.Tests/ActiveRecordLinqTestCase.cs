@@ -39,35 +39,35 @@ namespace Castle.ActiveRecord.Tests
 		{
 			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Post), typeof(Blog));
 
-			Recreate();
-
-
-			Post.DeleteAll();
-			Blog.DeleteAll();
-
-			var blogs = from b in Blog.Queryable select b;
-
-			Assert.IsNotNull(blogs);
-			Assert.AreEqual(0, blogs.Count());
-
-			var blog = new Blog
+			using (new SessionScope())
 			{
-				Name = "hammett's blog",
-				Author = "hamilton verissimo"
-			};
-			blog.Save();
+				Recreate();
 
+				Post.DeleteAll();
+				Blog.DeleteAll();
 
-			blogs = from b in Blog.Queryable select b;
-			Assert.IsNotNull(blogs);
-			Assert.AreEqual(1, blogs.Count());
+				var blogs = from b in Blog.Queryable select b;
 
-			var retrieved = Blog.Queryable.First();
-			Assert.IsNotNull(retrieved);
+				Assert.IsNotNull(blogs);
+				Assert.AreEqual(0, blogs.Count());
 
-			Assert.AreEqual(blog.Name, retrieved.Name);
-			Assert.AreEqual(blog.Author, retrieved.Author);
+				var blog = new Blog
+				           	{
+				           		Name = "hammett's blog",
+				           		Author = "hamilton verissimo"
+				           	};
+				blog.Save();
 
+				blogs = from b in Blog.Queryable select b;
+				Assert.IsNotNull(blogs);
+				Assert.AreEqual(1, blogs.Count());
+
+				var retrieved = Blog.Queryable.First();
+				Assert.IsNotNull(retrieved);
+
+				Assert.AreEqual(blog.Name, retrieved.Name);
+				Assert.AreEqual(blog.Author, retrieved.Author);
+			}
 		}
 
 		[Test]
@@ -75,80 +75,75 @@ namespace Castle.ActiveRecord.Tests
 		{
 			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Post), typeof(Blog));
 
-			Recreate();
-
-
-			Post.DeleteAll();
-			Blog.DeleteAll();
-
-			var blogs = from b in Blog.Queryable select b;
-
-			Assert.IsNotNull(blogs);
-			Assert.AreEqual(0, blogs.Count());
-
-			var blog = new Blog
+			using (new SessionScope())
 			{
-				Name = "hammett's blog",
-				Author = "hamilton verissimo"
-			};
-			blog.Save();
+				Recreate();
 
+				Post.DeleteAll();
+				Blog.DeleteAll();
 
-			blogs = from b in Blog.Queryable select b;
-			Assert.IsNotNull(blogs);
-			Assert.AreEqual(1, blogs.Count());
+				var blogs = from b in Blog.Queryable select b;
 
-			// this line will fail because of blogs.Count above
-			var retrieved = blogs.First();
-			Assert.IsNotNull(retrieved);
+				Assert.IsNotNull(blogs);
+				Assert.AreEqual(0, blogs.Count());
 
-			Assert.AreEqual(blog.Name, retrieved.Name);
-			Assert.AreEqual(blog.Author, retrieved.Author);
+				var blog = new Blog
+				           	{
+				           		Name = "hammett's blog",
+				           		Author = "hamilton verissimo"
+				           	};
+				blog.Save();
 
+				blogs = from b in Blog.Queryable select b;
+				Assert.IsNotNull(blogs);
+				Assert.AreEqual(1, blogs.Count());
+
+				// this line will fail because of blogs.Count above
+				var retrieved = blogs.First();
+				Assert.IsNotNull(retrieved);
+
+				Assert.AreEqual(blog.Name, retrieved.Name);
+				Assert.AreEqual(blog.Author, retrieved.Author);
+			}
 		}
-
 
 		[Test]
 		public void SimpleOperations2()
 		{
 			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Post), typeof(Blog));
 
-			Recreate();
+			using (new SessionScope())
+			{
+				Recreate();
 
-			Post.DeleteAll();
-			Blog.DeleteAll();
+				Post.DeleteAll();
+				Blog.DeleteAll();
 
-			var blogs = Blog.Queryable;
-			Assert.IsNotNull(blogs);
-			Assert.AreEqual(0, blogs.Count());
+				var blogs = Blog.Queryable;
+				Assert.IsNotNull(blogs);
+				Assert.AreEqual(0, blogs.Count());
 
-			Blog blog = new Blog();
-			blog.Name = "hammett's blog";
-			blog.Author = "hamilton verissimo";
-			blog.Create();
+				Blog blog = new Blog();
+				blog.Name = "hammett's blog";
+				blog.Author = "hamilton verissimo";
+				blog.Create();
 
-			Assert.AreEqual(1, (from
-			b in
-									Blog.Queryable
-								select
-									b).
-			Count())
-			;
+				Assert.AreEqual(1, (from b in Blog.Queryable select b).Count());
 
-			blogs = Blog.Queryable;
-			Assert.AreEqual(blog.Name, blogs.First().Name);
-			Assert.AreEqual(blog.Author, blogs.First().Author);
+				blogs = Blog.Queryable;
+				Assert.AreEqual(blog.Name, blogs.First().Name);
+				Assert.AreEqual(blog.Author, blogs.First().Author);
 
-			blog.Name = "something else1";
-			blog.Author = "something else2";
-			blog.Update();
+				blog.Name = "something else1";
+				blog.Author = "something else2";
+				blog.Update();
 
-			blogs = Blog.Queryable;
-			Assert.IsNotNull(blogs);
-			Assert.AreEqual(1, Blog.Queryable.Count());
-			Assert.AreEqual(blog.Name, blogs.First().Name);
-			Assert.AreEqual(blog.Author, blogs.First().Author);
-
+				blogs = Blog.Queryable;
+				Assert.IsNotNull(blogs);
+				Assert.AreEqual(1, Blog.Queryable.Count());
+				Assert.AreEqual(blog.Name, blogs.First().Name);
+				Assert.AreEqual(blog.Author, blogs.First().Author);
+			}
 		}
 
 		[Test]
@@ -182,10 +177,10 @@ namespace Castle.ActiveRecord.Tests
 				Blog blog = (from b in Blog.Queryable where b.Id == blogId select b).First();
 
 				Blog blog2 = Blog.Queryable.First(b => b.Id == blogId);
-				Assert.AreSame(blog, blog2);
+				Assert.AreEqual(blog, blog2);
 
 				Blog blog3 = Blog.Find(blogId);
-				Assert.AreSame(blog, blog3);
+				Assert.AreEqual(blog, blog3);
 
 				Assert.IsNotNull(blog);
 				Assert.IsNotNull(blog.Posts, "posts collection is null");
@@ -195,7 +190,6 @@ namespace Castle.ActiveRecord.Tests
 				{
 					Assert.AreEqual(blog.Id, post.Blog.Id);
 				}
-
 			}
 		}
 
@@ -224,7 +218,7 @@ namespace Castle.ActiveRecord.Tests
 				Assert.IsNotNull(widget2);
 				Assert.AreEqual("Hello world", widget2.Name);
 
-				Assert.AreSame(widget2, widget);
+				Assert.AreEqual(widget2, widget);
 			}
 		}
 
@@ -254,72 +248,59 @@ namespace Castle.ActiveRecord.Tests
 
 
 
-		[Test]
-		public void Linq_without_session_scope()
+		[Test, ExpectedException(typeof(ActiveRecordException))]
+		public void Linq_without_session_scope_should_fail()
 		{
 			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Widget));
 			Recreate();
 			Widget.DeleteAll();
 
-			var widgets = from w in ActiveRecordLinq.AsQueryable<Widget>() select w;
-			Assert.IsNotNull(widgets);
-			Assert.AreEqual(0, widgets.Count());
-		}
-
-		[Test]
-		public void Linq_without_session_scope2()
-		{
-			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Widget));
-			Recreate();
-			Widget.DeleteAll();
-
-			var widget = new Widget { Name = "foo" };
-			widget.Save();
-
-			var orderedQueryable = ActiveRecordLinqBase<Widget>.Queryable;
-			var widgets = (from w in orderedQueryable
-			               where w.Name.StartsWith("f")
-			               select w).ToList();
-
-			Assert.IsNotNull(widgets);
-			Assert.AreEqual("foo", widgets.Single().Name);
+			ActiveRecordLinq.AsQueryable<Widget>();
 		}
 
 		[Test]
 		public void Projecting()
 		{
 			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Widget));
-			Recreate();
-			Widget.DeleteAll();
 
-			var widget = new Widget { Name = "foo" };
-			widget.Save();
+			using (new SessionScope())
+			{
+				Recreate();
+				Widget.DeleteAll();
 
-			var orderedQueryable = ActiveRecordLinqBase<Widget>.Queryable;
-			var widgets = (from w in orderedQueryable
-						   where w.Name.StartsWith("f")
-						   select w.Name).ToList();
+				var widget = new Widget {Name = "foo"};
+				widget.Save();
 
-			Assert.IsNotNull(widgets);
-			Assert.AreEqual("foo", widgets.Single());
+				var orderedQueryable = ActiveRecordLinqBase<Widget>.Queryable;
+				var widgets = (from w in orderedQueryable
+				               where w.Name.StartsWith("f")
+				               select w.Name).ToList();
+
+				Assert.IsNotNull(widgets);
+				Assert.AreEqual("foo", widgets.Single());
+			}
 		}
 		[Test]
 		public void Projecting2()
 		{
 			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(Widget));
-			Recreate();
-			Widget.DeleteAll();
 
-			var widget = new Widget { Name = "foo" };
-			widget.Save();
+			using (new SessionScope())
+			{
+				Recreate();
+				Widget.DeleteAll();
 
-			var orderedQueryable = ActiveRecordLinqBase<Widget>.Queryable;
-			var name = (from w in orderedQueryable
-						   where w.Name.StartsWith("f")
-						   select w.Name).First();
+				var widget = new Widget {Name = "foo"};
+				widget.Save();
 
-			Assert.IsNotNull(name);
-			Assert.AreEqual("foo", name);
+				var orderedQueryable = ActiveRecordLinqBase<Widget>.Queryable;
+				var name = (from w in orderedQueryable
+				            where w.Name.StartsWith("f")
+				            select w.Name).First();
+
+				Assert.IsNotNull(name);
+				Assert.AreEqual("foo", name);
+			}
 		}
 	}
 }

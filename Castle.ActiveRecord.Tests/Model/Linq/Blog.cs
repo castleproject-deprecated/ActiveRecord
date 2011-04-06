@@ -19,8 +19,8 @@ namespace Castle.ActiveRecord.Tests.Model.Linq
 	using Castle.ActiveRecord.Framework;
 
 	[ActiveRecord("BlogTable")]
-    public class Blog : ActiveRecordLinqBase<Blog>
-    {
+    public class Blog : ActiveRecordLinqBase<Blog>, IEquatable<Blog>
+	{
         private int _id;
         private String _name;
         private String _author;
@@ -87,158 +87,41 @@ namespace Castle.ActiveRecord.Tests.Model.Linq
             set { _recentposts = value; }
         }
 
-        /*
-        public static void DeleteAll()
-        {
-            ActiveRecordMediator.DeleteAll(typeof(Blog));
-        }
+		public bool Equals(Blog other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return other._id == _id && Equals(other._name, _name) && Equals(other._author, _author);
+		}
 
-        public static void DeleteAll(string where)
-        {
-            ActiveRecordMediator.DeleteAll(typeof(Blog), where);
-        }
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != typeof (Blog)) return false;
+			return Equals((Blog) obj);
+		}
 
-        public static Blog[] FindAll()
-        {
-            return (Blog[])ActiveRecordMediator.FindAll(typeof(Blog));
-        }
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				int result = _id;
+				result = (result*397) ^ (_name != null ? _name.GetHashCode() : 0);
+				result = (result*397) ^ (_author != null ? _author.GetHashCode() : 0);
+				result = (result*397) ^ (_posts != null ? _posts.GetHashCode() : 0);
+				return result;
+			}
+		}
 
-        public static Blog Find(int id)
-        {
-            return (Blog)ActiveRecordMediator.FindByPrimaryKey(typeof(Blog), id);
-        }
+		public static bool operator ==(Blog left, Blog right)
+		{
+			return Equals(left, right);
+		}
 
-        public static int FetchCount()
-        {
-            return Count(typeof(Blog));
-        }
-
-        public static int FetchCount(string filter, params object[] args)
-        {
-            return Count(typeof(Blog), filter, args);
-        }
-
-        public static int FetchCount(params ICriterion[] criterias)
-        {
-            return Count(typeof(Blog), criterias);
-        }
-
-        public static bool Exists()
-        {
-            return Exists(typeof(Blog));
-        }
-
-        public static bool Exists(string filter, params object[] args)
-        {
-            return Exists(typeof(Blog), filter, args);
-        }
-
-        public static bool Exists(int id)
-        {
-            return Exists(typeof(Blog), id);
-        }
-
-        public static bool Exists(params ICriterion[] criteria)
-        {
-            return Exists(typeof(Blog), criteria);
-        }
-
-        public static Blog[] FindByProperty(String property, object value)
-        {
-            return (Blog[])FindAllByProperty(typeof(Blog), property, value);
-        }
-
-        public static Blog[] FindByProperty(String property, String orderByColumn, object value)
-        {
-            return (Blog[])FindAllByProperty(typeof(Blog), orderByColumn, property, value);
-        }
-         */
-
-        /*
-
-        /// <summary>
-        /// Lifecycle method invoked during Save of the entity
-        /// </summary>
-        protected override void OnSave()
-        {
-            onSaveCalled = true;
-        }
-
-        /// <summary>
-        /// Lifecycle method invoked during Update of the entity
-        /// </summary>
-        protected override void OnUpdate()
-        {
-            onUpdateCalled = true;
-        }
-
-        /// <summary>
-        /// Lifecycle method invoked during Delete of the entity
-        /// </summary>
-        protected override void OnDelete()
-        {
-            onDeleteCalled = true;
-        }
-
-        /// <summary>
-        /// Lifecycle method invoked during Load of the entity
-        /// </summary>
-        protected override void OnLoad(object id)
-        {
-            onLoadCalled = true;
-        }
-
-        public bool OnSaveCalled
-        {
-            get { return onSaveCalled; }
-        }
-
-        public bool OnUpdateCalled
-        {
-            get { return onUpdateCalled; }
-        }
-
-        public bool OnDeleteCalled
-        {
-            get { return onDeleteCalled; }
-        }
-
-        public bool OnLoadCalled
-        {
-            get { return onLoadCalled; }
-        }
-
-        public ISession CurrentSession
-        {
-            get
-            {
-                return (ISession)
-                       ActiveRecordMediator.Execute(typeof(Blog), new NHibernateDelegate(GrabSession), this);
-            }
-        }
-
-        private static object GrabSession(ISession session, object instance)
-        {
-            return session;
-        }
-
-        public void CustomAction()
-        {
-            ActiveRecordMediator.Execute(typeof(Blog), new NHibernateDelegate(MyCustomMethod), this);
-        }
-
-        private static object MyCustomMethod(ISession session, object blogInstance)
-        {
-            session.Delete(blogInstance);
-            session.Flush();
-
-            return null;
-        }
-
-        internal static ISessionFactoryHolder Holder
-        {
-            get { return ActiveRecordMediator.GetSessionFactoryHolder(); }
-        }
-         */
+		public static bool operator !=(Blog left, Blog right)
+		{
+			return !Equals(left, right);
+		}
     }
 }
