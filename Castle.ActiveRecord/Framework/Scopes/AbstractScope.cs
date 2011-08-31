@@ -209,21 +209,32 @@ namespace Castle.ActiveRecord.Framework.Scopes
 		/// <param name="close">if set to <c>true</c> [close].</param>
 		protected internal void PerformDisposal(ICollection<ISession> sessions, bool flush, bool close)
 		{
-			foreach (ISession session in sessions)
+			foreach (var session in sessions)
 			{
-				if (flush) session.Flush();
-
-				ITransaction tx = session.Transaction;
-				if (session.IsConnected && session.Connection.State == ConnectionState.Open &&
-					tx != null && tx.IsActive && !(tx.WasCommitted || tx.WasRolledBack))
+				var commit = false;
+				try
 				{
 					if (flush)
-						tx.Commit();
-					else
-						session.Transaction.Rollback();
-					tx.Dispose();
+					{
+						session.Flush();
+						commit = true;
+					}
 				}
-				if (close) session.Dispose();
+				finally
+				{
+					var tx = session.Transaction;
+					if (session.IsConnected && session.Connection.State == ConnectionState.Open &&
+						tx != null && tx.IsActive && !(tx.WasCommitted || tx.WasRolledBack))
+					{
+						if (commit)
+							tx.Commit();
+						else
+							tx.Rollback();
+						tx.Dispose();
+					}
+
+					if (close) session.Dispose();
+				}
 			}
 		}
 
