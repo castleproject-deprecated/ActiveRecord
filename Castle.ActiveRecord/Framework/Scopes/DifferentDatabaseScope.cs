@@ -29,6 +29,7 @@ namespace Castle.ActiveRecord.Framework.Scopes
 		private readonly IDbConnection connection;
 		private readonly SessionScope parentSimpleScope;
 		private readonly TransactionScope parentTransactionScope;
+        private bool hasSessionError;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DifferentDatabaseScope"/> class.
@@ -166,9 +167,11 @@ namespace Castle.ActiveRecord.Framework.Scopes
 		/// <param name="sessions">The sessions.</param>
 		protected override void PerformDisposal(ICollection<ISession> sessions)
 		{
+		    bool flush = !this.hasSessionError && this.FlushAction != FlushAction.Never;
+
 			if (parentTransactionScope == null && parentSimpleScope == null)
 			{
-				PerformDisposal(sessions, true, true);
+                PerformDisposal(sessions, flush, true);
 			}
 		}
 
@@ -191,6 +194,7 @@ namespace Castle.ActiveRecord.Framework.Scopes
 		/// <param name="session">the session</param>
 		public override void FailSession(ISession session)
 		{
+		    hasSessionError = true;
 			if (parentTransactionScope != null)
 			{
 				parentTransactionScope.VoteRollBack();
