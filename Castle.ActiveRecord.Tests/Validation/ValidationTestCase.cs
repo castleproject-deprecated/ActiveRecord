@@ -414,8 +414,7 @@ namespace Castle.ActiveRecord.Tests.Validation
 
 			String[] messages = blog.ValidationErrorMessages;
 			Assert.IsTrue(messages.Length == 1);
-			Assert.AreEqual("Id is currently in use. Please pick up a new Id.", messages[0]);
-			//Assert.AreEqual("The ID you specified already exists.", messages[0]); //TODO: Fix it (custom validation messages).
+			Assert.AreEqual("The ID you specified already exists.", messages[0]);
 
 			blog.Create();
 		}
