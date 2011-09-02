@@ -128,6 +128,8 @@ namespace Castle.ActiveRecord.Framework.Validators
 		/// <returns></returns>
 		protected override string BuildErrorMessage()
 		{
+			if (!String.IsNullOrEmpty(ErrorMessage))
+				return ErrorMessage;
 			return String.Format("{0} is currently in use. Please pick up a new {0}.", Property.Name);
 		}
 
