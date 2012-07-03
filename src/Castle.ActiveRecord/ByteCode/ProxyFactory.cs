@@ -63,7 +63,7 @@ namespace Castle.ActiveRecord.ByteCode
 		/// Returns a proxy capable of field interception.
 		/// </summary>
 		/// <returns></returns>
-        public override object GetFieldInterceptionProxy() 
+        public override object GetFieldInterceptionProxy(object instanceToWrap) 
         {
             var proxyGenerationOptions = new ProxyGenerationOptions();
             var interceptor = new LazyFieldInterceptor();
