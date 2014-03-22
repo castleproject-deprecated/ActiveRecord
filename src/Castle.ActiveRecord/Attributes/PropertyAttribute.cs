@@ -78,7 +78,7 @@ namespace Castle.ActiveRecord
 		/// <summary>
 		/// Gets or sets a value indicating whether this property allow null.
 		/// </summary>
-		/// <value><c>true</c> if allow null; otherwise, <c>false</c>.</value>
+		/// <value><c>true</c> if the value is not nullable; otherwise, <c>false</c>.</value>
 		public bool NotNull { get; set; }
 
 		/// <summary>
