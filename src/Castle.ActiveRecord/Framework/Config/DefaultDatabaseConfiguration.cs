@@ -57,9 +57,11 @@ namespace Castle.ActiveRecord.Framework.Config
 				case DatabaseType.MsSqlServer2000:
 					return Configure<SqlClientDriver, MsSql2000Dialect>();
 				case DatabaseType.MsSqlServer2005:
-					return Configure<SqlClientDriver, MsSql2005Dialect>();
+					return Configure<SqlClientDriver, MsSql2012Dialect>();
 				case DatabaseType.MsSqlServer2008:
-					return Configure<SqlClientDriver, MsSql2008Dialect>();
+					return Configure<SqlClientDriver, MsSql2012Dialect>();
+                case DatabaseType.MsSqlServer2012:
+                    return Configure<SqlClientDriver, MsSql2012Dialect>();
 				case DatabaseType.SQLite:
 					return Configure<SQLite20Driver, SQLiteDialect>(SQLite());
 				case DatabaseType.MySql:

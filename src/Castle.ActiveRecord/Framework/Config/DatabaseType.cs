@@ -14,67 +14,71 @@
 
 namespace Castle.ActiveRecord.Framework.Config
 {
-	/// <summary>
-	/// Enum for database types support for configuration construction. 
-	/// Not to be confused by databases supported by ActiveRecord
-	/// </summary>
-	public enum DatabaseType
-	{
-		/// <summary>
-		/// Microsoft SQL Server 2000
-		/// </summary>
-		MsSqlServer2000,
-		/// <summary>
-		/// Microsoft SQL Server 2005
-		/// </summary>
-		MsSqlServer2005,
-		/// <summary>
-		/// Microsoft SQL Server 2008
-		/// </summary>
-		MsSqlServer2008,
-		/// <summary>
-		/// SQLite
-		/// </summary>
-		SQLite,
-		/// <summary>
-		/// MySQL 3 or 4
-		/// </summary>
-		MySql,
-		/// <summary>
-		/// MySQL 5
-		/// </summary>
-		MySql5,
-		/// <summary>
-		/// Firebird
-		/// </summary>
-		Firebird,
-		/// <summary>
-		/// PostgreSQL
-		/// </summary>
-		PostgreSQL,
-		/// <summary>
-		/// PostgreSQL 8.1
-		/// </summary>
-		PostgreSQL81,
-		/// <summary>
-		/// PostgreSQL 8.2
-		/// </summary>
-		PostgreSQL82,
-		/// <summary>
-		/// Microsoft SQL Server 2005 Compact Edition
-		/// </summary>
-		MsSqlCe,
-		/// <summary>
-		/// Oracle 
-		/// </summary>
-		Oracle8i,
-		/// <summary>
-		/// Oracle 9
-		/// </summary>
-		Oracle9i,
-		/// <summary>
-		/// Oracle 10g
-		/// </summary>
-		Oracle10g
-	}
+    /// <summary>
+    /// Enum for database types support for configuration construction. 
+    /// Not to be confused by databases supported by ActiveRecord
+    /// </summary>
+    public enum DatabaseType
+    {
+        /// <summary>
+        /// Microsoft SQL Server 2000
+        /// </summary>
+        MsSqlServer2000,
+        /// <summary>
+        /// Microsoft SQL Server 2005
+        /// </summary>
+        MsSqlServer2005,
+        /// <summary>
+        /// Microsoft SQL Server 2008
+        /// </summary>
+        MsSqlServer2008,
+        /// <summary>
+        /// Microsoft SQL Server 2012
+        /// </summary>
+        MsSqlServer2012,
+        /// <summary>
+        /// SQLite
+        /// </summary>
+        SQLite,
+        /// <summary>
+        /// MySQL 3 or 4
+        /// </summary>
+        MySql,
+        /// <summary>
+        /// MySQL 5
+        /// </summary>
+        MySql5,
+        /// <summary>
+        /// Firebird
+        /// </summary>
+        Firebird,
+        /// <summary>
+        /// PostgreSQL
+        /// </summary>
+        PostgreSQL,
+        /// <summary>
+        /// PostgreSQL 8.1
+        /// </summary>
+        PostgreSQL81,
+        /// <summary>
+        /// PostgreSQL 8.2
+        /// </summary>
+        PostgreSQL82,
+        /// <summary>
+        /// Microsoft SQL Server 2005 Compact Edition
+        /// </summary>
+        MsSqlCe,
+        /// <summary>
+        /// Oracle 
+        /// </summary>
+        Oracle8i,
+        /// <summary>
+        /// Oracle 9
+        /// </summary>
+        Oracle9i,
+        /// <summary>
+        /// Oracle 10g
+        /// </summary>
+        Oracle10g
+    }
 }

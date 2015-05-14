@@ -58,7 +58,7 @@ namespace Castle.ActiveRecord.Tests.Config
 				.ConnectionStringName("a_string")
 				.Driver<SqlClientDriver>()
 				.ConnectionProvider<DriverConnectionProvider>()
-				.Dialect<MsSql2005Dialect>()
+				.Dialect<MsSql2012Dialect>()
 				.ProxiedBy<ProxyFactoryFactory>()
 				.ShowSql();
 

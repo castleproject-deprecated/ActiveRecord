@@ -28,7 +28,7 @@ namespace Castle.ActiveRecord.Tests
 
             Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("hibernate.connection.driver_class", "NHibernate.Driver.SqlClientDriver");
-            properties.Add("hibernate.dialect", "NHibernate.Dialect.MsSql2008Dialect");
+            properties.Add("hibernate.dialect", "NHibernate.Dialect.MsSql2012Dialect");
             properties.Add("hibernate.connection.provider", "NHibernate.Connection.DriverConnectionProvider");
             properties.Add("hibernate.connection.connection_string",
                            "Data Source=.;Initial Catalog=Test;Integrated Security=true");
