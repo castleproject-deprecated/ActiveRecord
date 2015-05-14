@@ -23,6 +23,12 @@ namespace Castle.ActiveRecord.ByteCode
     /// </summary>
     public class ProxyFactoryFactory : IProxyFactoryFactory 
     {
+
+        public IProxyValidator ProxyValidator
+        {
+            get { return new DynProxyTypeValidator(); }
+        }
+
         public IProxyFactory BuildProxyFactory() 
         {
             return new ProxyFactory();
@@ -32,11 +38,6 @@ namespace Castle.ActiveRecord.ByteCode
     	{
 			return entity is INHibernateProxy;
     	}
-
-    	public IProxyValidator ProxyValidator 
-        {
-            get { return new DynProxyTypeValidator(); }
-        }
 
         public bool IsInstrumented(System.Type entityClass) 
         {

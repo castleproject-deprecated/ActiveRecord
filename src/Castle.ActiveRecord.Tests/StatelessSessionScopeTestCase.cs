@@ -25,6 +25,8 @@ namespace Castle.ActiveRecord.Tests
 	using NHibernate.Criterion;
 	using NUnit.Framework;
 	using System.Collections;
+	using System.Collections.Generic;
+
 	using Castle.ActiveRecord.Queries;
 
 	[TestFixture]
@@ -208,7 +210,7 @@ Please check the stacktrace and change your code accordingly.", ex.Message);
 
 			using (new StatelessSessionScope())
 			{
-				blog.Posts = new ArrayList();
+				blog.Posts = new List<Post>();
 
 				for (int i = 0; i < 10; i++)
 				{

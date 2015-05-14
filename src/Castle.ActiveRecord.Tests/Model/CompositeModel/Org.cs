@@ -16,19 +16,20 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
 
-	[ActiveRecord("Orgs")]
+    [ActiveRecord("Orgs")]
 	public class Org : ActiveRecordBase
 	{
 		private string _id;
 		private String _description;
 		private DateTime _created;
-		private IList _agents;
+        private IList<Agent> _agents;
 		private int _version;
 
 		public Org()
 		{
-			_agents = new ArrayList();
+			_agents = new List<Agent>();
 			_created = DateTime.Now;
 			_version = -1;
 		}
@@ -63,7 +64,7 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 		[HasMany(typeof(Agent),
 			Inverse=true,
 			Lazy=true)]
-		public IList Agents
+        public IList<Agent> Agents
 		{
 			get { return _agents; }
 			set { _agents = value; }

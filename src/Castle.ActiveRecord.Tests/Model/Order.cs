@@ -76,7 +76,7 @@ namespace Castle.ActiveRecord.Tests.Model
 		private int id;
 		private DateTime ordered_date;
 		private Boolean shipped;
-		private IList _products;
+		private IList<object> _products;
 
 		[PrimaryKey(PrimaryKeyType.Native, "OrderID")]
 		public int ID
@@ -109,7 +109,7 @@ namespace Castle.ActiveRecord.Tests.Model
 			ColumnRef="product_id", ColumnKey="order_id"),
 			CollectionID(CollectionIDType.HiLo, "line_number", "Int32"),
 			Hilo(Table="testing_hilo", Column="sequence", MaxLo=150)]
-		public IList Products
+        public IList<object> Products
 		{
 			get { return _products; }
 			set { _products = value; }

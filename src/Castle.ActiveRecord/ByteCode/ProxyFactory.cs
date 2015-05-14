@@ -23,8 +23,8 @@ namespace Castle.ActiveRecord.ByteCode
 
     internal class ProxyFactory : AbstractProxyFactory 
     {
+        private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(ProxyFactory));
         private readonly NHibernate.Proxy.DynamicProxy.ProxyFactory factory = new NHibernate.Proxy.DynamicProxy.ProxyFactory();
-        protected static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(ProxyFactory));
 
         /// <summary>
 		/// Build a proxy using the Castle.DynamicProxy library, that overrides the default <see cref="LazyInitializer"/>
@@ -37,7 +37,7 @@ namespace Castle.ActiveRecord.ByteCode
             try
             {
                 var defaultLazyInitializer = new LazyInitializer(this.EntityName, this.PersistentClass, id, this.GetIdentifierMethod, this.SetIdentifierMethod, this.ComponentIdType, session);
-                return this.IsClassProxy ? (INHibernateProxy)this.factory.CreateProxy(this.PersistentClass, defaultLazyInitializer, this.Interfaces) : (INHibernateProxy)this.factory.CreateProxy(this.Interfaces[0], (NHibernate.Proxy.DynamicProxy.IInterceptor)defaultLazyInitializer, this.Interfaces);
+                return this.IsClassProxy ? (INHibernateProxy)this.factory.CreateProxy(this.PersistentClass, defaultLazyInitializer, this.Interfaces) : (INHibernateProxy)this.factory.CreateProxy(this.Interfaces[0], defaultLazyInitializer, this.Interfaces);
             }
             catch (Exception ex)
             {

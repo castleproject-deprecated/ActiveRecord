@@ -214,7 +214,7 @@ namespace Castle.ActiveRecord.Tests
 				Assert.IsNotNull(widget);
 				Assert.AreEqual("Hello world", widget.Name);
 
-				var widget2 = ActiveRecordLinq.AsQueryable<Widget>().First(w => w.Name == "Hello World");
+				var widget2 = ActiveRecordLinq.AsQueryable<Widget>().First(w => w.Name == "Hello world");
 				Assert.IsNotNull(widget2);
 				Assert.AreEqual("Hello world", widget2.Name);
 
@@ -240,7 +240,7 @@ namespace Castle.ActiveRecord.Tests
 				Widget widget = new Widget { Name = "Hello world" };
 				widget.Save();
 
-				widgets = from w in scope.AsQueryable<Widget>() where w.Name == "Hello World" select w;
+                widgets = from w in scope.AsQueryable<Widget>() where w.Name == "Hello world" select w;
 				Assert.IsNotNull(widgets);
 				Assert.AreEqual(1, widgets.Count());
 			}

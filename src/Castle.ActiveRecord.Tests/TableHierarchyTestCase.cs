@@ -182,14 +182,16 @@ namespace Castle.ActiveRecord.Tests
 			
 			OrderWithIDBag myOrder = new OrderWithIDBag();
 			myOrder.OrderedDate = new DateTime(2006, 12, 25);
-			ProductWithIDBag coolGadget = new ProductWithIDBag();
-			coolGadget.Name = "Xbox 2";
-			coolGadget.Price = 330.23f;
-			
-			using (new SessionScope())
+		    ProductWithIDBag coolGadget = new ProductWithIDBag
+		                                      {
+		                                          Name = "Xbox 2",
+		                                          Price = 330.23f
+		                                      };
+
+		    using (new SessionScope())
 			{
 				coolGadget.Save();
-				IList products = new ArrayList();
+				var products = new List<object>();
 				products.Add(coolGadget);
 				myOrder.Products = products;
 				myOrder.Save();

@@ -16,6 +16,8 @@ namespace Castle.ActiveRecord.Tests.Model
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
+
 	using Castle.ActiveRecord.Framework;
 	using NHibernate;
 	using NHibernate.Criterion;
@@ -26,10 +28,10 @@ namespace Castle.ActiveRecord.Tests.Model
 		private int _id;
 		private String _name;
 		private String _author;
-		private IList _posts;
-		private IList _publishedposts;
-		private IList _unpublishedposts;
-		private IList _recentposts;
+		private IList<Post> _posts;
+		private IList<Post> _publishedposts;
+		private IList<Post> _unpublishedposts;
+		private IList<Post> _recentposts;
 		private bool onSaveCalled, onUpdateCalled, onDeleteCalled, onLoadCalled;
 
 		public Blog()
@@ -63,28 +65,28 @@ namespace Castle.ActiveRecord.Tests.Model
 		}
 
 		[HasMany(typeof(Post), Table="Posts", ColumnKey="blogid")]
-		public IList Posts
+		public IList<Post> Posts
 		{
 			get { return _posts; }
 			set { _posts = value; }
 		}
 
 		[HasMany(typeof(Post), Table="Posts", ColumnKey="blogid", Where="published = 1")]
-		public IList PublishedPosts
+        public IList<Post> PublishedPosts
 		{
 			get { return _publishedposts; }
 			set { _publishedposts = value; }
 		}
 
 		[HasMany(typeof(Post), Table="Posts", ColumnKey="blogid", Where="published = 0")]
-		public IList UnPublishedPosts
+        public IList<Post> UnPublishedPosts
 		{
 			get { return _unpublishedposts; }
 			set { _unpublishedposts = value; }
 		}
 
 		[HasMany(typeof(Post), Table="Posts", ColumnKey="blogid", OrderBy="created desc")]
-		public IList RecentPosts
+        public IList<Post> RecentPosts
 		{
 			get { return _recentposts; }
 			set { _recentposts = value; }
