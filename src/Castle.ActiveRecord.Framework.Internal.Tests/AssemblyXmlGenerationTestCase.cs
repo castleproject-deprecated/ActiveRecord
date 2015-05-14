@@ -62,14 +62,9 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests
 		public void WillUseRegisteredAssembliesToLookForRawMappingXmlEvenIfThereAreNoActiveRecordTypesInThatAssembly()
 		{
 			ActiveRecordStarter.ResetInitializationFlag();
-			ActiveRecordStarter.Initialize(
-				typeof(RegisterNHibernateClassMapping).Assembly,
-				GetConfigSource()
-				);
-			ISessionFactory factory = ActiveRecordMediator.GetSessionFactoryHolder()
-				.GetSessionFactory(typeof(ActiveRecordBase));
-			IClassMetadata metadata = factory
-				.GetClassMetadata(typeof(NHibernateClass));
+		    ActiveRecordStarter.Initialize(typeof(RegisterNHibernateClassMapping).Assembly, GetConfigSource());
+			ISessionFactory factory = ActiveRecordMediator.GetSessionFactoryHolder().GetSessionFactory(typeof(ActiveRecordBase));
+			IClassMetadata metadata = factory.GetClassMetadata(typeof(NHibernateClass));
 			Assert.IsNotNull(metadata);
 		}
 	}
