@@ -16,17 +16,18 @@ namespace Castle.ActiveRecord.Tests.Model.GenericModel
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
 
-	[ActiveRecord("People")]
+    [ActiveRecord("People")]
 	public class Person : ActiveRecordBase<Person>
 	{
 		private int _id;
 		private String _name;
-		private IList _companies;
+        private IList<Company> _companies;
 
 		public Person()
 		{
-			_companies = new ArrayList();
+			_companies = new List<Company>();
 		}
 
 		[PrimaryKey]
@@ -44,7 +45,7 @@ namespace Castle.ActiveRecord.Tests.Model.GenericModel
 		}
 
 		[HasAndBelongsToMany( typeof(Company), RelationType.Bag, Table="PeopleCompanies", ColumnRef="company_id", ColumnKey="person_id" )]
-		public IList Companies
+        public IList<Company> Companies
 		{
 			get { return _companies; }
 			set { _companies = value; }

@@ -15,6 +15,7 @@
 namespace Castle.ActiveRecord.Tests.Model.LazyModel
 {
 	using System;
+	using System.Collections.Generic;
 
 	using Iesi.Collections;
 
@@ -23,7 +24,7 @@ namespace Castle.ActiveRecord.Tests.Model.LazyModel
 	public class ProductLazy : ActiveRecordValidationBase
 	{
 		private int id;
-		private ISet categories = new HashedSet();
+        private ISet<CategoryLazy> categories = new HashSet<CategoryLazy>();
 
 		public ProductLazy()
 		{
@@ -37,7 +38,7 @@ namespace Castle.ActiveRecord.Tests.Model.LazyModel
 		}
 
 		[HasMany( typeof(CategoryLazy), Lazy=true, Cascade=ManyRelationCascadeEnum.All )]
-		public ISet Categories
+        public ISet<CategoryLazy> Categories
 		{
 			get { return categories; }
 			set { categories = value; }

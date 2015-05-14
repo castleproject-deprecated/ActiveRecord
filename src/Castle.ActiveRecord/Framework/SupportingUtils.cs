@@ -1,24 +1,16 @@
-// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Itopcase" file="SupportingUtils.cs">
+//   Copyright(C)2013
+// </copyright>
 // 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
+// --------------------------------------------------------------------------------------------------------------------
 namespace Castle.ActiveRecord.Framework
 {
-	using System;
-	using System.Collections;
-	using Iesi.Collections;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
-	/// <summary>
+    /// <summary>
 	/// Contains utility methods for dealing with ActiveRecord objects
 	/// and collections.
 	/// Useful for external frameworks.
@@ -69,6 +61,7 @@ namespace Castle.ActiveRecord.Framework
 			return array;
 		}
 		
+
 		/// <summary>
 		/// Converts the results stored in an <see cref="IEnumerable"/> to an
 		/// strongly-typed array.
@@ -102,7 +95,7 @@ namespace Castle.ActiveRecord.Framework
 			// entityIndex was specified, or if distinct was chosen.
 			if (distinct || entityIndex != -1)
 			{
-				Set set = (distinct ? new ListSet() : null);
+                ISet<object> set = distinct ? new HashSet<object>() : null;
 
 				ICollection collection = list as ICollection;
 
@@ -110,7 +103,7 @@ namespace Castle.ActiveRecord.Framework
 
 				foreach(object item in list)
 				{
-					object el = (entityIndex == -1 ? item : ((object[]) item)[entityIndex]);
+					object el = entityIndex == -1 ? item : ((object[]) item)[entityIndex];
 
 					if (set == null || set.Add(el))
 					{
@@ -162,14 +155,14 @@ namespace Castle.ActiveRecord.Framework
 		{
 			// we only need to perform an additional processing if 
 			// distinct was chosen.
-			Set set = (distinct ? new ListSet() : null);
+            ISet<object> set = distinct ? new HashSet<object>() : null;
 
 			ICollection coll = list as ICollection;
 			IList newList = coll != null ? new ArrayList(coll.Count) : new ArrayList();
 
 			foreach(object item in list)
 			{
-				object[] p = (item is object[] ? (object[]) item : new object[] {item});
+				object[] p = item is object[] ? (object[]) item : new[] {item};
 				object el = Activator.CreateInstance(type, p);
 
 				if (set == null || set.Add(el))

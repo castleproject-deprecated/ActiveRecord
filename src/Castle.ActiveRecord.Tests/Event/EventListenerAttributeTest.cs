@@ -18,6 +18,8 @@ namespace Castle.ActiveRecord.Tests.Event
 {
 	using Iesi.Collections;
 	using System;
+	using System.Collections.Generic;
+
 	using NUnit.Framework;
 	using Castle.ActiveRecord;
 	using Castle.ActiveRecord.Tests.Model;
@@ -244,7 +246,7 @@ namespace Castle.ActiveRecord.Tests.Event
 		{
 			public void OnLoad(LoadEvent @event, LoadType loadType){}
 			public void OnDelete(DeleteEvent @event){}
-			public void OnDelete(DeleteEvent @event, ISet transientEntities){}
+		    public void OnDelete(DeleteEvent @event, ISet<object> transientEntities) {}
 		}
 
 		[EventListener(Singleton = true)]

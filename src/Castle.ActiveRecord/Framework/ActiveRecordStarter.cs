@@ -73,7 +73,7 @@ namespace Castle.ActiveRecord
 		private static bool isInitialized = false;
 
 		private static readonly List<IModelBuilderExtension> extensions = new List<IModelBuilderExtension>();
-		private static readonly Iesi.Collections.Generic.ISet<Assembly> registeredAssemblies = new HashedSet<Assembly>();
+        private static readonly HashSet<Assembly> registeredAssemblies = new HashSet<Assembly>();
 		private static IDictionary<Type, string> registeredTypes;
 
 		/// <summary>
@@ -730,7 +730,7 @@ namespace Castle.ActiveRecord
 		{
 			XmlGenerationVisitor xmlVisitor = new XmlGenerationVisitor();
 			AssemblyXmlGenerator assemblyXmlGenerator = new AssemblyXmlGenerator();
-			ISet assembliesGeneratedXmlFor = new HashedSet();
+			
 			foreach(ActiveRecordModel model in models)
 			{
 				Configuration config = holder.GetConfiguration(holder.GetRootType(model.Type));
@@ -1046,7 +1046,7 @@ namespace Castle.ActiveRecord
 
 		private static void AddXmlToNHibernateFromAssmebliesAttributes(ISessionFactoryHolder holder, ActiveRecordModelCollection models)
 		{
-			Iesi.Collections.Generic.ISet<Assembly> assembliesGeneratedXmlFor = new HashedSet<Assembly>();
+			ISet<Assembly> assembliesGeneratedXmlFor = new HashSet<Assembly>();
 			AssemblyXmlGenerator assemblyXmlGenerator = new AssemblyXmlGenerator();
 
 			foreach (ActiveRecordModel model in models)

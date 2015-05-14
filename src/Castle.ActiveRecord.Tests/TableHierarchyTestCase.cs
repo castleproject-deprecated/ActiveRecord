@@ -16,6 +16,7 @@ namespace Castle.ActiveRecord.Tests
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
 
 	using NUnit.Framework;
 
@@ -112,14 +113,14 @@ namespace Castle.ActiveRecord.Tests
 			using (new SessionScope())
 			{
 				coolGadget.Save();
-				ISet products = new ListSet();
+				ISet<Product> products = new HashSet<Product>();
 				products.Add(coolGadget);
 				myOrder.Products = products;
 				myOrder.Save();
 			}
 			
 			Order secondRef2Order = Order.Find(myOrder.ID);
-			Assert.IsFalse(secondRef2Order.Products.IsEmpty);
+			Assert.IsFalse(secondRef2Order.Products.Count == 0);
 			
 			Product secondRef2Product = Product.Find(coolGadget.ID);
 			Assert.AreEqual(1, secondRef2Product.Orders.Count);	

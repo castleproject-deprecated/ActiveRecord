@@ -16,6 +16,8 @@ namespace Castle.ActiveRecord.Tests.Model.GenericModel
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
+
 	using Iesi.Collections.Generic;
 
 	[ActiveRecord( "Companies", DiscriminatorColumn = "type", DiscriminatorType = "String", DiscriminatorValue = "company" )]
@@ -23,7 +25,7 @@ namespace Castle.ActiveRecord.Tests.Model.GenericModel
 	{
 		private int id;
 		private String name;
-		private ISet<Person> _people = new HashedSet<Person>();
+		private ISet<Person> _people = new HashSet<Person>();
 		private PostalAddress _address;
 
 		public Company()

@@ -16,6 +16,7 @@ namespace Castle.ActiveRecord.Tests.Model
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
 
 	using Iesi.Collections;
 
@@ -26,7 +27,7 @@ namespace Castle.ActiveRecord.Tests.Model
 		private int id;
 		private DateTime ordered_date;
 		private Boolean shipped;
-		private ISet _products;
+		private ISet<Product> _products;
 
 		[PrimaryKey(PrimaryKeyType.Native, "OrderID")]
 		public int ID
@@ -57,7 +58,7 @@ namespace Castle.ActiveRecord.Tests.Model
 		[HasAndBelongsToMany(typeof (Product), RelationType.Set,
 			Table="line_item",
 			ColumnRef="product_id", ColumnKey="order_id")]
-		public ISet Products
+        public ISet<Product> Products
 		{
 			get { return _products; }
 			set { _products = value; }

@@ -25,8 +25,8 @@ namespace Castle.ActiveRecord.Framework.Internal.EventListener
 	/// </summary>
 	public class EventListenerContributor : AbstractNHContributor
 	{
-		private readonly Dictionary<Type, Set<Type>> listenersPerEvent = 
-			new Dictionary<Type, Set<Type>>();
+        private readonly Dictionary<Type, HashSet<Type>> listenersPerEvent =
+            new Dictionary<Type, HashSet<Type>>();
 
 		private readonly Dictionary<Type, EventListenerConfig> listeners = new Dictionary<Type, EventListenerConfig>();
 
@@ -50,7 +50,7 @@ namespace Castle.ActiveRecord.Framework.Internal.EventListener
 			foreach (var eventType in events)
 			{
 				if (!listenersPerEvent.ContainsKey(eventType))
-					listenersPerEvent.Add(eventType, new HashedSet<Type>());
+					listenersPerEvent.Add(eventType, new HashSet<Type>());
 				listenersPerEvent[eventType].Add(config.ListenerType);
 			}
 			return config;

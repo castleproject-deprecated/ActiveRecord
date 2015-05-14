@@ -15,6 +15,7 @@
 namespace Castle.ActiveRecord.Tests.Model.StrictModel
 {
 	using System;
+	using System.Collections.Generic;
 
 	using Iesi.Collections;
 
@@ -30,7 +31,7 @@ namespace Castle.ActiveRecord.Tests.Model.StrictModel
 	{
 		private int id;
 		private ContainerType type;
-		private ISet estratos = new ListSet();
+        private ISet<Estrato> estratos = new HashSet<Estrato>();
 
 		public QuestionContainer()
 		{
@@ -51,7 +52,7 @@ namespace Castle.ActiveRecord.Tests.Model.StrictModel
 		}
 
 		[HasMany( typeof(Estrato), Inverse=true)]
-		public ISet Estratos
+        public ISet<Estrato> Estratos
 		{
 			get { return estratos; }
 			set { estratos = value; }

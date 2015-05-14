@@ -14,17 +14,21 @@
 
 namespace Castle.ActiveRecord.Framework
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Threading;
-	using System.Collections;
-	using System.Runtime.CompilerServices;
-	using Iesi.Collections;
-	using NHibernate;
-	using NHibernate.Cfg;
-	using Castle.ActiveRecord.Framework.Scopes;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
 
-	/// <summary>
+    using Castle.ActiveRecord.Framework.Scopes;
+
+    using Iesi.Collections;
+
+    using NHibernate;
+    using NHibernate.Cfg;
+
+    /// <summary>
 	/// Default implementation of <seealso cref="ISessionFactoryHolder"/>
 	/// </summary>
 	/// <remarks>
@@ -70,7 +74,7 @@ namespace Castle.ActiveRecord.Framework
 		/// </summary>
 		public Configuration[] GetAllConfigurations()
 		{
-			HashedSet set = new HashedSet(type2Conf.Values);
+            ISet<object> set = new HashSet<object>(type2Conf.Values.Cast<object>());
 
 			Configuration[] confs = new Configuration[set.Count];
 

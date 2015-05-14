@@ -6,6 +6,7 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <Configuration Condition=" '$(Configuration)' == '' ">NET40-Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <NuGetPackageImportStamp>5454b8ca</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -99,44 +100,44 @@
       <Name>Castle.ActiveRecord.Tests.Model-vs2010</Name>
     </ProjectReference>
     <ProjectReference Include="..\Castle.ActiveRecord.Web\Castle.ActiveRecord.Web.csproj">
-      <Project>{3A0B9A64-8140-429E-A3F0-5B1617CEB466}</Project>
+      <Project>{3a0b9a64-8140-429e-a3f0-5b1617ceb466}</Project>
       <Name>Castle.ActiveRecord.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\Castle.ActiveRecord\Castle.ActiveRecord-vs2010.csproj">
-      <Project>{652F95D4-86E2-40B6-919D-CFC6E449386B}</Project>
+      <Project>{652f95d4-86e2-40b6-919d-cfc6e449386b}</Project>
       <Name>Castle.ActiveRecord-vs2010</Name>
     </ProjectReference>
     <Reference Include="Castle.Components.Validator, Version=1.1.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\$(BuildConfigKey)\Castle.Components.Validator.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core, Version=1.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\$(BuildConfigKey)\Castle.Core.dll</HintPath>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net40-client\Castle.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Iesi.Collections.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\$(BuildConfigKey)\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net, Version=2.0.0.4, Culture=neutral, PublicKeyToken=255f08c3cb6b422d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Lucene.Net.dll</HintPath>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NHibernate, Version=2.1.0.2002, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NHibernate.dll</HintPath>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.2002, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NHibernate.ByteCode.Castle.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.Search, Version=2.0.0.1001, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NHibernate.Search.dll</HintPath>
+    <Reference Include="NHibernate.Search, Version=0.0.0.0, Culture=neutral, PublicKeyToken=e05025044aa97d32, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NHibernate.Search.MB.4.0.3.4000\lib\net40\NHibernate.Search.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework">
       <Name>nunit.framework</Name>
@@ -152,9 +153,9 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.61.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\$(BuildConfigKey)\System.Data.SQLite.DLL</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.96.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Data.SQLite.Core.1.0.96.0\lib\net40\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
@@ -332,6 +333,7 @@
     <None Include="App-net-2.0.config" />
     <None Include="App.config" />
     <None Include="App-net-3.5.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveRecordDetachedQueryGenericTestCase.cs" />
@@ -440,4 +442,11 @@
     </PreBuildEvent>
     <!--    <PostBuildEvent>copy "$(ProjectDir)App-net-2.0.config" "$(TargetPath).config"</PostBuildEvent>-->
   </PropertyGroup>
+  <Import Project="..\..\packages\System.Data.SQLite.Core.1.0.96.0\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\..\packages\System.Data.SQLite.Core.1.0.96.0\build\net40\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\System.Data.SQLite.Core.1.0.96.0\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\System.Data.SQLite.Core.1.0.96.0\build\net40\System.Data.SQLite.Core.targets'))" />
+  </Target>
 </Project>
