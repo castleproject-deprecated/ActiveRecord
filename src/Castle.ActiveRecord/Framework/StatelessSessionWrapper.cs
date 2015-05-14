@@ -37,6 +37,7 @@ namespace Castle.ActiveRecord.Framework
 		public StatelessSessionWrapper(IStatelessSession statelessSession)
 		{
 			this.statelessSession = statelessSession;
+		    this.statelessSession.SetBatchSize(1);
 		}
 
 #pragma warning disable 1591
@@ -244,6 +245,7 @@ namespace Castle.ActiveRecord.Framework
 	    /// </remarks>
 	    public void Save(string entityName, object obj, object id)
 	    {
+            statelessSession.Update(entityName, obj);
 	    }
 
 	    public object Save(object obj)
@@ -267,6 +269,7 @@ namespace Castle.ActiveRecord.Framework
 	    /// </remarks>
 	    public void Update(string entityName, object obj, object id)
 	    {
+            statelessSession.Update(entityName, obj);
 	    }
 
 	    /// <summary>
@@ -280,6 +283,7 @@ namespace Castle.ActiveRecord.Framework
 	    /// <param name="entityName">The name of the entity</param><param name="obj">A transient instance containing new or updated state</param><param name="id">Identifier of persistent instance</param>
 	    public void SaveOrUpdate(string entityName, object obj, object id)
 	    {
+            statelessSession.Update(entityName, obj);
 	    }
 
 	    public void Update(object obj)
@@ -431,7 +435,7 @@ namespace Castle.ActiveRecord.Framework
 
 		public void Flush()
 		{
-			throw new NotWrappedException();
+            throw new NotWrappedException();
 		}
 
 		public FlushMode FlushMode
@@ -627,7 +631,7 @@ namespace Castle.ActiveRecord.Framework
 
 		public ISession SetBatchSize(int batchSize)
 		{
-			throw new NotWrappedException();
+            throw new NotWrappedException();
 		}
 
 		public NHibernate.Stat.ISessionStatistics Statistics

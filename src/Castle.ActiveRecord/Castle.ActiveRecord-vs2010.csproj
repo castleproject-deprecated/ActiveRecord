@@ -65,6 +65,7 @@
     </DocumentationFile>
     <NoWarn>1591</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NET40-Release|AnyCPU' ">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
