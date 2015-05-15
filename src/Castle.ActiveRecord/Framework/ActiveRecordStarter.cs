@@ -73,7 +73,7 @@ namespace Castle.ActiveRecord
 		private static bool isInitialized = false;
 
 		private static readonly List<IModelBuilderExtension> extensions = new List<IModelBuilderExtension>();
-        private static readonly HashSet<Assembly> registeredAssemblies = new HashSet<Assembly>();
+		private static readonly HashSet<Assembly> registeredAssemblies = new HashSet<Assembly>();
 		private static IDictionary<Type, string> registeredTypes;
 
 		/// <summary>
@@ -152,7 +152,7 @@ namespace Castle.ActiveRecord
 		/// </summary>
 		public static void Initialize(IConfigurationSource source, params Type[] types)
 		{
-			lock(lockConfig)
+			lock (lockConfig)
 			{
 				if (isInitialized)
 				{
@@ -213,7 +213,7 @@ namespace Castle.ActiveRecord
 		/// </summary>
 		public static void Initialize(Assembly assembly, IConfigurationSource source)
 		{
-			Initialize(new Assembly[] {assembly}, source);
+			Initialize(new Assembly[] { assembly }, source);
 		}
 
 		/// <summary>
@@ -224,7 +224,7 @@ namespace Castle.ActiveRecord
 		{
 			List<Type> list = new List<Type>(additionalTypes);
 
-			foreach(Assembly assembly in assemblies)
+			foreach (Assembly assembly in assemblies)
 			{
 				CollectValidActiveRecordTypesFromAssembly(assembly, list, source);
 			}
@@ -252,7 +252,7 @@ namespace Castle.ActiveRecord
 		{
 			List<Type> types = new List<Type>();
 
-			foreach(Assembly assembly in assemblies)
+			foreach (Assembly assembly in assemblies)
 			{
 				CollectValidActiveRecordTypesFromAssembly(assembly, types, configSource);
 			}
@@ -277,7 +277,7 @@ namespace Castle.ActiveRecord
 		{
 			CheckInitialized();
 
-			foreach(Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
+			foreach (Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
 			{
 				SchemaExport export = CreateSchemaExport(config);
 
@@ -285,7 +285,7 @@ namespace Castle.ActiveRecord
 				{
 					export.Create(false, true);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					throw new ActiveRecordException("Could not create the schema", ex);
 				}
@@ -308,7 +308,7 @@ namespace Castle.ActiveRecord
 			{
 				export.Create(false, true);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				throw new ActiveRecordException("Could not create the schema", ex);
 			}
@@ -348,7 +348,7 @@ namespace Castle.ActiveRecord
 		{
 			CheckInitialized();
 
-			foreach(Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
+			foreach (Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
 			{
 				SchemaExport export = CreateSchemaExport(config);
 
@@ -356,7 +356,7 @@ namespace Castle.ActiveRecord
 				{
 					export.Drop(false, true);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					throw new ActiveRecordException("Could not drop the schema", ex);
 				}
@@ -379,7 +379,7 @@ namespace Castle.ActiveRecord
 			{
 				export.Drop(false, true);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				throw new ActiveRecordException("Could not drop the schema", ex);
 			}
@@ -394,7 +394,7 @@ namespace Castle.ActiveRecord
 			CheckInitialized();
 			ArrayList exceptions = new ArrayList();
 
-			foreach(Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
+			foreach (Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
 			{
 				SchemaUpdate updater = CreateSchemaUpdate(config);
 
@@ -402,9 +402,9 @@ namespace Castle.ActiveRecord
 				{
 					updater.Execute(false, true);
 
-					exceptions.AddRange((IList) updater.Exceptions);
+					exceptions.AddRange((IList)updater.Exceptions);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					throw new ActiveRecordException("Could not update the schema", ex);
 				}
@@ -429,12 +429,12 @@ namespace Castle.ActiveRecord
 			{
 				updater.Execute(false, true);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				throw new ActiveRecordException("Could not update the schema", ex);
 			}
 
-			return (IList) updater.Exceptions;
+			return (IList)updater.Exceptions;
 		}
 
 		/// <summary>
@@ -451,7 +451,7 @@ namespace Castle.ActiveRecord
 			bool isFirstExport = true;
 			int fileCount = 1;
 
-			foreach(Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
+			foreach (Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
 			{
 				SchemaExport export = CreateSchemaExport(config);
 
@@ -460,7 +460,7 @@ namespace Castle.ActiveRecord
 					export.SetOutputFile(isFirstExport ? fileName : CreateAnotherFile(fileName, fileCount++));
 					export.Drop(false, false);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					throw new ActiveRecordException("Could not drop the schema", ex);
 				}
@@ -486,7 +486,7 @@ namespace Castle.ActiveRecord
 				export.SetOutputFile(fileName);
 				export.Drop(false, false);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				throw new ActiveRecordException("Could not generate drop schema scripts", ex);
 			}
@@ -506,7 +506,7 @@ namespace Castle.ActiveRecord
 			bool isFirstExport = true;
 			int fileCount = 1;
 
-			foreach(Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
+			foreach (Configuration config in ActiveRecordBase.holder.GetAllConfigurations())
 			{
 				SchemaExport export = CreateSchemaExport(config);
 
@@ -515,7 +515,7 @@ namespace Castle.ActiveRecord
 					export.SetOutputFile(isFirstExport ? fileName : CreateAnotherFile(fileName, fileCount++));
 					export.Create(false, false);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					throw new ActiveRecordException("Could not create the schema", ex);
 				}
@@ -541,7 +541,7 @@ namespace Castle.ActiveRecord
 				export.SetOutputFile(fileName);
 				export.Create(false, false);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				throw new ActiveRecordException("Could not create the schema scripts", ex);
 			}
@@ -612,8 +612,8 @@ namespace Castle.ActiveRecord
 		}
 
 		private static ActiveRecordModelCollection BuildModels(ISessionFactoryHolder holder,
-		                                                       IConfigurationSource source,
-		                                                       IEnumerable<Type> types, bool ignoreProblematicTypes)
+															   IConfigurationSource source,
+															   IEnumerable<Type> types, bool ignoreProblematicTypes)
 		{
 			ActiveRecordModelBuilder builder = new ActiveRecordModelBuilder();
 
@@ -621,7 +621,7 @@ namespace Castle.ActiveRecord
 
 			ActiveRecordModelCollection models = builder.Models;
 
-			foreach(Type type in types)
+			foreach (Type type in types)
 			{
 				if (ShouldIgnoreType(type))
 				{
@@ -702,9 +702,9 @@ namespace Castle.ActiveRecord
 		private static bool ShouldIgnoreType(Type type)
 		{
 			return (registeredTypes.ContainsKey(type) ||
-			        type == typeof(ActiveRecordBase) ||
-			        type == typeof(ActiveRecordValidationBase) ||
-			        type == typeof(ActiveRecordHooksBase));
+					type == typeof(ActiveRecordBase) ||
+					type == typeof(ActiveRecordValidationBase) ||
+					type == typeof(ActiveRecordHooksBase));
 		}
 
 		private static bool IsTypeHierarchyBase(ICustomAttributeProvider type)
@@ -718,7 +718,7 @@ namespace Castle.ActiveRecord
 
 			if (attrs != null && attrs.Length > 0)
 			{
-				ActiveRecordAttribute att = (ActiveRecordAttribute) attrs[0];
+				ActiveRecordAttribute att = (ActiveRecordAttribute)attrs[0];
 
 				return att.DiscriminatorColumn != null;
 			}
@@ -730,8 +730,8 @@ namespace Castle.ActiveRecord
 		{
 			XmlGenerationVisitor xmlVisitor = new XmlGenerationVisitor();
 			AssemblyXmlGenerator assemblyXmlGenerator = new AssemblyXmlGenerator();
-			
-			foreach(ActiveRecordModel model in models)
+
+			foreach (ActiveRecordModel model in models)
 			{
 				Configuration config = holder.GetConfiguration(holder.GetRootType(model.Type));
 
@@ -764,7 +764,7 @@ namespace Castle.ActiveRecord
 			{
 				config.AddXmlString(xml);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				throw new ActiveRecordException(
 					"Error adding information from class " + model.Type.FullName +
@@ -778,7 +778,7 @@ namespace Castle.ActiveRecord
 			{
 				return assembly.GetExportedTypes();
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				throw new ActiveRecordInitializationException(
 					"Error while loading the exported types from the assembly: " + assembly.FullName, ex);
@@ -829,7 +829,7 @@ namespace Castle.ActiveRecord
 
 			Configuration cfg = new Configuration();
 
-			foreach(IConfiguration childConfig in config.Children)
+			foreach (IConfiguration childConfig in config.Children)
 			{
 				cfg.Properties[childConfig.Name] = childConfig.Value;
 			}
@@ -853,12 +853,12 @@ namespace Castle.ActiveRecord
 					{
 						String message =
 							String.Format("The specified type {0} does " + "not implement the interface INamingStrategy",
-							              namingStrategyType.FullName);
+										  namingStrategyType.FullName);
 
 						throw new ActiveRecordException(message);
 					}
 
-					nconf.SetNamingStrategy((INamingStrategy) Activator.CreateInstance(namingStrategyType));
+					nconf.SetNamingStrategy((INamingStrategy)Activator.CreateInstance(namingStrategyType));
 				}
 
 				AddContributorsToConfig(type, nconf);
@@ -896,12 +896,12 @@ namespace Castle.ActiveRecord
 				{
 					String message =
 						String.Format("The specified type {0} does " + "not implement the interface ISessionFactoryHolder",
-						              sessionFactoryHolderType.FullName);
+									  sessionFactoryHolderType.FullName);
 
 					throw new ActiveRecordException(message);
 				}
 
-				return (ISessionFactoryHolder) Activator.CreateInstance(sessionFactoryHolderType);
+				return (ISessionFactoryHolder)Activator.CreateInstance(sessionFactoryHolderType);
 			}
 			else
 			{
@@ -910,9 +910,9 @@ namespace Castle.ActiveRecord
 		}
 
 		private static void RegisterTypes(ISessionFactoryHolder holder, IConfigurationSource source, IEnumerable<Type> types,
-		                                  bool ignoreProblematicTypes)
+										  bool ignoreProblematicTypes)
 		{
-			lock(lockConfig)
+			lock (lockConfig)
 			{
 				ActiveRecordModelCollection models = BuildModels(holder, source, types, ignoreProblematicTypes);
 
@@ -939,7 +939,7 @@ namespace Castle.ActiveRecord
 				AddXmlToNHibernateFromAssmebliesAttributes(holder, models);
 
 				SessionFactoryHolderDelegate registeredInConfigurationHandler = MappingRegisteredInConfiguration;
-				if(registeredInConfigurationHandler!=null)
+				if (registeredInConfigurationHandler != null)
 				{
 					registeredInConfigurationHandler(holder);
 				}
@@ -959,16 +959,16 @@ namespace Castle.ActiveRecord
 				var eventListenerAttributes = type.GetCustomAttributes(typeof(EventListenerAttribute), false);
 				if (eventListenerAttributes.Length == 1)
 				{
-					var attribute = (EventListenerAttribute) eventListenerAttributes[0];
+					var attribute = (EventListenerAttribute)eventListenerAttributes[0];
 					var config = new EventListenerConfig(type)
-					             	{
-					             		ReplaceExisting = attribute.ReplaceExisting,
-										Ignore=attribute.Ignore,
-										SkipEvent=attribute.SkipEvent,
+									{
+										ReplaceExisting = attribute.ReplaceExisting,
+										Ignore = attribute.Ignore,
+										SkipEvent = attribute.SkipEvent,
 										Singleton = attribute.Singleton,
 										Include = attribute.Include,
 										Exclude = attribute.Exclude
-					             	};
+									};
 
 					contributor.Add(config);
 				}
@@ -984,8 +984,8 @@ namespace Castle.ActiveRecord
 			foreach (var assembly in registeredAssemblies)
 			{
 				addEventListenerAttributes.AddRange(
-					(AddEventListenerAttribute[]) assembly.GetCustomAttributes(typeof (AddEventListenerAttribute), false));
-				ignoreEventListenerAttributes.AddRange((IgnoreEventListenerAttribute[]) assembly.GetCustomAttributes(typeof(IgnoreEventListenerAttribute), false));
+					(AddEventListenerAttribute[])assembly.GetCustomAttributes(typeof(AddEventListenerAttribute), false));
+				ignoreEventListenerAttributes.AddRange((IgnoreEventListenerAttribute[])assembly.GetCustomAttributes(typeof(IgnoreEventListenerAttribute), false));
 			}
 
 			ProcessEventListenerAssemblyAttributes(contributor, ignoreEventListenerAttributes);
@@ -1029,7 +1029,7 @@ namespace Castle.ActiveRecord
 			else
 			{
 				config.Ignore = false;
-				var addAttribute = (AddEventListenerAttribute) attribute;
+				var addAttribute = (AddEventListenerAttribute)attribute;
 				config.Exclude = addAttribute.Exclude;
 				config.Include = addAttribute.Include;
 				config.SkipEvent = addAttribute.ExcludeEvent;
@@ -1051,13 +1051,13 @@ namespace Castle.ActiveRecord
 
 			foreach (ActiveRecordModel model in models)
 			{
-				if (assembliesGeneratedXmlFor.Contains(model.Type.Assembly)) 
+				if (assembliesGeneratedXmlFor.Contains(model.Type.Assembly))
 					continue;
 
 				assembliesGeneratedXmlFor.Add(model.Type.Assembly);
 
 				Configuration config = holder.GetConfiguration(holder.GetRootType(model.Type));
-					
+
 				string[] configurations = assemblyXmlGenerator.CreateXmlConfigurations(model.Type.Assembly);
 
 				foreach (string xml in configurations)
@@ -1092,7 +1092,7 @@ namespace Castle.ActiveRecord
 
 		private static void VerifySchema(ActiveRecordModelCollection models)
 		{
-			foreach(ActiveRecordModel model in models)
+			foreach (ActiveRecordModel model in models)
 			{
 				if (!model.Type.IsAbstract)
 				{
@@ -1100,7 +1100,7 @@ namespace Castle.ActiveRecord
 					{
 						ActiveRecordMediator.FindAll(model.Type, Expression.Sql("1=0"));
 					}
-					catch(Exception ex)
+					catch (Exception ex)
 					{
 						throw new ActiveRecordException("Error verifying the schema for model " + model.Type.Name, ex);
 					}
@@ -1118,12 +1118,12 @@ namespace Castle.ActiveRecord
 				{
 					String message =
 						String.Format("The specified type {0} does " + "not implement the interface IThreadScopeInfo",
-						              threadScopeType.FullName);
+									  threadScopeType.FullName);
 
 					throw new ActiveRecordInitializationException(message);
 				}
 
-				return (IThreadScopeInfo) Activator.CreateInstance(threadScopeType);
+				return (IThreadScopeInfo)Activator.CreateInstance(threadScopeType);
 			}
 			else
 			{
@@ -1139,12 +1139,12 @@ namespace Castle.ActiveRecord
 		/// <param name="list">Array to store retrieved types in</param>
 		/// <param name="source">IConfigurationSource to inspect AR base declarations from</param>
 		private static void CollectValidActiveRecordTypesFromAssembly(Assembly assembly, ICollection<Type> list,
-		                                                              IConfigurationSource source)
+																	  IConfigurationSource source)
 		{
 			registeredAssemblies.Add(assembly);
 			Type[] types = GetExportedTypesFromAssembly(assembly);
 
-			foreach(Type type in types)
+			foreach (Type type in types)
 			{
 				if (IsActiveRecordType(type) || IsEventListener(type) || source.GetConfiguration(type) != null)
 				{
@@ -1155,7 +1155,7 @@ namespace Castle.ActiveRecord
 
 		private static bool IsEventListener(Type type)
 		{
-			return type.IsDefined(typeof (EventListenerAttribute), false);
+			return type.IsDefined(typeof(EventListenerAttribute), false);
 		}
 
 		/// <summary>

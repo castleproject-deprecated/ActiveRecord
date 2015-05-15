@@ -52,13 +52,13 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static Order Find(int id)
 		{
-			return ((Order) (ActiveRecordBase.FindByPrimaryKey(typeof (Order), id)));
+			return ((Order)(ActiveRecordBase.FindByPrimaryKey(typeof(Order), id)));
 		}
 
-		[HasAndBelongsToMany(typeof (Product), RelationType.Set,
-			Table="line_item",
-			ColumnRef="product_id", ColumnKey="order_id")]
-        public ISet<Product> Products
+		[HasAndBelongsToMany(typeof(Product), RelationType.Set,
+			Table = "line_item",
+			ColumnRef = "product_id", ColumnKey = "order_id")]
+		public ISet<Product> Products
 		{
 			get { return _products; }
 			set { _products = value; }
@@ -66,7 +66,7 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static void DeleteAll()
 		{
-			ActiveRecordBase.DeleteAll(typeof (Order));
+			ActiveRecordBase.DeleteAll(typeof(Order));
 		}
 	}
 
@@ -101,15 +101,15 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static OrderWithIDBag Find(int id)
 		{
-			return ((OrderWithIDBag) (ActiveRecordBase.FindByPrimaryKey(typeof (OrderWithIDBag), id)));
+			return ((OrderWithIDBag)(ActiveRecordBase.FindByPrimaryKey(typeof(OrderWithIDBag), id)));
 		}
 
-		[HasAndBelongsToMany(typeof (ProductWithIDBag), RelationType.IdBag,
-			Table="line_item_non_ident",
-			ColumnRef="product_id", ColumnKey="order_id"),
+		[HasAndBelongsToMany(typeof(ProductWithIDBag), RelationType.IdBag,
+			Table = "line_item_non_ident",
+			ColumnRef = "product_id", ColumnKey = "order_id"),
 			CollectionID(CollectionIDType.HiLo, "line_number", "Int32"),
-			Hilo(Table="testing_hilo", Column="sequence", MaxLo=150)]
-        public IList<object> Products
+			Hilo(Table = "testing_hilo", Column = "sequence", MaxLo = 150)]
+		public IList<object> Products
 		{
 			get { return _products; }
 			set { _products = value; }
@@ -117,7 +117,7 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static void DeleteAll()
 		{
-			ActiveRecordBase.DeleteAll(typeof (OrderWithIDBag));
+			ActiveRecordBase.DeleteAll(typeof(OrderWithIDBag));
 		}
 	}
 }

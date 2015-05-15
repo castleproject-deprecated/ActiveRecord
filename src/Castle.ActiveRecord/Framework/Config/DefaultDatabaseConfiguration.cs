@@ -18,7 +18,7 @@ namespace Castle.ActiveRecord.Framework.Config
 	using System.Collections.Generic;
 	using System.Data;
 
-    using Castle.ActiveRecord.ByteCode;
+	using Castle.ActiveRecord.ByteCode;
 
 	using NHibernate.Connection;
 	using NHibernate.Dialect;
@@ -60,14 +60,16 @@ namespace Castle.ActiveRecord.Framework.Config
 					return Configure<SqlClientDriver, MsSql2012Dialect>();
 				case DatabaseType.MsSqlServer2008:
 					return Configure<SqlClientDriver, MsSql2012Dialect>();
-                case DatabaseType.MsSqlServer2012:
-                    return Configure<SqlClientDriver, MsSql2012Dialect>();
+				case DatabaseType.MsSqlServer2012:
+					return Configure<SqlClientDriver, MsSql2012Dialect>();
 				case DatabaseType.SQLite:
 					return Configure<SQLite20Driver, SQLiteDialect>(SQLite());
 				case DatabaseType.MySql:
 					return Configure<MySqlDataDriver, MySQLDialect>();
 				case DatabaseType.MySql5:
 					return Configure<MySqlDataDriver, MySQL5Dialect>();
+				case DatabaseType.Firebird:
+					return Configure<FirebirdClientDriver, FirebirdDialect>(Firebird());
 				case DatabaseType.PostgreSQL:
 					return Configure<NpgsqlDriver, PostgreSQLDialect>();
 				case DatabaseType.PostgreSQL81:

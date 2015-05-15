@@ -18,13 +18,13 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 	using System.Collections;
 	using System.Collections.Generic;
 
-    [ActiveRecord("Orgs")]
+	[ActiveRecord("Orgs")]
 	public class Org : ActiveRecordBase
 	{
 		private string _id;
 		private String _description;
 		private DateTime _created;
-        private IList<Agent> _agents;
+		private IList<Agent> _agents;
 		private int _version;
 
 		public Org()
@@ -34,7 +34,8 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 			_version = -1;
 		}
 
-		public Org(string id, String description) : this()
+		public Org(string id, String description)
+			: this()
 		{
 			_id = id;
 			_description = description;
@@ -47,14 +48,14 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 			set { _id = value; }
 		}
 
-		[Version(UnsavedValue="negative")]
+		[Version(UnsavedValue = "negative")]
 		public int Version
 		{
 			get { return _version; }
 			set { _version = value; }
 		}
 
-		[Property(ColumnType="StringClob")]
+		[Property(ColumnType = "StringClob")]
 		public String Contents
 		{
 			get { return _description; }
@@ -62,9 +63,9 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 		}
 
 		[HasMany(typeof(Agent),
-			Inverse=true,
-			Lazy=true)]
-        public IList<Agent> Agents
+			Inverse = true,
+			Lazy = true)]
+		public IList<Agent> Agents
 		{
 			get { return _agents; }
 			set { _agents = value; }
@@ -90,12 +91,12 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 
 		public static Org[] FindAll()
 		{
-			return (Org[]) FindAll(typeof(Org));
+			return (Org[])FindAll(typeof(Org));
 		}
 
 		public static Org Find(string id)
 		{
-			return (Org) FindByPrimaryKey(typeof(Org), id);
+			return (Org)FindByPrimaryKey(typeof(Org), id);
 		}
 
 		public static int FetchCount()

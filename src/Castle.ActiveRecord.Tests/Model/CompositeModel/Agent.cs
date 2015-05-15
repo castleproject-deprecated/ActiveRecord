@@ -28,7 +28,7 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 	{
 		private AgentKey _userKey;
 		private Org _org;
-        private IList<Group> _groups;
+		private IList<Group> _groups;
 		private int _version;
 
 		public Agent()
@@ -37,7 +37,8 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 			_version = -1;
 		}
 
-		public Agent(AgentKey key) : this()
+		public Agent(AgentKey key)
+			: this()
 		{
 			_userKey = key;
 		}
@@ -59,27 +60,27 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 			get { return _userKey.Name; }
 		}
 
-		[Version(UnsavedValue="negative")]
+		[Version(UnsavedValue = "negative")]
 		public int Version
 		{
-			get{ return _version; }
-			set{ _version = value; }
+			get { return _version; }
+			set { _version = value; }
 		}
 
-		[BelongsTo("OrgId", Insert=false, Update=false)]
+		[BelongsTo("OrgId", Insert = false, Update = false)]
 		public Org Org
 		{
 			get { return _org; }
 			set { _org = value; }
 		}
 
-		[HasAndBelongsToMany(typeof (Group),
+		[HasAndBelongsToMany(typeof(Group),
 			 Table = "GroupAgents",
 			 ColumnRef = "GroupId",
-			 CompositeKeyColumnKeys = new String[]{"OrgId","Name"},
+			 CompositeKeyColumnKeys = new String[] { "OrgId", "Name" },
 			 Lazy = true,
 			 Cascade = ManyRelationCascadeEnum.SaveUpdate)]
-        public IList<Group> Groups
+		public IList<Group> Groups
 		{
 			get { return _groups; }
 			set { _groups = value; }
@@ -87,17 +88,17 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 
 		public static void DeleteAll()
 		{
-			ActiveRecordBase.DeleteAll( typeof(Agent) );
+			ActiveRecordBase.DeleteAll(typeof(Agent));
 		}
 
 		public static Agent[] FindAll()
 		{
-			return (Agent[]) ActiveRecordBase.FindAll( typeof(Agent) );
+			return (Agent[])ActiveRecordBase.FindAll(typeof(Agent));
 		}
 
 		public static Agent Find(object key)
 		{
-			return (Agent) ActiveRecordBase.FindByPrimaryKey( typeof(Agent), key );
+			return (Agent)ActiveRecordBase.FindByPrimaryKey(typeof(Agent), key);
 		}
 
 		/// <summary>
@@ -117,7 +118,7 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 		{
 			session.Delete(userInstance);
 			session.Flush();
-			
+
 			return null;
 		}
 	}

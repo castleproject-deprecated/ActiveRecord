@@ -1,4 +1,4 @@
- // Copyright 2004-2011 Castle Project - http://www.castleproject.org/
+// Copyright 2004-2011 Castle Project - http://www.castleproject.org/
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ namespace Castle.ActiveRecord.Tests.Model
 		private string product_name;
 		private float price;
 		private string serial_number;
-        private ISet<Order> _orders;
+		private ISet<Order> _orders;
 
 		[PrimaryKey(PrimaryKeyType.Native, "ProductID")]
 		public int ID
@@ -56,9 +56,9 @@ namespace Castle.ActiveRecord.Tests.Model
 			set { this.price = value; }
 		}
 
-		[HasAndBelongsToMany(typeof (Order), RelationType.Set,
-			Table="line_item",
-			ColumnRef="order_id", ColumnKey="product_id", Inverse=true)]
+		[HasAndBelongsToMany(typeof(Order), RelationType.Set,
+			Table = "line_item",
+			ColumnRef = "order_id", ColumnKey = "product_id", Inverse = true)]
 		public ISet<Order> Orders
 		{
 			get { return _orders; }
@@ -67,12 +67,12 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static Product Find(int id)
 		{
-			return ((Product) (ActiveRecordBase.FindByPrimaryKey(typeof (Product), id)));
+			return ((Product)(ActiveRecordBase.FindByPrimaryKey(typeof(Product), id)));
 		}
 
 		public static void DeleteAll()
 		{
-			ActiveRecordBase.DeleteAll(typeof (Product));
+			ActiveRecordBase.DeleteAll(typeof(Product));
 		}
 	}
 
@@ -113,11 +113,11 @@ namespace Castle.ActiveRecord.Tests.Model
 			set { this.price = value; }
 		}
 
-		[HasAndBelongsToMany(typeof (OrderWithIDBag), RelationType.IdBag,
-			Table="line_item_non_ident",
-			ColumnRef="order_id", ColumnKey="product_id"),
+		[HasAndBelongsToMany(typeof(OrderWithIDBag), RelationType.IdBag,
+			Table = "line_item_non_ident",
+			ColumnRef = "order_id", ColumnKey = "product_id"),
 			CollectionID(CollectionIDType.HiLo, "line_number", "Int32"),
-			Hilo(Table="testing_hilo", Column="sequence", MaxLo=150)]
+			Hilo(Table = "testing_hilo", Column = "sequence", MaxLo = 150)]
 		public IList Orders
 		{
 			get { return _orders; }
@@ -126,12 +126,12 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static ProductWithIDBag Find(int id)
 		{
-			return ((ProductWithIDBag) (ActiveRecordBase.FindByPrimaryKey(typeof (ProductWithIDBag), id)));
+			return ((ProductWithIDBag)(ActiveRecordBase.FindByPrimaryKey(typeof(ProductWithIDBag), id)));
 		}
 
 		public static void DeleteAll()
 		{
-			ActiveRecordBase.DeleteAll(typeof (ProductWithIDBag));
+			ActiveRecordBase.DeleteAll(typeof(ProductWithIDBag));
 		}
 	}
 }

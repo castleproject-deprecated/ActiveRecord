@@ -39,7 +39,7 @@ namespace Castle.ActiveRecord.Tests.Event
 		public void C1_Listener_must_be_added_when_initialized_with_assembly()
 		{
 			ActiveRecordStarter.Initialize(Assembly.GetAssembly(typeof(AttributedPreLoadListener)), GetConfigSource());
-			AssertListenerWasRegistered<AttributedPreLoadListener>(e=>e.PreLoadEventListeners);
+			AssertListenerWasRegistered<AttributedPreLoadListener>(e => e.PreLoadEventListeners);
 		}
 
 		[Test]
@@ -119,7 +119,7 @@ namespace Castle.ActiveRecord.Tests.Event
 		{
 			InitializeSingleBase(typeof(MultipleListener));
 			Assert.AreNotSame(Array.Find(GetRegisteredListeners(e => e.PreLoadEventListeners), l => (l is MultipleListener)),
-			                  Array.Find(GetRegisteredListeners(e => e.PostLoadEventListeners), l => (l is MultipleListener)));
+							  Array.Find(GetRegisteredListeners(e => e.PostLoadEventListeners), l => (l is MultipleListener)));
 		}
 
 		[Test]
@@ -130,21 +130,21 @@ namespace Castle.ActiveRecord.Tests.Event
 							  Array.Find(GetRegisteredListeners(e => e.PostLoadEventListeners), l => (l is MultipleSingletonListener)));
 		}
 
-        [Test]
-        public void Event_listeners_are_registered_only_once()
-        {
-            InitializeSingleBase(typeof(SamplePostInsertListener), typeof(SamplePostUpdateListener), typeof(SamplePostDeleteListener));
-            Assert.AreEqual(1, Array.FindAll(GetRegisteredListeners(e => e.PostInsertEventListeners), l => (l is SamplePostInsertListener)).Length);
-            Assert.AreEqual(1, Array.FindAll(GetRegisteredListeners(e => e.PostUpdateEventListeners), l => (l is SamplePostUpdateListener)).Length);
-            Assert.AreEqual(1, Array.FindAll(GetRegisteredListeners(e => e.PostDeleteEventListeners), l => (l is SamplePostDeleteListener)).Length);
-        }
+		[Test]
+		public void Event_listeners_are_registered_only_once()
+		{
+			InitializeSingleBase(typeof(SamplePostInsertListener), typeof(SamplePostUpdateListener), typeof(SamplePostDeleteListener));
+			Assert.AreEqual(1, Array.FindAll(GetRegisteredListeners(e => e.PostInsertEventListeners), l => (l is SamplePostInsertListener)).Length);
+			Assert.AreEqual(1, Array.FindAll(GetRegisteredListeners(e => e.PostUpdateEventListeners), l => (l is SamplePostUpdateListener)).Length);
+			Assert.AreEqual(1, Array.FindAll(GetRegisteredListeners(e => e.PostDeleteEventListeners), l => (l is SamplePostDeleteListener)).Length);
+		}
 
 		[Test]
 		public void U1_Listeners_are_registered_for_all_configurations()
 		{
 			InitializeMultipleBases(typeof(SamplePreInsertListener));
 			AssertListenerWasRegistered<SamplePreInsertListener, ActiveRecordBase>(e => e.PreInsertEventListeners);
-			AssertListenerWasRegistered<SamplePreInsertListener, Test2ARBase>(e=>e.PreInsertEventListeners);
+			AssertListenerWasRegistered<SamplePreInsertListener, Test2ARBase>(e => e.PreInsertEventListeners);
 		}
 
 		[Test]
@@ -170,7 +170,7 @@ namespace Castle.ActiveRecord.Tests.Event
 		[Test]
 		public void U1_C5_U4_No_replacement_on_excluded_configs()
 		{
-			InitializeMultipleBases(typeof (SecondBaseReplacementLoadListener));
+			InitializeMultipleBases(typeof(SecondBaseReplacementLoadListener));
 			AssertListenerWasNotRegistered<SecondBaseReplacementLoadListener, ActiveRecordBase>(e => e.LoadEventListeners);
 			AssertListenerWasRegistered<SecondBaseReplacementLoadListener, Test2ARBase>(e => e.LoadEventListeners);
 			AssertListenerWasRegistered<NHibernate.Event.Default.DefaultLoadEventListener, ActiveRecordBase>(e => e.LoadEventListeners);
@@ -182,81 +182,81 @@ namespace Castle.ActiveRecord.Tests.Event
 		[EventListener]
 		private class SamplePreInsertListener : IPreInsertEventListener
 		{
-			public bool OnPreInsert(PreInsertEvent @event) {return true; }
+			public bool OnPreInsert(PreInsertEvent @event) { return true; }
 		}
 
-        [EventListener]
-        private class SamplePostInsertListener : IPostInsertEventListener
-        {
-            public void OnPostInsert(PostInsertEvent @event) { }
-        }
+		[EventListener]
+		private class SamplePostInsertListener : IPostInsertEventListener
+		{
+			public void OnPostInsert(PostInsertEvent @event) { }
+		}
 
-        [EventListener]
-        private class SamplePostUpdateListener : IPostUpdateEventListener
-        {
-            public void OnPostUpdate(PostUpdateEvent @event) { }
-        }
+		[EventListener]
+		private class SamplePostUpdateListener : IPostUpdateEventListener
+		{
+			public void OnPostUpdate(PostUpdateEvent @event) { }
+		}
 
-        [EventListener]
-        private class SamplePostDeleteListener : IPostDeleteEventListener
-        {
-            public void OnPostDelete(PostDeleteEvent @event) { }
-        }
+		[EventListener]
+		private class SamplePostDeleteListener : IPostDeleteEventListener
+		{
+			public void OnPostDelete(PostDeleteEvent @event) { }
+		}
 
 		[EventListener]
 		private class AdditionalLoadListener : ILoadEventListener
 		{
-			public void OnLoad(LoadEvent @event, LoadType loadType){}
+			public void OnLoad(LoadEvent @event, LoadType loadType) { }
 		}
 
 		[EventListener(ReplaceExisting = true)]
 		private class ReplacementLoadListener : ILoadEventListener
 		{
-			public void OnLoad(LoadEvent @event, LoadType loadType){}
+			public void OnLoad(LoadEvent @event, LoadType loadType) { }
 		}
 
 		[EventListener(Ignore = true)]
 		private class IgnoredListener : IPreLoadEventListener
 		{
-			public void OnPreLoad(PreLoadEvent @event){}
+			public void OnPreLoad(PreLoadEvent @event) { }
 		}
 
 		[EventListener(Ignore = true, ReplaceExisting = true)]
 		private class IgnoredReplacementListener : ILoadEventListener
 		{
-			public void OnLoad(LoadEvent @event, LoadType loadType){}
+			public void OnLoad(LoadEvent @event, LoadType loadType) { }
 		}
 
 		[EventListener]
 		private class MultipleListener : IPreLoadEventListener, IPostLoadEventListener
 		{
-			public void OnPreLoad(PreLoadEvent @event){}
-            public void OnPostLoad(PostLoadEvent @event){}
+			public void OnPreLoad(PreLoadEvent @event) { }
+			public void OnPostLoad(PostLoadEvent @event) { }
 		}
 
-		[EventListener(SkipEvent = new[] {typeof (IPreLoadEventListener)})]
+		[EventListener(SkipEvent = new[] { typeof(IPreLoadEventListener) })]
 		private class MultipleSkippedListener : IPreLoadEventListener, IPostLoadEventListener
 		{
-			public void OnPreLoad(PreLoadEvent @event){}
-			public void OnPostLoad(PostLoadEvent @event){}
+			public void OnPreLoad(PreLoadEvent @event) { }
+			public void OnPostLoad(PostLoadEvent @event) { }
 		}
 
-		[EventListener(SkipEvent = new[] {typeof (ILoadEventListener)})]
+		[EventListener(SkipEvent = new[] { typeof(ILoadEventListener) })]
 		private class MultipleSkippedReplacementListener : ILoadEventListener, IDeleteEventListener
 		{
-			public void OnLoad(LoadEvent @event, LoadType loadType){}
-			public void OnDelete(DeleteEvent @event){}
-		    public void OnDelete(DeleteEvent @event, ISet<object> transientEntities) {}
+			public void OnLoad(LoadEvent @event, LoadType loadType) { }
+			public void OnDelete(DeleteEvent @event) { }
+			public void OnDelete(DeleteEvent @event, ISet<object> transientEntities) { }
 		}
 
 		[EventListener(Singleton = true)]
 		private class MultipleSingletonListener : IPreLoadEventListener, IPostLoadEventListener
 		{
-			public void OnPreLoad(PreLoadEvent @event){}
-			public void OnPostLoad(PostLoadEvent @event){}
+			public void OnPreLoad(PreLoadEvent @event) { }
+			public void OnPostLoad(PostLoadEvent @event) { }
 		}
 
-		[EventListener(Include=new[]{typeof(ActiveRecordBase)})]
+		[EventListener(Include = new[] { typeof(ActiveRecordBase) })]
 		private class FirstBaseIncludeListener : IPreLoadEventListener
 		{
 			public void OnPreLoad(PreLoadEvent @event) { }
@@ -290,16 +290,16 @@ namespace Castle.ActiveRecord.Tests.Event
 
 		protected static void InitializeSingleBase(params Type[] listenerTypes)
 		{
-			InitializeWithListeners(listenerTypes, new[] {typeof (Blog), typeof (Post)});
+			InitializeWithListeners(listenerTypes, new[] { typeof(Blog), typeof(Post) });
 		}
 
 		private static void InitializeWithListeners(Type[] listenerTypes, Type[] arTypes)
 		{
 			var typesToRegister = new Type[listenerTypes.Length + arTypes.Length];
-			Array.ConstrainedCopy(arTypes,0,typesToRegister,0,arTypes.Length);
-			Array.ConstrainedCopy(listenerTypes,0,typesToRegister,arTypes.Length,listenerTypes.Length);
+			Array.ConstrainedCopy(arTypes, 0, typesToRegister, 0, arTypes.Length);
+			Array.ConstrainedCopy(listenerTypes, 0, typesToRegister, arTypes.Length, listenerTypes.Length);
 
-			ActiveRecordStarter.Initialize(GetConfigSource(),typesToRegister);
+			ActiveRecordStarter.Initialize(GetConfigSource(), typesToRegister);
 		}
 
 		protected static void InitializeMultipleBases(params Type[] listenerTypes)

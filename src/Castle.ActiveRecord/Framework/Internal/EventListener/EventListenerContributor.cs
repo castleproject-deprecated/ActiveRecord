@@ -16,8 +16,10 @@ namespace Castle.ActiveRecord.Framework.Internal.EventListener
 {
 	using System;
 	using System.Collections;
-	using Iesi.Collections.Generic;
 	using System.Collections.Generic;
+
+	using Iesi.Collections.Generic;
+
 	using NHibernate.Cfg;
 
 	/// <summary>
@@ -25,8 +27,8 @@ namespace Castle.ActiveRecord.Framework.Internal.EventListener
 	/// </summary>
 	public class EventListenerContributor : AbstractNHContributor
 	{
-        private readonly Dictionary<Type, HashSet<Type>> listenersPerEvent =
-            new Dictionary<Type, HashSet<Type>>();
+		private readonly Dictionary<Type, HashSet<Type>> listenersPerEvent =
+			new Dictionary<Type, HashSet<Type>>();
 
 		private readonly Dictionary<Type, EventListenerConfig> listeners = new Dictionary<Type, EventListenerConfig>();
 
@@ -103,7 +105,7 @@ Please open an issue at support.castleproject.org using this text.");
 
 			foreach (var eventType in eventTypes)
 			{
-				if (!listenersPerEvent.ContainsKey(eventType) || listenersPerEvent[eventType] == null) 
+				if (!listenersPerEvent.ContainsKey(eventType) || listenersPerEvent[eventType] == null)
 					continue;
 
 				var currentListeners = CollectListeners(eventType);
@@ -127,8 +129,8 @@ Please open an issue at support.castleproject.org using this text.");
 			{
 				var config = Get(listenerType);
 				if (config.Ignore) continue;
-				if (config.SkipEvent != null && Array.Exists(config.SkipEvent,t => t.Equals(type))) continue;
-				if (config.Include != null && 
+				if (config.SkipEvent != null && Array.Exists(config.SkipEvent, t => t.Equals(type))) continue;
+				if (config.Include != null &&
 					config.Include.Length > 0 &&
 					!Array.Exists(config.Include, t => t.Equals(currentActiveRecordConfig)))
 					continue;
@@ -173,7 +175,7 @@ Please open an issue at support.castleproject.org using this text.");
 				return true;
 			};
 		}
-		
+
 		internal static Type[] GetEventTypes(Type listenerType)
 		{
 			return Array.FindAll(

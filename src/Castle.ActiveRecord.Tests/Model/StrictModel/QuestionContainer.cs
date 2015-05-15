@@ -26,12 +26,12 @@ namespace Castle.ActiveRecord.Tests.Model.StrictModel
 		Survey
 	}
 
-	[ActiveRecord(DiscriminatorColumn="type", DiscriminatorType="Int16", DiscriminatorValue="0")]
+	[ActiveRecord(DiscriminatorColumn = "type", DiscriminatorType = "Int16", DiscriminatorValue = "0")]
 	public class QuestionContainer : ActiveRecordValidationBase
 	{
 		private int id;
 		private ContainerType type;
-        private ISet<Estrato> estratos = new HashSet<Estrato>();
+		private ISet<Estrato> estratos = new HashSet<Estrato>();
 
 		public QuestionContainer()
 		{
@@ -44,15 +44,15 @@ namespace Castle.ActiveRecord.Tests.Model.StrictModel
 			set { id = value; }
 		}
 
-		[Property("type", Insert=false, Update=false)]
+		[Property("type", Insert = false, Update = false)]
 		public ContainerType Type
 		{
 			get { return type; }
 			set { type = value; }
 		}
 
-		[HasMany( typeof(Estrato), Inverse=true)]
-        public ISet<Estrato> Estratos
+		[HasMany(typeof(Estrato), Inverse = true)]
+		public ISet<Estrato> Estratos
 		{
 			get { return estratos; }
 			set { estratos = value; }
@@ -60,12 +60,12 @@ namespace Castle.ActiveRecord.Tests.Model.StrictModel
 
 		public static void DeleteAll()
 		{
-			ActiveRecordBase.DeleteAll( typeof(QuestionContainer) );
+			ActiveRecordBase.DeleteAll(typeof(QuestionContainer));
 		}
 
 		public static QuestionContainer Find(int id)
 		{
-			return (QuestionContainer) ActiveRecordBase.FindByPrimaryKey( typeof(QuestionContainer), id );
+			return (QuestionContainer)ActiveRecordBase.FindByPrimaryKey(typeof(QuestionContainer), id);
 		}
 
 		public override bool Equals(object obj)

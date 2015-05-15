@@ -1,16 +1,10 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Itopcase" file="SupportingUtils.cs">
-//   Copyright(C)2013
-// </copyright>
-// 
-// --------------------------------------------------------------------------------------------------------------------
 namespace Castle.ActiveRecord.Framework
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
 
-    /// <summary>
+	/// <summary>
 	/// Contains utility methods for dealing with ActiveRecord objects
 	/// and collections.
 	/// Useful for external frameworks.
@@ -60,7 +54,7 @@ namespace Castle.ActiveRecord.Framework
 
 			return array;
 		}
-		
+
 
 		/// <summary>
 		/// Converts the results stored in an <see cref="IEnumerable"/> to an
@@ -95,15 +89,15 @@ namespace Castle.ActiveRecord.Framework
 			// entityIndex was specified, or if distinct was chosen.
 			if (distinct || entityIndex != -1)
 			{
-                ISet<object> set = distinct ? new HashSet<object>() : null;
+				ISet<object> set = distinct ? new HashSet<object>() : null;
 
 				ICollection collection = list as ICollection;
 
 				IList newList = collection != null ? new ArrayList(collection.Count) : new ArrayList();
 
-				foreach(object item in list)
+				foreach (object item in list)
 				{
-					object el = entityIndex == -1 ? item : ((object[]) item)[entityIndex];
+					object el = entityIndex == -1 ? item : ((object[])item)[entityIndex];
 
 					if (set == null || set.Add(el))
 					{
@@ -120,7 +114,7 @@ namespace Castle.ActiveRecord.Framework
 			{
 				ArrayList newList = new ArrayList();
 
-				foreach(object item in list)
+				foreach (object item in list)
 				{
 					newList.Add(item);
 				}
@@ -155,14 +149,14 @@ namespace Castle.ActiveRecord.Framework
 		{
 			// we only need to perform an additional processing if 
 			// distinct was chosen.
-            ISet<object> set = distinct ? new HashSet<object>() : null;
+			ISet<object> set = distinct ? new HashSet<object>() : null;
 
 			ICollection coll = list as ICollection;
 			IList newList = coll != null ? new ArrayList(coll.Count) : new ArrayList();
 
-			foreach(object item in list)
+			foreach (object item in list)
 			{
-				object[] p = item is object[] ? (object[]) item : new[] {item};
+				object[] p = item is object[] ? (object[])item : new[] { item };
 				object el = Activator.CreateInstance(type, p);
 
 				if (set == null || set.Add(el))
@@ -190,7 +184,7 @@ namespace Castle.ActiveRecord.Framework
 		/// <returns>The strongly-typed array</returns>
 		public static T[] BuildObjectArray<T>(IEnumerable list, bool distinct)
 		{
-			return (T[]) BuildObjectArray(typeof(T), list, distinct);
+			return (T[])BuildObjectArray(typeof(T), list, distinct);
 		}
 
 		#endregion
@@ -212,7 +206,7 @@ namespace Castle.ActiveRecord.Framework
 		/// <remarks>A good alternative is to use the new <see cref="ImportAttribute"/></remarks>
 		public static T[] BuildArray<T>(IEnumerable list, bool distinct)
 		{
-			return (T[]) BuildArray(typeof(T), list, distinct);
+			return (T[])BuildArray(typeof(T), list, distinct);
 		}
 
 		/// <summary>
@@ -229,10 +223,10 @@ namespace Castle.ActiveRecord.Framework
 		/// </param>
 		/// <param name="distinct">If true, only distinct results will be inserted in the array</param>
 		/// <returns>The strongly-typed array</returns>
-	
+
 		public static T[] BuildArray<T>(IEnumerable list, int? entityIndex, bool distinct)
 		{
-			return (T[]) BuildArray(typeof(T), list, entityIndex ?? -1, distinct);
+			return (T[])BuildArray(typeof(T), list, entityIndex ?? -1, distinct);
 		}
 
 		#endregion

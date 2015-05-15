@@ -16,7 +16,7 @@ namespace Castle.ActiveRecord.Tests.Model.AnyModel
 {
 	using System;
 	using System.Collections;
-		
+
 	[ActiveRecord("Orders")]
 	public class Order : ActiveRecordBase
 	{
@@ -129,7 +129,7 @@ namespace Castle.ActiveRecord.Tests.Model.AnyModel
 	public class ModelWithInCorrectMapping : ActiveRecordBase
 	{
 		private string payment;
-		
+
 		[Any.MetaValue("CREDIT_CARD", typeof(CreditCards))]
 		[Any.MetaValue("BANK_ACCOUNT", typeof(BankAccounts))]
 		public string Payment

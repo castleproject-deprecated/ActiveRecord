@@ -52,10 +52,10 @@ namespace Castle.ActiveRecord.Tests
 				Assert.AreEqual(0, blogs.Count());
 
 				var blog = new Blog
-				           	{
-				           		Name = "hammett's blog",
-				           		Author = "hamilton verissimo"
-				           	};
+							{
+								Name = "hammett's blog",
+								Author = "hamilton verissimo"
+							};
 				blog.Save();
 
 				blogs = from b in Blog.Queryable select b;
@@ -88,10 +88,10 @@ namespace Castle.ActiveRecord.Tests
 				Assert.AreEqual(0, blogs.Count());
 
 				var blog = new Blog
-				           	{
-				           		Name = "hammett's blog",
-				           		Author = "hamilton verissimo"
-				           	};
+							{
+								Name = "hammett's blog",
+								Author = "hamilton verissimo"
+							};
 				blog.Save();
 
 				blogs = from b in Blog.Queryable select b;
@@ -240,7 +240,7 @@ namespace Castle.ActiveRecord.Tests
 				Widget widget = new Widget { Name = "Hello world" };
 				widget.Save();
 
-                widgets = from w in scope.AsQueryable<Widget>() where w.Name == "Hello world" select w;
+				widgets = from w in scope.AsQueryable<Widget>() where w.Name == "Hello world" select w;
 				Assert.IsNotNull(widgets);
 				Assert.AreEqual(1, widgets.Count());
 			}
@@ -268,13 +268,13 @@ namespace Castle.ActiveRecord.Tests
 				Recreate();
 				Widget.DeleteAll();
 
-				var widget = new Widget {Name = "foo"};
+				var widget = new Widget { Name = "foo" };
 				widget.Save();
 
 				var orderedQueryable = ActiveRecordLinqBase<Widget>.Queryable;
 				var widgets = (from w in orderedQueryable
-				               where w.Name.StartsWith("f")
-				               select w.Name).ToList();
+							   where w.Name.StartsWith("f")
+							   select w.Name).ToList();
 
 				Assert.IsNotNull(widgets);
 				Assert.AreEqual("foo", widgets.Single());
@@ -290,13 +290,13 @@ namespace Castle.ActiveRecord.Tests
 				Recreate();
 				Widget.DeleteAll();
 
-				var widget = new Widget {Name = "foo"};
+				var widget = new Widget { Name = "foo" };
 				widget.Save();
 
 				var orderedQueryable = ActiveRecordLinqBase<Widget>.Queryable;
 				var name = (from w in orderedQueryable
-				            where w.Name.StartsWith("f")
-				            select w.Name).First();
+							where w.Name.StartsWith("f")
+							select w.Name).First();
 
 				Assert.IsNotNull(name);
 				Assert.AreEqual("foo", name);

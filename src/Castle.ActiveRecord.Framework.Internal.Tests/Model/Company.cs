@@ -17,7 +17,7 @@ namespace Castle.ActiveRecord.Framework.Internal.Tests.Model
 	/// <summary>
 	/// Warning: This is a wrong definition!
 	/// </summary>
-	[ActiveRecord(DiscriminatorColumn="column", DiscriminatorValue="1"), JoinedBase]
+	[ActiveRecord(DiscriminatorColumn = "column", DiscriminatorValue = "1"), JoinedBase]
 	public class Company : ActiveRecordBase
 	{
 		public Company()

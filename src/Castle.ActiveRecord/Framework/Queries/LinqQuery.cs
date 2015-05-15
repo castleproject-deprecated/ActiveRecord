@@ -15,60 +15,60 @@
 
 namespace Castle.ActiveRecord.Linq
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq.Expressions;
 
-    using NHibernate;
-    using NHibernate.Engine;
-    using NHibernate.Linq;
+	using NHibernate;
+	using NHibernate.Engine;
+	using NHibernate.Linq;
 
-    /// <summary>
-    /// Linq Active Record Query
-    /// </summary>
-    public class LinqQuery<T> : IActiveRecordQuery
-    {
-        private readonly Expression expression;
-        private readonly Type rootType;
+	/// <summary>
+	/// Linq Active Record Query
+	/// </summary>
+	public class LinqQuery<T> : IActiveRecordQuery
+	{
+		private readonly Expression expression;
+		private readonly Type rootType;
 
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="expression"></param>
-        /// <param name="rootType"></param>
-        public LinqQuery(Expression expression, Type rootType)
-        {
-            //this.options = options;
-            this.expression = expression;
-            this.rootType = rootType;
-        }
+		/// <summary>
+		/// ctor
+		/// </summary>
+		/// <param name="expression"></param>
+		/// <param name="rootType"></param>
+		public LinqQuery(Expression expression, Type rootType)
+		{
+			//this.options = options;
+			this.expression = expression;
+			this.rootType = rootType;
+		}
 
-        /// <inheritDoc/>
-        public Type RootType
-        {
-            get { return rootType; }
-        }
+		/// <inheritDoc/>
+		public Type RootType
+		{
+			get { return rootType; }
+		}
 
-        /// <inheritDoc/>
-        public List<T> Result { get; private set; }
+		/// <inheritDoc/>
+		public List<T> Result { get; private set; }
 
-        /// <inheritDoc />
-        public object Execute(ISession session)
-        {
-            var result = new DefaultQueryProvider((ISessionImplementor)session).Execute(expression);
-            if (result is IEnumerable<T>)
-            {
-                Result = new List<T>(result as IEnumerable<T>);
-            }
+		/// <inheritDoc />
+		public object Execute(ISession session)
+		{
+			var result = new DefaultQueryProvider((ISessionImplementor)session).Execute(expression);
+			if (result is IEnumerable<T>)
+			{
+				Result = new List<T>(result as IEnumerable<T>);
+			}
 
-            return result;
-        }
+			return result;
+		}
 
-        /// <inheritDoc />
-        public IEnumerable Enumerate(ISession session)
-        {
-            return (IEnumerable)Execute(session);
-        }
-    }
+		/// <inheritDoc />
+		public IEnumerable Enumerate(ISession session)
+		{
+			return (IEnumerable)Execute(session);
+		}
+	}
 }
