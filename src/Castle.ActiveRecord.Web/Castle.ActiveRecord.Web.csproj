@@ -4,7 +4,7 @@
     <RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)\..\..</RootPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-	<Configuration Condition=" '$(Configuration)' == '' ">NET40-Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">NET40-Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
   </PropertyGroup>
   <PropertyGroup>
@@ -21,7 +21,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NET40-Debug|AnyCPU' ">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
-	</TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <OutputPath>bin\NET40-Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -38,12 +38,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NET40-Release|AnyCPU' ">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
-	</TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <OutputPath>bin\NET40-Release\</OutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;PHYSICALASSEMBLY DOTNET DOTNET40 CLIENTPROFILE</DefineConstants>
-	<DocumentationFile>bin\NET40-Release\Castle.ActiveRecord.Web.xml</DocumentationFile>
+    <DocumentationFile>bin\NET40-Release\Castle.ActiveRecord.Web.xml</DocumentationFile>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>1591</NoWarn>
@@ -71,7 +71,7 @@
     </TargetFrameworkProfile>
     <OutputPath>bin\NET35-Release\</OutputPath>
     <DefineConstants>TRACE;PHYSICALASSEMBLY DOTNET DOTNET35</DefineConstants>
-	<DocumentationFile>bin\NET40-Release\Castle.ActiveRecord.Web.xml</DocumentationFile>
+    <DocumentationFile>bin\NET40-Release\Castle.ActiveRecord.Web.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>1591</NoWarn>

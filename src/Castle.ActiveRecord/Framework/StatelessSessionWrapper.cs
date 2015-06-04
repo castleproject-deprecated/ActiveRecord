@@ -449,15 +449,25 @@ namespace Castle.ActiveRecord.Framework
 			throw new NotWrappedException();
 		}
 
-		public object Merge(string entityName, object obj)
-		{
-			throw new NotWrappedException();
-		}
+        public object Merge(string entityName, object obj)
+        {
+            throw new NotWrappedException();
+        }
 
-		public object Merge(object obj)
-		{
-			throw new NotWrappedException();
-		}
+        public object Merge(object obj)
+        {
+            throw new NotWrappedException();
+        }
+
+        public T Merge<T>(T entity) where T : class
+        {
+            throw new NotWrappedException();
+        }
+
+        public T Merge<T>(string entityName, T entity) where T : class
+        {
+            throw new NotWrappedException();
+        }
 
 		public void Persist(string entityName, object obj)
 		{
@@ -551,10 +561,20 @@ namespace Castle.ActiveRecord.Framework
 		/// <returns>
 		/// An ICriteria&lt;T&gt; object
 		/// </returns>
-		public IQueryOver<T, T> QueryOver<T>() where T : class
-		{
-			throw new NotWrappedException();
-		}
+        public IQueryOver<T, T> QueryOver<T>() where T : class
+        {
+            throw new NotWrappedException();
+        }
+
+        public IQueryOver<T, T> QueryOver<T>(string entityName) where T : class
+        {
+            throw new NotWrappedException();
+        }
+
+        public IQueryOver<T, T> QueryOver<T>(string entityName, Expression<Func<T>> alias) where T : class
+        {
+            throw new NotWrappedException();
+        }
 
 		#endregion
 
