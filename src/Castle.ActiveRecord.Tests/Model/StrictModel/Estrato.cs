@@ -15,6 +15,7 @@
 namespace Castle.ActiveRecord.Tests.Model.StrictModel
 {
 	using System;
+	using System.Collections.Generic;
 
 	using Iesi.Collections;
 
@@ -25,15 +26,15 @@ namespace Castle.ActiveRecord.Tests.Model.StrictModel
 		Survey
 	}
 
-	[ActiveRecord(DiscriminatorColumn="type", DiscriminatorType="Int16", DiscriminatorValue="0")]
+	[ActiveRecord(DiscriminatorColumn = "type", DiscriminatorType = "Int16", DiscriminatorValue = "0")]
 	public class Estrato : ActiveRecordValidationBase
 	{
 		private int id;
 		private EstratoType type;
 		private QuestionContainer container;
 		private Estrato parentEstrato;
-		private ISet subestratos = new ListSet();
-		private ISet references = new ListSet();
+		private ISet<Estrato> subestratos = new HashSet<Estrato>();
+		private ISet<Estrato> references = new HashSet<Estrato>();
 
 		public Estrato()
 		{
@@ -46,7 +47,7 @@ namespace Castle.ActiveRecord.Tests.Model.StrictModel
 			set { id = value; }
 		}
 
-		[Property("type", Insert=false, Update=false)]
+		[Property("type", Insert = false, Update = false)]
 		public EstratoType EstratoType
 		{
 			get { return type; }
@@ -60,22 +61,22 @@ namespace Castle.ActiveRecord.Tests.Model.StrictModel
 			set { container = value; }
 		}
 
-		[HasAndBelongsToMany( typeof(Estrato), Table="EstratoRefEstrato", ColumnRef="ref_estrato_id", ColumnKey="estrato_id" )]
-		public ISet ReferencedEstratos
+		[HasAndBelongsToMany(typeof(Estrato), Table = "EstratoRefEstrato", ColumnRef = "ref_estrato_id", ColumnKey = "estrato_id")]
+		public ISet<Estrato> ReferencedEstratos
 		{
 			get { return references; }
 			set { references = value; }
 		}
 
-		[BelongsTo("parent_id", Type=typeof(Estrato))]
+		[BelongsTo("parent_id", Type = typeof(Estrato))]
 		public Estrato ParentEstrato
 		{
 			get { return parentEstrato; }
 			set { parentEstrato = value; }
 		}
 
-		[HasMany( typeof(Estrato), Inverse=true, Cascade=ManyRelationCascadeEnum.All)]
-		public ISet SubEstratos
+		[HasMany(typeof(Estrato), Inverse = true, Cascade = ManyRelationCascadeEnum.All)]
+		public ISet<Estrato> SubEstratos
 		{
 			get { return subestratos; }
 			set { subestratos = value; }

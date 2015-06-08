@@ -37,11 +37,10 @@ namespace Castle.ActiveRecord.Framework
 		public StatelessSessionWrapper(IStatelessSession statelessSession)
 		{
 			this.statelessSession = statelessSession;
+			this.statelessSession.SetBatchSize(1);
 		}
 
 #pragma warning disable 1591
-
-		#region Supported
 
 		public System.Data.IDbConnection Connection
 		{
@@ -74,7 +73,7 @@ namespace Castle.ActiveRecord.Framework
 			statelessSession.Close();
 			return null;
 		}
-		
+
 		public ICriteria CreateCriteria(string entityName, string alias)
 		{
 			return statelessSession.CreateCriteria(entityName, alias);
@@ -117,6 +116,30 @@ namespace Castle.ActiveRecord.Framework
 			return statelessSession.QueryOver<T>(alias);
 		}
 
+		/// <summary>
+		/// Creates a new <c>IQueryOver{T};</c> for the entity class.
+		/// </summary>
+		/// <typeparam name="T">The entity class</typeparam><param name="entityName">The name of the entity to Query</param>
+		/// <returns>
+		/// An IQueryOver{T} object
+		/// </returns>
+		public IQueryOver<T, T> QueryOver<T>(string entityName) where T : class
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Creates a new <c>IQueryOver{T}</c> for the entity class.
+		/// </summary>
+		/// <typeparam name="T">The entity class</typeparam><param name="entityName">The name of the entity to Query</param><param name="alias">The alias of the entity</param>
+		/// <returns>
+		/// An IQueryOver{T} object
+		/// </returns>
+		public IQueryOver<T, T> QueryOver<T>(string entityName, Expression<Func<T>> alias) where T : class
+		{
+			throw new NotImplementedException();
+		}
+
 		public IQuery CreateQuery(string queryString)
 		{
 			return statelessSession.CreateQuery(queryString);
@@ -154,7 +177,7 @@ namespace Castle.ActiveRecord.Framework
 
 		public T Get<T>(object id)
 		{
-			return (T)statelessSession.Get(typeof(T).FullName,id);
+			return (T)statelessSession.Get(typeof(T).FullName, id);
 		}
 
 		public object Get(string entityName, object id)
@@ -212,6 +235,19 @@ namespace Castle.ActiveRecord.Framework
 			return statelessSession.Insert(entityName, obj);
 		}
 
+		/// <summary>
+		/// Persist the given transient instance, using the given identifier.
+		/// </summary>
+		/// <param name="entityName">The Entity name.</param><param name="obj">a transient instance of a persistent class </param><param name="id">An unused valid identifier</param>
+		/// <remarks>
+		/// This operation cascades to associated instances if the
+		///             association is mapped with <tt>cascade="save-update"</tt>.
+		/// </remarks>
+		public void Save(string entityName, object obj, object id)
+		{
+			statelessSession.Update(entityName, obj);
+		}
+
 		public object Save(object obj)
 		{
 			return statelessSession.Insert(obj);
@@ -222,14 +258,39 @@ namespace Castle.ActiveRecord.Framework
 			statelessSession.Update(entityName, obj);
 		}
 
+		/// <summary>
+		/// Update the persistent instance associated with the given identifier.
+		/// </summary>
+		/// <param name="entityName">The Entity name.</param><param name="obj">a detached instance containing updated state </param><param name="id">Identifier of persistent instance</param>
+		/// <remarks>
+		/// If there is a persistent instance with the same identifier,
+		///             an exception is thrown. This operation cascades to associated instances
+		///             if the association is mapped with <tt>cascade="save-update"</tt>.
+		/// </remarks>
+		public void Update(string entityName, object obj, object id)
+		{
+			statelessSession.Update(entityName, obj);
+		}
+
+		/// <summary>
+		/// Either <c>Save()</c> or <c>Update()</c> the given instance, depending upon the value of
+		///             its identifier property.
+		/// </summary>
+		/// <remarks>
+		/// By default the instance is always saved. This behaviour may be adjusted by specifying
+		///             an <c>unsaved-value</c> attribute of the identifier property mapping
+		/// </remarks>
+		/// <param name="entityName">The name of the entity</param><param name="obj">A transient instance containing new or updated state</param><param name="id">Identifier of persistent instance</param>
+		public void SaveOrUpdate(string entityName, object obj, object id)
+		{
+			statelessSession.Update(entityName, obj);
+		}
+
 		public void Update(object obj)
 		{
 			statelessSession.Update(obj);
 		}
 
-		#endregion
-
-		#region Unsupported
 		public EntityMode ActiveEntityMode
 		{
 			get { throw new NotWrappedException(); }
@@ -454,6 +515,45 @@ namespace Castle.ActiveRecord.Framework
 			throw new NotWrappedException();
 		}
 
+		/// <summary>
+		/// Copy the state of the given object onto the persistent object with the same
+		///             identifier. If there is no persistent instance currently associated with
+		///             the session, it will be loaded. Return the persistent instance. If the
+		///             given instance is unsaved, save a copy of and return it as a newly persistent
+		///             instance. The given instance does not become associated with the session.
+		///             This operation cascades to associated instances if the association is mapped
+		///             with <tt>cascade="merge"</tt>.<br/>
+		///             The semantics of this method are defined by JSR-220.
+		/// </summary>
+		/// <param name="entity">a detached instance with state to be copied </param>
+		/// <returns>
+		/// an updated persistent instance 
+		/// </returns>
+		public T Merge<T>(T entity) where T : class
+		{
+			throw new NotWrappedException();
+		}
+
+		/// <summary>
+		/// Copy the state of the given object onto the persistent object with the same
+		///             identifier. If there is no persistent instance currently associated with
+		///             the session, it will be loaded. Return the persistent instance. If the
+		///             given instance is unsaved, save a copy of and return it as a newly persistent
+		///             instance. The given instance does not become associated with the session.
+		///             This operation cascades to associated instances if the association is mapped
+		///             with <tt>cascade="merge"</tt>.<br/>
+		///             The semantics of this method are defined by JSR-220.
+		///             <param name="entityName">Name of the entity.</param><param name="entity">a detached instance with state to be copied </param>
+		/// <returns>
+		/// an updated persistent instance 
+		/// </returns>
+		/// </summary>
+		/// <returns/>
+		public T Merge<T>(string entityName, T entity) where T : class
+		{
+			return null;
+		}
+
 		public object Merge(object obj)
 		{
 			throw new NotWrappedException();
@@ -556,16 +656,11 @@ namespace Castle.ActiveRecord.Framework
 			throw new NotWrappedException();
 		}
 
-		#endregion
-
-		#region IDisposable Members
-
 		public void Dispose()
 		{
 			statelessSession.Dispose();
 		}
 
-		#endregion
 #pragma warning restore 1591
 	}
 

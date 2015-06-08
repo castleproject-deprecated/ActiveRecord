@@ -53,7 +53,7 @@ namespace Castle.ActiveRecord.Tests
 		public void SqlServer2005Defaults()
 		{
 			var configuration = BuildConfiguration("MsSqlServer2005");
-			AssertPropertyEquals(configuration, dialect, typeof(MsSql2005Dialect).AssemblyQualifiedName);
+			AssertPropertyEquals(configuration, dialect, typeof(MsSql2012Dialect).AssemblyQualifiedName);
 			AssertPropertyEquals(configuration, connection_provider, typeof(DriverConnectionProvider).AssemblyQualifiedName);
 			AssertPropertyEquals(configuration, connection_driver_class, typeof(SqlClientDriver).AssemblyQualifiedName);
 			AssertPropertyEquals(configuration, proxyfactory_factory_class, typeof(ProxyFactoryFactory).AssemblyQualifiedName);
@@ -80,7 +80,7 @@ namespace Castle.ActiveRecord.Tests
 			var value = @"<activerecord>
 	<config database=""MsSqlServer2005"" />
 </activerecord>";
-			TestDelegate action = () => 
+			TestDelegate action = () =>
 
 				BuildConfiguration(ReadConfiguration(value));
 
@@ -117,7 +117,7 @@ namespace Castle.ActiveRecord.Tests
 
 			var ex = Assert.Throws<ConfigurationErrorsException>(action);
 			Assert.AreEqual(
-				"Specified value (IDontExist!) is not valid for 'database' attribute. Valid values are: 'MsSqlServer2000' 'MsSqlServer2005' 'MsSqlServer2008' " +
+				"Specified value (IDontExist!) is not valid for 'database' attribute. Valid values are: 'MsSqlServer2000' 'MsSqlServer2005' 'MsSqlServer2008' 'MsSqlServer2012' " +
 				"'SQLite' 'MySql' 'MySql5' 'Firebird' 'PostgreSQL' 'PostgreSQL81' 'PostgreSQL82' 'MsSqlCe' 'Oracle8i' 'Oracle9i' 'Oracle10g'.",
 				ex.Message);
 		}
@@ -129,7 +129,7 @@ namespace Castle.ActiveRecord.Tests
 	<config csn=""foobar"" db=""MsSqlServer2005"" />
 </activerecord>";
 			var configuration = BuildConfiguration(ReadConfiguration(value));
-			AssertPropertyEquals(configuration, dialect, typeof(MsSql2005Dialect).AssemblyQualifiedName);
+			AssertPropertyEquals(configuration, dialect, typeof(MsSql2012Dialect).AssemblyQualifiedName);
 			AssertPropertyEquals(configuration, connection_connection_string_name, "foobar");
 		}
 

@@ -46,13 +46,13 @@ namespace Castle.ActiveRecord.Tests
 
 			ActiveRecordMediator.Save(lazy);
 
-			VeryLazyObject lazyFromDb = (VeryLazyObject) ActiveRecordMediator.FindByPrimaryKey(typeof(VeryLazyObject), lazy.Id);
+			VeryLazyObject lazyFromDb = (VeryLazyObject)ActiveRecordMediator.FindByPrimaryKey(typeof(VeryLazyObject), lazy.Id);
 			Assert.AreEqual("test", lazyFromDb.Title);
 
 			lazyFromDb.Title = "test for update";
 			ActiveRecordMediator.Update(lazyFromDb);
 
-			lazyFromDb = (VeryLazyObject) ActiveRecordMediator.FindByPrimaryKey(typeof(VeryLazyObject), lazy.Id);
+			lazyFromDb = (VeryLazyObject)ActiveRecordMediator.FindByPrimaryKey(typeof(VeryLazyObject), lazy.Id);
 			Assert.AreEqual("test for update", lazyFromDb.Title);
 		}
 
@@ -76,7 +76,7 @@ namespace Castle.ActiveRecord.Tests
 
 			using (new SessionScope())
 			{
-				LazyObjectWithLazyBlobProperty lazyFromDb = (LazyObjectWithLazyBlobProperty) ActiveRecordMediator.FindByPrimaryKey(typeof(LazyObjectWithLazyBlobProperty), id);
+				LazyObjectWithLazyBlobProperty lazyFromDb = (LazyObjectWithLazyBlobProperty)ActiveRecordMediator.FindByPrimaryKey(typeof(LazyObjectWithLazyBlobProperty), id);
 				Assert.True(!NHibernate.NHibernateUtil.IsPropertyInitialized(lazyFromDb, "BlobData"));
 
 				byte[] fromDb = lazyFromDb.BlobData;
@@ -89,8 +89,8 @@ namespace Castle.ActiveRecord.Tests
 		[Test]
 		public void CanLoadLazyBelongsToOutsideOfScope()
 		{
-			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(ScopelessLazy), typeof(ObjectWithLazyAssociation), typeof(VeryLazyObject2)); 
-			
+			ActiveRecordStarter.Initialize(GetConfigSource(), typeof(ScopelessLazy), typeof(ObjectWithLazyAssociation), typeof(VeryLazyObject2));
+
 			Recreate();
 
 			var lazy = new VeryLazyObject2();
@@ -101,7 +101,7 @@ namespace Castle.ActiveRecord.Tests
 			obj.LazyObj = lazy;
 			ActiveRecordMediator.Save(obj);
 
-			var objFromDb = (ObjectWithLazyAssociation) ActiveRecordMediator.FindByPrimaryKey(typeof(ObjectWithLazyAssociation), obj.Id);
+			var objFromDb = (ObjectWithLazyAssociation)ActiveRecordMediator.FindByPrimaryKey(typeof(ObjectWithLazyAssociation), obj.Id);
 			Assert.False(NHibernate.NHibernateUtil.IsInitialized(objFromDb.LazyObj));
 			Assert.AreEqual("test", objFromDb.LazyObj.Title);
 			Assert.True(NHibernate.NHibernateUtil.IsInitialized(objFromDb.LazyObj));

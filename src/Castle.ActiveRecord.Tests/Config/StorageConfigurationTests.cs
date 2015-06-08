@@ -67,7 +67,7 @@ namespace Castle.ActiveRecord.Tests.Config
 		[Test]
 		public void DialectIsAdded()
 		{
-			AssertConfiguration(_configuration.Dialect<MsSql2005Dialect>(), "dialect", "NHibernate.Dialect.MsSql2005Dialect");
+			AssertConfiguration(_configuration.Dialect<MsSql2012Dialect>(), "dialect", "NHibernate.Dialect.MsSql2012Dialect");
 		}
 
 		[Test]

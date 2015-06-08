@@ -162,7 +162,7 @@ namespace Castle.ActiveRecord.Framework.Config
 			if (string.IsNullOrEmpty(server)) throw new ArgumentNullException("server");
 			if (string.IsNullOrEmpty(initialCatalog)) throw new ArgumentNullException("initialCatalog");
 
-			return Build(DatabaseType.MsSqlServer2005, "Server=" + server + ";initial catalog=" + initialCatalog + ";Integrated Security=SSPI");
+			return Build(DatabaseType.MsSqlServer2008, "Server=" + server + ";initial catalog=" + initialCatalog + ";Integrated Security=SSPI");
 		}
 
 		/// <summary>
@@ -180,7 +180,7 @@ namespace Castle.ActiveRecord.Framework.Config
 			if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
 			if (string.IsNullOrEmpty(password)) throw new ArgumentNullException("password");
 
-			return Build(DatabaseType.MsSqlServer2005, "Server=" + server + ";initial catalog=" + initialCatalog + ";User id=" + username + ";password=" + password);
+			return Build(DatabaseType.MsSqlServer2008, "Server=" + server + ";initial catalog=" + initialCatalog + ";User id=" + username + ";password=" + password);
 		}
 
 		/// <summary>

@@ -27,7 +27,7 @@ namespace Castle.ActiveRecord.Linq
 	/// <summary>
 	/// Linq Active Record Query
 	/// </summary>
-	public class LinqQuery<T>:IActiveRecordQuery
+	public class LinqQuery<T> : IActiveRecordQuery
 	{
 		private readonly Expression expression;
 		private readonly Type rootType;
@@ -37,7 +37,7 @@ namespace Castle.ActiveRecord.Linq
 		/// </summary>
 		/// <param name="expression"></param>
 		/// <param name="rootType"></param>
-		public LinqQuery(Expression expression,Type rootType)
+		public LinqQuery(Expression expression, Type rootType)
 		{
 			//this.options = options;
 			this.expression = expression;
@@ -56,9 +56,12 @@ namespace Castle.ActiveRecord.Linq
 		/// <inheritDoc />
 		public object Execute(ISession session)
 		{
-			var result = new NhQueryProvider((ISessionImplementor) session).Execute(expression);
+			var result = new DefaultQueryProvider((ISessionImplementor)session).Execute(expression);
 			if (result is IEnumerable<T>)
+			{
 				Result = new List<T>(result as IEnumerable<T>);
+			}
+
 			return result;
 		}
 

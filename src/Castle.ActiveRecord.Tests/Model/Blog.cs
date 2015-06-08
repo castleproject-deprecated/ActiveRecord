@@ -16,6 +16,8 @@ namespace Castle.ActiveRecord.Tests.Model
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
+
 	using Castle.ActiveRecord.Framework;
 	using NHibernate;
 	using NHibernate.Criterion;
@@ -26,10 +28,10 @@ namespace Castle.ActiveRecord.Tests.Model
 		private int _id;
 		private String _name;
 		private String _author;
-		private IList _posts;
-		private IList _publishedposts;
-		private IList _unpublishedposts;
-		private IList _recentposts;
+		private IList<Post> _posts;
+		private IList<Post> _publishedposts;
+		private IList<Post> _unpublishedposts;
+		private IList<Post> _recentposts;
 		private bool onSaveCalled, onUpdateCalled, onDeleteCalled, onLoadCalled;
 
 		public Blog()
@@ -62,29 +64,29 @@ namespace Castle.ActiveRecord.Tests.Model
 			set { _author = value; }
 		}
 
-		[HasMany(typeof(Post), Table="Posts", ColumnKey="blogid")]
-		public IList Posts
+		[HasMany(typeof(Post), Table = "Posts", ColumnKey = "blogid")]
+		public IList<Post> Posts
 		{
 			get { return _posts; }
 			set { _posts = value; }
 		}
 
-		[HasMany(typeof(Post), Table="Posts", ColumnKey="blogid", Where="published = 1")]
-		public IList PublishedPosts
+		[HasMany(typeof(Post), Table = "Posts", ColumnKey = "blogid", Where = "published = 1")]
+		public IList<Post> PublishedPosts
 		{
 			get { return _publishedposts; }
 			set { _publishedposts = value; }
 		}
 
-		[HasMany(typeof(Post), Table="Posts", ColumnKey="blogid", Where="published = 0")]
-		public IList UnPublishedPosts
+		[HasMany(typeof(Post), Table = "Posts", ColumnKey = "blogid", Where = "published = 0")]
+		public IList<Post> UnPublishedPosts
 		{
 			get { return _unpublishedposts; }
 			set { _unpublishedposts = value; }
 		}
 
-		[HasMany(typeof(Post), Table="Posts", ColumnKey="blogid", OrderBy="created desc")]
-		public IList RecentPosts
+		[HasMany(typeof(Post), Table = "Posts", ColumnKey = "blogid", OrderBy = "created desc")]
+		public IList<Post> RecentPosts
 		{
 			get { return _recentposts; }
 			set { _recentposts = value; }
@@ -105,23 +107,23 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static Blog[] FindAll()
 		{
-			return (Blog[]) ActiveRecordMediator.FindAll(typeof(Blog));
+			return (Blog[])ActiveRecordMediator.FindAll(typeof(Blog));
 		}
 
-        public static Blog[] FindAll(IDetachedQuery dq)
-        {
-            return (Blog[]) FindAll(typeof(Blog), dq);
-        }
+		public static Blog[] FindAll(IDetachedQuery dq)
+		{
+			return (Blog[])FindAll(typeof(Blog), dq);
+		}
 
 		public static Blog Find(int id)
 		{
-			return (Blog) ActiveRecordMediator.FindByPrimaryKey(typeof(Blog), id);
+			return (Blog)ActiveRecordMediator.FindByPrimaryKey(typeof(Blog), id);
 		}
 
-        public static Blog FindOne(IDetachedQuery dq)
-        {
-            return (Blog) FindOne(typeof(Blog), dq);
-        }
+		public static Blog FindOne(IDetachedQuery dq)
+		{
+			return (Blog)FindOne(typeof(Blog), dq);
+		}
 
 		public static int FetchCount()
 		{
@@ -158,24 +160,24 @@ namespace Castle.ActiveRecord.Tests.Model
 			return Exists(typeof(Blog), criteria);
 		}
 
-        public static bool Exists(IDetachedQuery dq)
-        {
-            return Exists(typeof(Blog), dq);
-        }
+		public static bool Exists(IDetachedQuery dq)
+		{
+			return Exists(typeof(Blog), dq);
+		}
 
-        public static Blog[] SlicedFindAll(int FirstResult, int MaxResult, IDetachedQuery dq)
-        {
-            return (Blog[]) SlicedFindAll(typeof(Blog), FirstResult, MaxResult, dq);
-        }
+		public static Blog[] SlicedFindAll(int FirstResult, int MaxResult, IDetachedQuery dq)
+		{
+			return (Blog[])SlicedFindAll(typeof(Blog), FirstResult, MaxResult, dq);
+		}
 
 		public static Blog[] FindByProperty(String property, object value)
 		{
-			return (Blog[]) FindAllByProperty(typeof(Blog), property, value);
+			return (Blog[])FindAllByProperty(typeof(Blog), property, value);
 		}
 
 		public static Blog[] FindByProperty(String property, String orderByColumn, object value)
 		{
-			return (Blog[]) FindAllByProperty(typeof(Blog), orderByColumn, property, value);
+			return (Blog[])FindAllByProperty(typeof(Blog), orderByColumn, property, value);
 		}
 
 		/// <summary>
@@ -235,7 +237,7 @@ namespace Castle.ActiveRecord.Tests.Model
 			get
 			{
 				return (ISession)
-				       ActiveRecordMediator.Execute(typeof(Blog), new NHibernateDelegate(GrabSession), this);
+					   ActiveRecordMediator.Execute(typeof(Blog), new NHibernateDelegate(GrabSession), this);
 			}
 		}
 

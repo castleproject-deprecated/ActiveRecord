@@ -87,15 +87,15 @@ namespace Castle.ActiveRecord.Framework.Internal
 		private readonly IDictionary<string, object> extendedProperties =
 			new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
 
-		private readonly IDictionary<string, PropertyModel> propertyDictionary = 
+		private readonly IDictionary<string, PropertyModel> propertyDictionary =
 			new Dictionary<string, PropertyModel>(StringComparer.InvariantCultureIgnoreCase);
-		
+
 		private readonly IDictionary<string, BelongsToModel> belongsToDictionary =
 			new Dictionary<string, BelongsToModel>(StringComparer.InvariantCultureIgnoreCase);
 
 		private readonly IDictionary<string, HasManyToAnyModel> hasManyToAnyDictionary =
 			new Dictionary<string, HasManyToAnyModel>(StringComparer.InvariantCultureIgnoreCase);
-		
+
 		private readonly IDictionary<string, HasManyModel> hasManyDictionary =
 			new Dictionary<string, HasManyModel>(StringComparer.InvariantCultureIgnoreCase);
 
@@ -533,7 +533,7 @@ namespace Castle.ActiveRecord.Framework.Internal
 		public static ActiveRecordModel GetModel(Type arType)
 		{
 			arType = GetNonProxy(arType);
-			return (ActiveRecordModel) type2Model[arType];
+			return (ActiveRecordModel)type2Model[arType];
 		}
 
 		/// <summary>
@@ -553,11 +553,13 @@ namespace Castle.ActiveRecord.Framework.Internal
 		/// </summary>
 		private static Type GetNonProxy(Type type)
 		{
-			if (type.GetField("__interceptor") != null ||//Dynamic Proxy 1.0
-				type.GetField("__interceptors")!=null) //Dynamic Proxy 2.0
+			//Dynamic Proxy 1.0  //Dynamic Proxy 2.0
+			if (type.GetField("__interceptor", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) != null
+				|| type.GetField("__interceptors", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) != null)
 			{
 				type = type.BaseType;
 			}
+
 			return type;
 		}
 

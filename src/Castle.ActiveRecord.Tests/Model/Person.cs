@@ -16,8 +16,9 @@ namespace Castle.ActiveRecord.Tests.Model
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
 
-	[ActiveRecord("People"), 
+    [ActiveRecord("People"), 
 	 JoinedTable("Addresses", Column = "person_id")]
 	public class Person : ActiveRecordBase
 	{
@@ -25,12 +26,12 @@ namespace Castle.ActiveRecord.Tests.Model
 		private String _name;
 		private FullName _fullName;
 		private String _address;
-		private IList _companies;
+		private IList<Company> _companies;
 		private Blog _blog;
 
 		public Person()
 		{
-			_companies = new ArrayList();
+			_companies = new List<Company>();
 		}
 
 		[PrimaryKey]
@@ -72,7 +73,7 @@ namespace Castle.ActiveRecord.Tests.Model
 		}
 
 		[HasAndBelongsToMany( typeof(Company), RelationType.Bag, Table="PeopleCompanies", ColumnRef="company_id", ColumnKey="person_id" )]
-		public IList Companies
+        public IList<Company> Companies
 		{
 			get { return _companies; }
 			set { _companies = value; }

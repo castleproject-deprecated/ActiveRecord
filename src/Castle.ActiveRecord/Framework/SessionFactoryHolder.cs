@@ -15,14 +15,18 @@
 namespace Castle.ActiveRecord.Framework
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Threading;
 	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq;
 	using System.Runtime.CompilerServices;
+	using System.Threading;
+
+	using Castle.ActiveRecord.Framework.Scopes;
+
 	using Iesi.Collections;
+
 	using NHibernate;
 	using NHibernate.Cfg;
-	using Castle.ActiveRecord.Framework.Scopes;
 
 	/// <summary>
 	/// Default implementation of <seealso cref="ISessionFactoryHolder"/>
@@ -70,7 +74,7 @@ namespace Castle.ActiveRecord.Framework
 		/// </summary>
 		public Configuration[] GetAllConfigurations()
 		{
-			HashedSet set = new HashedSet(type2Conf.Values);
+			ISet<object> set = new HashSet<object>(type2Conf.Values.Cast<object>());
 
 			Configuration[] confs = new Configuration[set.Count];
 
@@ -87,7 +91,7 @@ namespace Castle.ActiveRecord.Framework
 		{
 			List<ISessionFactory> factories = new List<ISessionFactory>();
 
-			foreach(ISessionFactory factory in type2SessFactory.Values)
+			foreach (ISessionFactory factory in type2SessFactory.Values)
 			{
 				factories.Add(factory);
 			}
@@ -161,11 +165,11 @@ namespace Castle.ActiveRecord.Framework
 		{
 			readerWriterLock.AcquireWriterLock(-1);
 
-			try 
+			try
 			{
 				type2SessFactory[baseType] = sessionFactory;
 			}
-			finally 
+			finally
 			{
 				readerWriterLock.ReleaseWriterLock();
 			}
@@ -196,7 +200,7 @@ namespace Castle.ActiveRecord.Framework
 		/// <returns></returns>
 		public Type GetRootType(Type type)
 		{
-			while(type != typeof(object))
+			while (type != typeof(object))
 			{
 				if (type2Conf.ContainsKey(type))
 				{
@@ -232,7 +236,7 @@ namespace Castle.ActiveRecord.Framework
 
 		private static ISession OpenSession(ISessionFactory sessionFactory)
 		{
-			lock(sessionFactory)
+			lock (sessionFactory)
 			{
 				return sessionFactory.OpenSession(InterceptorFactory.Create());
 			}
@@ -240,7 +244,7 @@ namespace Castle.ActiveRecord.Framework
 
 		internal static ISession OpenSessionWithScope(ISessionScope scope, ISessionFactory sessionFactory)
 		{
-			lock(sessionFactory)
+			lock (sessionFactory)
 			{
 				return scope.OpenSession(sessionFactory, InterceptorFactory.Create());
 			}

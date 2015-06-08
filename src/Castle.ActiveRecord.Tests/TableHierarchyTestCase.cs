@@ -16,6 +16,7 @@ namespace Castle.ActiveRecord.Tests
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
 
 	using NUnit.Framework;
 
@@ -28,7 +29,7 @@ namespace Castle.ActiveRecord.Tests
 		[Test]
 		public void CompanyFirmAndClient()
 		{
-			ActiveRecordStarter.Initialize( GetConfigSource(), 
+			ActiveRecordStarter.Initialize(GetConfigSource(),
 				typeof(Company), typeof(Client), typeof(Firm), typeof(Person),
 				typeof(Blog), typeof(Post));
 			Recreate();
@@ -45,22 +46,22 @@ namespace Castle.ActiveRecord.Tests
 			client.Save();
 
 			Client[] clients = Client.FindAll();
-			Assert.AreEqual( 1, clients.Length );
+			Assert.AreEqual(1, clients.Length);
 
 			Firm[] firms = Firm.FindAll();
-			Assert.AreEqual( 1, firms.Length );
+			Assert.AreEqual(1, firms.Length);
 
-			Assert.AreEqual( firm.Id, firms[0].Id );
-			Assert.AreEqual( client.Id, clients[0].Id );
+			Assert.AreEqual(firm.Id, firms[0].Id);
+			Assert.AreEqual(client.Id, clients[0].Id);
 
-			Assert.IsNotNull( clients[0].Firm );
-			Assert.AreEqual( firm.Id, clients[0].Firm.Id );
+			Assert.IsNotNull(clients[0].Firm);
+			Assert.AreEqual(firm.Id, clients[0].Firm.Id);
 		}
 
 		[Test]
 		public void ManyToMany()
 		{
-			ActiveRecordStarter.Initialize( GetConfigSource(), 
+			ActiveRecordStarter.Initialize(GetConfigSource(),
 				typeof(Company), typeof(Client), typeof(Firm), typeof(Person),
 				typeof(Blog), typeof(Post));
 			Recreate();
@@ -74,7 +75,7 @@ namespace Castle.ActiveRecord.Tests
 			Client client = new Client("castle", firm);
 			Company company = new Company("vs");
 
-			using(new SessionScope())
+			using (new SessionScope())
 			{
 				firm.Save();
 				client.Save();
@@ -83,54 +84,54 @@ namespace Castle.ActiveRecord.Tests
 				Person person = new Person();
 				person.Name = "hammett";
 
-				person.Companies.Add( firm );
-				person.Companies.Add( client );
-				person.Companies.Add( company );
+				person.Companies.Add(firm);
+				person.Companies.Add(client);
+				person.Companies.Add(company);
 				person.Save();
 			}
 
-			company = Company.Find( company.Id );
-			Assert.AreEqual(1, company.People.Count );
+			company = Company.Find(company.Id);
+			Assert.AreEqual(1, company.People.Count);
 		}
-		
+
 		[Test]
 		public void ManyToManyUsingSet()
 		{
-			ActiveRecordStarter.Initialize(GetConfigSource(), 
+			ActiveRecordStarter.Initialize(GetConfigSource(),
 				typeof(Order), typeof(Product)/*, typeof(LineItem)*/);
 			Recreate();
-			
+
 			Order.DeleteAll();
 			Product.DeleteAll();
-			
+
 			Order myOrder = new Order();
 			myOrder.OrderedDate = DateTime.Parse("05/09/2004");
 			Product coolGadget = new Product();
 			coolGadget.Name = "PSP";
 			coolGadget.Price = 250.39f;
-			
+
 			using (new SessionScope())
 			{
 				coolGadget.Save();
-				ISet products = new ListSet();
+				ISet<Product> products = new HashSet<Product>();
 				products.Add(coolGadget);
 				myOrder.Products = products;
 				myOrder.Save();
 			}
-			
+
 			Order secondRef2Order = Order.Find(myOrder.ID);
-			Assert.IsFalse(secondRef2Order.Products.IsEmpty);
-			
+			Assert.IsFalse(secondRef2Order.Products.Count == 0);
+
 			Product secondRef2Product = Product.Find(coolGadget.ID);
-			Assert.AreEqual(1, secondRef2Product.Orders.Count);	
+			Assert.AreEqual(1, secondRef2Product.Orders.Count);
 		}
 
 		[Test]
 		[Ignore("Jira issue for NH team")]
 		public void InvalidSessionCache()
 		{
-			ActiveRecordStarter.Initialize( GetConfigSource(), 
-				typeof(Company), typeof(Client), typeof(Firm), typeof(Person) );
+			ActiveRecordStarter.Initialize(GetConfigSource(),
+				typeof(Company), typeof(Client), typeof(Firm), typeof(Person));
 			Recreate();
 
 			Company.DeleteAll();
@@ -142,27 +143,27 @@ namespace Castle.ActiveRecord.Tests
 			Client client = new Client("castle", firm);
 			Company company = new Company("vs");
 
-			using(new SessionScope())
+			using (new SessionScope())
 			{
 				firm.Save();
 				client.Save();
 				company.Save();
 			}
 
-			using(new SessionScope())
+			using (new SessionScope())
 			{
 				try
 				{
-					Client c = Client.Find( firm.Id );
+					Client c = Client.Find(firm.Id);
 
 					Assert.Fail("Exception was expected");
 				}
-				catch(Exception)
+				catch (Exception)
 				{
 					// Phew!!
 				}
 
-				Firm firm2 = Firm.Find( firm.Id );
+				Firm firm2 = Firm.Find(firm.Id);
 
 				Assert.IsNotNull(firm2);
 			}
@@ -172,31 +173,33 @@ namespace Castle.ActiveRecord.Tests
 		[Ignore("Create schema does not create all necessary tables for this test case")]
 		public void ManyToManyUsingIDBag()
 		{
-			ActiveRecordStarter.Initialize(GetConfigSource(), 
+			ActiveRecordStarter.Initialize(GetConfigSource(),
 				typeof(OrderWithIDBag), typeof(ProductWithIDBag));
 			Recreate();
-			
+
 			OrderWithIDBag.DeleteAll();
 			ProductWithIDBag.DeleteAll();
-			
+
 			OrderWithIDBag myOrder = new OrderWithIDBag();
 			myOrder.OrderedDate = new DateTime(2006, 12, 25);
-			ProductWithIDBag coolGadget = new ProductWithIDBag();
-			coolGadget.Name = "Xbox 2";
-			coolGadget.Price = 330.23f;
-			
+			ProductWithIDBag coolGadget = new ProductWithIDBag
+											  {
+												  Name = "Xbox 2",
+												  Price = 330.23f
+											  };
+
 			using (new SessionScope())
 			{
 				coolGadget.Save();
-				IList products = new ArrayList();
+				var products = new List<object>();
 				products.Add(coolGadget);
 				myOrder.Products = products;
 				myOrder.Save();
 			}
-			
+
 			OrderWithIDBag secondRef2Order = OrderWithIDBag.Find(myOrder.ID);
 			Assert.IsTrue(secondRef2Order.Products.Count > 0);
-			
+
 			ProductWithIDBag secondRef2Product = ProductWithIDBag.Find(coolGadget.ID);
 			Assert.AreEqual(1, secondRef2Product.Orders.Count);
 		}

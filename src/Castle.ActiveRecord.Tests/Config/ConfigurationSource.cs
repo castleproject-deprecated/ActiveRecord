@@ -232,9 +232,9 @@ namespace Castle.ActiveRecord.Tests.Config
 		{
 			return @"	<config>
 							<add key=""connection.driver_class"" value=""NHibernate.Driver.SqlClientDriver"" />
-							<add key=""dialect""                 value=""NHibernate.Dialect.MsSql2000Dialect"" />
+							<add key=""dialect""                 value=""NHibernate.Dialect.MsSql2012Dialect"" />
 							<add key=""connection.provider""     value=""NHibernate.Connection.DriverConnectionProvider"" />
-							<add key=""connection.connection_string"" value=""Data Source=.;Initial Catalog=test;Integrated Security=True;Pooling=False"" />
+							<add key=""connection.connection_string"" value=""Data Source=.;Initial Catalog=Test;Integrated Security=True;Pooling=False"" />
 						</config>
 					</activerecord>";
 		}

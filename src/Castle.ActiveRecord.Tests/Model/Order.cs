@@ -16,6 +16,7 @@ namespace Castle.ActiveRecord.Tests.Model
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
 
 	using Iesi.Collections;
 
@@ -26,7 +27,7 @@ namespace Castle.ActiveRecord.Tests.Model
 		private int id;
 		private DateTime ordered_date;
 		private Boolean shipped;
-		private ISet _products;
+		private ISet<Product> _products;
 
 		[PrimaryKey(PrimaryKeyType.Native, "OrderID")]
 		public int ID
@@ -51,13 +52,13 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static Order Find(int id)
 		{
-			return ((Order) (ActiveRecordBase.FindByPrimaryKey(typeof (Order), id)));
+			return ((Order)(ActiveRecordBase.FindByPrimaryKey(typeof(Order), id)));
 		}
 
-		[HasAndBelongsToMany(typeof (Product), RelationType.Set,
-			Table="line_item",
-			ColumnRef="product_id", ColumnKey="order_id")]
-		public ISet Products
+		[HasAndBelongsToMany(typeof(Product), RelationType.Set,
+			Table = "line_item",
+			ColumnRef = "product_id", ColumnKey = "order_id")]
+		public ISet<Product> Products
 		{
 			get { return _products; }
 			set { _products = value; }
@@ -65,7 +66,7 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static void DeleteAll()
 		{
-			ActiveRecordBase.DeleteAll(typeof (Order));
+			ActiveRecordBase.DeleteAll(typeof(Order));
 		}
 	}
 
@@ -75,7 +76,7 @@ namespace Castle.ActiveRecord.Tests.Model
 		private int id;
 		private DateTime ordered_date;
 		private Boolean shipped;
-		private IList _products;
+		private IList<object> _products;
 
 		[PrimaryKey(PrimaryKeyType.Native, "OrderID")]
 		public int ID
@@ -100,15 +101,15 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static OrderWithIDBag Find(int id)
 		{
-			return ((OrderWithIDBag) (ActiveRecordBase.FindByPrimaryKey(typeof (OrderWithIDBag), id)));
+			return ((OrderWithIDBag)(ActiveRecordBase.FindByPrimaryKey(typeof(OrderWithIDBag), id)));
 		}
 
-		[HasAndBelongsToMany(typeof (ProductWithIDBag), RelationType.IdBag,
-			Table="line_item_non_ident",
-			ColumnRef="product_id", ColumnKey="order_id"),
+		[HasAndBelongsToMany(typeof(ProductWithIDBag), RelationType.IdBag,
+			Table = "line_item_non_ident",
+			ColumnRef = "product_id", ColumnKey = "order_id"),
 			CollectionID(CollectionIDType.HiLo, "line_number", "Int32"),
-			Hilo(Table="testing_hilo", Column="sequence", MaxLo=150)]
-		public IList Products
+			Hilo(Table = "testing_hilo", Column = "sequence", MaxLo = 150)]
+		public IList<object> Products
 		{
 			get { return _products; }
 			set { _products = value; }
@@ -116,7 +117,7 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static void DeleteAll()
 		{
-			ActiveRecordBase.DeleteAll(typeof (OrderWithIDBag));
+			ActiveRecordBase.DeleteAll(typeof(OrderWithIDBag));
 		}
 	}
 }

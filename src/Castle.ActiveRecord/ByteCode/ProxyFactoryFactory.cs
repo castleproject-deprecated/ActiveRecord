@@ -12,35 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Castle.ActiveRecord.ByteCode 
+namespace Castle.ActiveRecord.ByteCode
 {
 	using NHibernate.Bytecode;
 	using NHibernate.Proxy;
 
-    /// <summary>
-    /// The factory infrastructure used to build AR proxy objects.
-    /// Use this one if you want automatic session management durring proxy hydration.
-    /// </summary>
-    public class ProxyFactoryFactory : IProxyFactoryFactory 
-    {
-        public IProxyFactory BuildProxyFactory() 
-        {
-            return new ProxyFactory();
-        }
+	/// <summary>
+	/// The factory infrastructure used to build AR proxy objects.
+	/// Use this one if you want automatic session management durring proxy hydration.
+	/// </summary>
+	public class ProxyFactoryFactory : IProxyFactoryFactory
+	{
+		public IProxyValidator ProxyValidator
+		{
+			get { return new DynProxyTypeValidator(); }
+		}
 
-    	public bool IsProxy(object entity)
-    	{
+		public IProxyFactory BuildProxyFactory()
+		{
+			return new ProxyFactory();
+		}
+
+		public bool IsProxy(object entity)
+		{
 			return entity is INHibernateProxy;
-    	}
+		}
 
-    	public IProxyValidator ProxyValidator 
-        {
-            get { return new DynProxyTypeValidator(); }
-        }
-
-        public bool IsInstrumented(System.Type entityClass) 
-        {
-            return true;
-        }
-    }
+		public bool IsInstrumented(System.Type entityClass)
+		{
+			return true;
+		}
+	}
 }

@@ -18,7 +18,7 @@ namespace Castle.ActiveRecord.Tests.Model
 	using System.Collections;
 
 
-	[ActiveRecord("Companies", DiscriminatorColumn="type", DiscriminatorType="String", DiscriminatorValue="company")]
+	[ActiveRecord("Companies", DiscriminatorColumn = "type", DiscriminatorType = "String", DiscriminatorValue = "company")]
 	public class Company : ActiveRecordBase
 	{
 		private int id;
@@ -56,8 +56,8 @@ namespace Castle.ActiveRecord.Tests.Model
 			set { _address = value; }
 		}
 
-		[HasAndBelongsToMany( typeof(Person), RelationType.Bag, 
-			 Table="PeopleCompanies", ColumnRef="person_id", ColumnKey="company_id" )]
+		[HasAndBelongsToMany(typeof(Person), RelationType.Bag,
+			 Table = "PeopleCompanies", ColumnRef = "person_id", ColumnKey = "company_id")]
 		public IList People
 		{
 			get { return _people; }
@@ -66,17 +66,17 @@ namespace Castle.ActiveRecord.Tests.Model
 
 		public static void DeleteAll()
 		{
-			ActiveRecordBase.DeleteAll( typeof(Company) );
+			ActiveRecordBase.DeleteAll(typeof(Company));
 		}
 
 		public static Company[] FindAll()
 		{
-			return (Company[]) ActiveRecordBase.FindAll( typeof(Company) );
+			return (Company[])ActiveRecordBase.FindAll(typeof(Company));
 		}
 
 		public static Company Find(int id)
 		{
-			return (Company) ActiveRecordBase.FindByPrimaryKey( typeof(Company), id );
+			return (Company)ActiveRecordBase.FindByPrimaryKey(typeof(Company), id);
 		}
 	}
 
@@ -111,7 +111,7 @@ namespace Castle.ActiveRecord.Tests.Model
 		public String City
 		{
 			get { return _city; }
-			set { _city = value;}
+			set { _city = value; }
 		}
 
 		[Property]

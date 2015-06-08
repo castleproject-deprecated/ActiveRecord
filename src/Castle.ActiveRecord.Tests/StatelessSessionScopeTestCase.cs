@@ -25,6 +25,8 @@ namespace Castle.ActiveRecord.Tests
 	using NHibernate.Criterion;
 	using NUnit.Framework;
 	using System.Collections;
+	using System.Collections.Generic;
+
 	using Castle.ActiveRecord.Queries;
 
 	[TestFixture]
@@ -84,7 +86,7 @@ Please check the stacktrace and change your code accordingly.", ex.Message);
 			using (new StatelessSessionScope())
 			{
 				Assert.IsTrue(ActiveRecordMediator<Ship>.Exists(1));
-				Assert.AreEqual("Andrea Doria",ActiveRecordMediator<Ship>.FindByPrimaryKey(1).Name);
+				Assert.AreEqual("Andrea Doria", ActiveRecordMediator<Ship>.FindByPrimaryKey(1).Name);
 			}
 		}
 
@@ -120,9 +122,9 @@ Please check the stacktrace and change your code accordingly.", ex.Message);
 					Blog.Find(1);
 					Assert.Fail();
 				}
-				catch(ActiveRecordException ex)
+				catch (ActiveRecordException ex)
 				{
-					Assert.AreEqual(typeof(SessionException),ex.InnerException.GetType());
+					Assert.AreEqual(typeof(SessionException), ex.InnerException.GetType());
 					Assert.AreEqual("collections cannot be fetched by a stateless session", ex.InnerException.Message);
 				}
 			}
@@ -134,7 +136,9 @@ Please check the stacktrace and change your code accordingly.", ex.Message);
 			InitializeLazy();
 
 			using (new SessionScope())
+			{
 				CreateLazyBlog();
+			}
 
 			using (new StatelessSessionScope())
 			{
@@ -208,11 +212,11 @@ Please check the stacktrace and change your code accordingly.", ex.Message);
 
 			using (new StatelessSessionScope())
 			{
-				blog.Posts = new ArrayList();
+				blog.Posts = new List<Post>();
 
 				for (int i = 0; i < 10; i++)
 				{
-					var post = new Post() { Title = "Post" + i, Created = DateTime.Now};
+					var post = new Post() { Title = "Post" + i, Created = DateTime.Now };
 					post.Create();
 					blog.Posts.Add(post);
 				}

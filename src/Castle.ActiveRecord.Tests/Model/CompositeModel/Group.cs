@@ -16,6 +16,8 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
+
 	using Castle.ActiveRecord.Framework;
 	using NHibernate;
 
@@ -24,14 +26,14 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 	{
 		private int _id;
 		private String _name;
-		private IList _agents;
-		private IList _groups;
+        private IList<Agent> _agents;
+        private IList<Group> _groups;
 		private bool onSaveCalled, onUpdateCalled, onDeleteCalled, onLoadCalled;
 
 		public Group()
 		{
-			_agents = new ArrayList();
-			_groups = new ArrayList();
+			_agents = new List<Agent>();
+			_groups = new List<Group>();
 		}
 
 		[PrimaryKey(PrimaryKeyType.Native)]
@@ -50,7 +52,7 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 
 		[HasAndBelongsToMany(typeof(Agent), Table = "GroupAgents", CompositeKeyColumnRefs = new String[] {"OrgId", "Name"},
 			ColumnKey = "GroupId", Lazy = true, Inverse=true, Cascade = ManyRelationCascadeEnum.SaveUpdate)]
-		public IList Agents
+		public IList<Agent> Agents
 		{
 			get { return _agents; }
 			set { _agents = value; }
@@ -58,7 +60,7 @@ namespace Castle.ActiveRecord.Tests.Model.CompositeModel
 
 		[HasAndBelongsToMany(typeof(Group), Table = "GroupOrgs", ColumnRef = "GroupId", ColumnKey = "OrgId", Lazy = true,
 			Inverse=true, Cascade = ManyRelationCascadeEnum.SaveUpdate)]
-		public IList Groups
+		public IList<Group> Groups
 		{
 			get { return _groups; }
 			set { _groups = value; }
